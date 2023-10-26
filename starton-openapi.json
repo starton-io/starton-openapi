@@ -1,12 +1,289 @@
 {
   "openapi": "3.0.0",
   "paths": {
+    "/v3/smart-contract-template": {
+      "get": {
+        "operationId": "getAllSmartContractTemplate",
+        "summary": "Get all templates",
+        "description": "Return all templates created by starton",
+        "x-speakeasy-name-override": "getAll",
+        "x-speakeasy-group": "smart-contract.template",
+        "x-speakeasy-pagination": {
+          "type": "offsetLimit",
+          "inputs": [
+            {
+              "name": "page",
+              "in": "parameters",
+              "type": "page"
+            },
+            {
+              "name": "limit",
+              "in": "parameters",
+              "type": "limit"
+            }
+          ],
+          "outputs": {
+            "results": "$.items",
+            "numPages": "$.meta.totalPages"
+          }
+        },
+        "parameters": [
+          {
+            "name": "page",
+            "required": false,
+            "in": "query",
+            "description": "Number of returned page. By default the returned page is the first.",
+            "example": 0,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "limit",
+            "required": false,
+            "in": "query",
+            "example": 20,
+            "description": "Number of entities returned on each page. By default this number is set to 100.",
+            "schema": {
+              "maximum": 100,
+              "type": "integer"
+            }
+          },
+          {
+            "name": "isAudited",
+            "required": false,
+            "in": "query",
+            "description": "",
+            "example": true,
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "name": "isActivated",
+            "required": false,
+            "in": "query",
+            "description": "",
+            "example": true,
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "name": "name",
+            "required": false,
+            "in": "query",
+            "description": "",
+            "example": "ERC",
+            "schema": {
+              "pattern": "^[\\w\\-\\s]+$",
+              "type": "string"
+            }
+          },
+          {
+            "name": "blockchain",
+            "required": false,
+            "in": "query",
+            "description": "",
+            "example": "polygon",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "category",
+            "required": false,
+            "in": "query",
+            "description": "",
+            "example": "NFT",
+            "schema": {
+              "enum": [
+                "NFT",
+                "FUNGIBLE",
+                "OTHER",
+                "DEPRECATED",
+                "SALE",
+                "TOOL"
+              ],
+              "type": "string"
+            }
+          },
+          {
+            "name": "includeCompilationDetails",
+            "required": false,
+            "in": "query",
+            "description": "",
+            "example": true,
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "name": "includeForm",
+            "required": false,
+            "in": "query",
+            "description": "",
+            "example": true,
+            "schema": {
+              "type": "boolean"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "title": "SmartContractTemplatePaginated",
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/Paginate"
+                    },
+                    {
+                      "properties": {
+                        "items": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/SmartContractTemplate"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "oneOf": [
+                    {
+                      "$ref": "#/components/schemas/BAD_REQUEST_EXCEPTION"
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Smart Contract Library"
+        ],
+        "security": [
+          {
+            "starton-api-key": []
+          }
+        ]
+      }
+    },
+    "/v3/smart-contract-template/{id}": {
+      "get": {
+        "operationId": "getOneSmartContractTemplate",
+        "summary": "Get a template",
+        "description": "Return a template.",
+        "x-speakeasy-name-override": "getOne",
+        "x-speakeasy-group": "smart-contract.template",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "description": "",
+            "example": "ERC721_META_TRANSACTION",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "includeForm",
+            "required": false,
+            "in": "query",
+            "description": "",
+            "example": true,
+            "schema": {
+              "type": "boolean"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SmartContractTemplate"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "oneOf": [
+                    {
+                      "$ref": "#/components/schemas/BAD_REQUEST_EXCEPTION"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "oneOf": [
+                    {
+                      "$ref": "#/components/schemas/COULD_NOT_FIND_RESOURCE"
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Smart Contract Library"
+        ],
+        "security": [
+          {
+            "starton-api-key": []
+          }
+        ]
+      }
+    },
     "/v3/smart-contract": {
       "get": {
-        "operationId": "SmartContractHttpController_get",
+        "operationId": "getAllSmartContract",
         "summary": "Get all smart contract",
         "description": "Return all smart contract",
         "x-speakeasy-name-override": "getAll",
+        "x-speakeasy-pagination": {
+          "type": "offsetLimit",
+          "inputs": [
+            {
+              "name": "page",
+              "in": "parameters",
+              "type": "page"
+            },
+            {
+              "name": "limit",
+              "in": "parameters",
+              "type": "limit"
+            }
+          ],
+          "outputs": {
+            "results": "$.items",
+            "numPages": "$.meta.totalPages"
+          }
+        },
         "parameters": [
           {
             "name": "page",
@@ -76,7 +353,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "title": "SmartContract",
+                  "title": "SmartContractPaginated",
                   "allOf": [
                     {
                       "$ref": "#/components/schemas/Paginate"
@@ -123,7 +400,7 @@
     },
     "/v3/smart-contract/{network}/{address}": {
       "get": {
-        "operationId": "SmartContractHttpController_findOne",
+        "operationId": "getOneSmartContract",
         "summary": "Get a smart contract",
         "description": "Return a smart contract.",
         "x-speakeasy-name-override": "getOne",
@@ -219,7 +496,7 @@
         ]
       },
       "patch": {
-        "operationId": "SmartContractHttpController_update",
+        "operationId": "updateSmartContract",
         "summary": "Update a smart contract",
         "description": "Update a smart contract.",
         "x-speakeasy-name-override": "update",
@@ -319,7 +596,7 @@
         ]
       },
       "delete": {
-        "operationId": "SmartContractHttpController_delete",
+        "operationId": "deleteSmartContract",
         "summary": "Delete a smart contract",
         "description": "Delete a smart contract.",
         "x-speakeasy-name-override": "delete",
@@ -395,7 +672,7 @@
     },
     "/v3/smart-contract/from-bytecode": {
       "post": {
-        "operationId": "SmartContractHttpController_fromBytecode",
+        "operationId": "deployFromBytecodeSmartContract",
         "summary": "Deploy from bytecode (your own contract)",
         "description": "Deploy from bytecode allow you to deploy your own solidity code.",
         "x-speakeasy-name-override": "deployFromBytecode",
@@ -579,7 +856,7 @@
     },
     "/v3/smart-contract/from-template": {
       "post": {
-        "operationId": "SmartContractHttpController_fromTemplate",
+        "operationId": "deployFromTemplateSmartContract",
         "summary": "Deploy from template",
         "description": "Deploy from starton audited template.",
         "x-speakeasy-name-override": "deployFromTemplate",
@@ -753,7 +1030,7 @@
     },
     "/v3/smart-contract/{network}/{address}/call": {
       "post": {
-        "operationId": "SmartContractHttpController_call",
+        "operationId": "callSmartContract",
         "summary": "Call smart contract",
         "description": "Call a specific function from a smart contract",
         "x-speakeasy-name-override": "call",
@@ -957,7 +1234,7 @@
     },
     "/v3/smart-contract/{network}/{address}/read": {
       "post": {
-        "operationId": "SmartContractHttpController_read",
+        "operationId": "readSmartContract",
         "summary": "Read smart contract",
         "description": "Read a specific function from a smart contract",
         "x-speakeasy-name-override": "read",
@@ -1102,7 +1379,7 @@
     },
     "/v3/smart-contract/{network}/{address}/available-functions": {
       "get": {
-        "operationId": "SmartContractHttpController_availableFunction",
+        "operationId": "getAvailableFunctionsSmartContract",
         "summary": "Get functions & events",
         "description": "Return the read functions, write functions and events of a smart contract",
         "x-speakeasy-name-override": "getFunctions",
@@ -1200,20 +1477,11 @@
     },
     "/v3/smart-contract/import-existing": {
       "post": {
-        "operationId": "SmartContractHttpController_importExisting",
+        "operationId": "importExistingSmartContract",
         "summary": "Import existing contract",
         "description": "Import a contract already deployed",
         "x-speakeasy-name-override": "importExisting",
-        "parameters": [
-          {
-            "name": "address",
-            "required": true,
-            "in": "path",
-            "description": "Smart contract address.",
-            "example": "0x820f8728E32519b9C91B2406BF48AF80711aFecD",
-            "schema": {}
-          }
-        ],
+        "parameters": [],
         "requestBody": {
           "required": true,
           "description": "",
@@ -1288,10 +1556,29 @@
     },
     "/v3/transaction": {
       "get": {
-        "operationId": "TransactionHttpController_get",
+        "operationId": "getAllTransaction",
         "summary": "Get all transactions",
         "description": "Return all transactions",
         "x-speakeasy-name-override": "getAll",
+        "x-speakeasy-pagination": {
+          "type": "offsetLimit",
+          "inputs": [
+            {
+              "name": "page",
+              "in": "parameters",
+              "type": "page"
+            },
+            {
+              "name": "limit",
+              "in": "parameters",
+              "type": "limit"
+            }
+          ],
+          "outputs": {
+            "results": "$.items",
+            "numPages": "$.meta.totalPages"
+          }
+        },
         "parameters": [
           {
             "name": "page",
@@ -1371,7 +1658,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "title": "Transaction",
+                  "title": "TransactionPaginated",
                   "allOf": [
                     {
                       "$ref": "#/components/schemas/Paginate"
@@ -1416,7 +1703,7 @@
         ]
       },
       "post": {
-        "operationId": "TransactionCreateHttpController_post",
+        "operationId": "createTransaction",
         "summary": "Create a transaction",
         "description": "Create a transaction.",
         "x-speakeasy-name-override": "create",
@@ -1583,7 +1870,7 @@
     },
     "/v3/transaction/{id}": {
       "get": {
-        "operationId": "TransactionHttpController_findOne",
+        "operationId": "getOneTransaction",
         "summary": "Get a transaction",
         "description": "Return a transaction.",
         "x-speakeasy-name-override": "getOne",
@@ -1651,10 +1938,29 @@
     },
     "/v3/kms/wallet": {
       "get": {
-        "operationId": "WalletHttpController_get",
+        "operationId": "getAllWallet",
         "summary": "Get all wallet",
         "description": "Return all wallet",
         "x-speakeasy-name-override": "getAll",
+        "x-speakeasy-pagination": {
+          "type": "offsetLimit",
+          "inputs": [
+            {
+              "name": "page",
+              "in": "parameters",
+              "type": "page"
+            },
+            {
+              "name": "limit",
+              "in": "parameters",
+              "type": "limit"
+            }
+          ],
+          "outputs": {
+            "results": "$.items",
+            "numPages": "$.meta.totalPages"
+          }
+        },
         "parameters": [
           {
             "name": "page",
@@ -1693,7 +1999,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "title": "Wallet",
+                  "title": "WalletPaginated",
                   "allOf": [
                     {
                       "$ref": "#/components/schemas/Paginate"
@@ -1738,7 +2044,7 @@
         ]
       },
       "post": {
-        "operationId": "WalletHttpController_post",
+        "operationId": "createWallet",
         "summary": "Create a wallet",
         "description": "Create a wallet.",
         "x-speakeasy-name-override": "create",
@@ -1791,7 +2097,7 @@
     },
     "/v3/kms/wallet/{address}": {
       "get": {
-        "operationId": "WalletHttpController_findOne",
+        "operationId": "getOneWallet",
         "summary": "Get a wallet",
         "description": "Return a wallet.",
         "x-speakeasy-name-override": "getOne",
@@ -1857,7 +2163,7 @@
         ]
       },
       "patch": {
-        "operationId": "WalletHttpController_update",
+        "operationId": "updateWallet",
         "summary": "Update a wallet",
         "description": "Update a wallet.",
         "x-speakeasy-name-override": "update",
@@ -1933,7 +2239,7 @@
         ]
       },
       "delete": {
-        "operationId": "WalletHttpController_delete",
+        "operationId": "deleteWallet",
         "summary": "Delete a wallet",
         "description": "Delete a wallet.",
         "x-speakeasy-name-override": "delete",
@@ -2009,7 +2315,7 @@
     },
     "/v3/kms/wallet/import-provider-key": {
       "post": {
-        "operationId": "WalletHttpController_importProviderKey",
+        "operationId": "importProviderKeyWallet",
         "summary": "Import a wallet",
         "description": "Import a wallet.",
         "x-speakeasy-name-override": "import",
@@ -2062,7 +2368,7 @@
     },
     "/v3/kms/wallet/{address}/sign-message": {
       "post": {
-        "operationId": "WalletHttpController_signMessage",
+        "operationId": "signMessageWallet",
         "summary": "Sign a message",
         "description": "Sign a message.",
         "x-speakeasy-name-override": "sign",
@@ -2140,7 +2446,7 @@
     },
     "/v3/kms/wallet/{address}/{network}/nonce/available": {
       "get": {
-        "operationId": "WalletHttpController_getWalletAvailableNonces",
+        "operationId": "getAvailableNoncesWallet",
         "summary": "Get available nonce for a wallet",
         "description": "Get available nonce for a wallet",
         "x-speakeasy-name-override": "getAvailableNonces",
@@ -2248,7 +2554,7 @@
     },
     "/v3/kms/wallet/{address}/{network}/nonce/resync": {
       "post": {
-        "operationId": "WalletHttpController_resyncWalletNonces",
+        "operationId": "resyncNoncesWallet",
         "summary": "Resync nonce for a wallet",
         "description": "Resync nonce for a wallet",
         "x-speakeasy-name-override": "resyncNonce",
@@ -2355,10 +2661,29 @@
     },
     "/v3/kms": {
       "get": {
-        "operationId": "KmsHttpController_get",
+        "operationId": "getAllKms",
         "summary": "Get all kms",
         "description": "Return all kms",
         "x-speakeasy-name-override": "getAll",
+        "x-speakeasy-pagination": {
+          "type": "offsetLimit",
+          "inputs": [
+            {
+              "name": "page",
+              "in": "parameters",
+              "type": "page"
+            },
+            {
+              "name": "limit",
+              "in": "parameters",
+              "type": "limit"
+            }
+          ],
+          "outputs": {
+            "results": "$.items",
+            "numPages": "$.meta.totalPages"
+          }
+        },
         "parameters": [
           {
             "name": "page",
@@ -2388,7 +2713,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "title": "Kms",
+                  "title": "KmsPaginated",
                   "allOf": [
                     {
                       "$ref": "#/components/schemas/Paginate"
@@ -2428,7 +2753,7 @@
         ]
       },
       "post": {
-        "operationId": "KmsHttpController_post",
+        "operationId": "createKms",
         "summary": "Create a kms",
         "description": "Create a kms.",
         "x-speakeasy-name-override": "create",
@@ -2476,7 +2801,7 @@
     },
     "/v3/kms/{id}": {
       "get": {
-        "operationId": "KmsHttpController_findOne",
+        "operationId": "getOneKms",
         "summary": "Get a kms",
         "description": "Return a kms.",
         "x-speakeasy-name-override": "getOne",
@@ -2537,7 +2862,7 @@
         ]
       },
       "patch": {
-        "operationId": "KmsHttpController_update",
+        "operationId": "updateKms",
         "summary": "Update a kms",
         "description": "Update a kms.",
         "x-speakeasy-name-override": "update",
@@ -2608,7 +2933,7 @@
         ]
       },
       "delete": {
-        "operationId": "KmsHttpController_delete",
+        "operationId": "deleteKms",
         "summary": "Delete a kms",
         "description": "Delete a kms.",
         "x-speakeasy-name-override": "delete",
@@ -2671,7 +2996,7 @@
     },
     "/v3/data/{network}/address/{address}/balance/native": {
       "get": {
-        "operationId": "AddressHttpController_getNativeBalance",
+        "operationId": "getBalanceAddress",
         "summary": "Get native balance",
         "description": "Get native balance",
         "x-speakeasy-name-override": "getBalance",
@@ -2735,7 +3060,7 @@
     },
     "/v3/data/{network}/erc20/{contractAddress}/balance": {
       "get": {
-        "operationId": "Erc20HttpController_getERC20Balance",
+        "operationId": "getBalanceErc20",
         "summary": "Get erc20 balance",
         "description": "Get erc20 balance",
         "x-speakeasy-name-override": "getERC20Balance",
@@ -2809,7 +3134,7 @@
     },
     "/v3/setting/relayer/{network}": {
       "get": {
-        "operationId": "SettingRelayerHttpController_get",
+        "operationId": "getAllSettingRelayer",
         "summary": "Get settings",
         "description": "Return settings",
         "x-speakeasy-name-override": "get",
@@ -2876,7 +3201,7 @@
         ]
       },
       "patch": {
-        "operationId": "SettingRelayerHttpController_update",
+        "operationId": "updateSettingRelayer",
         "summary": "Update settings",
         "description": "Update settings",
         "x-speakeasy-name-override": "update",
@@ -2955,7 +3280,7 @@
     },
     "/v3/data/{network}/gas-price": {
       "get": {
-        "operationId": "GasPriceHttpController_getGasPriceForNetwork",
+        "operationId": "getAllGasPrice",
         "summary": "Get gas price",
         "description": "Return gas price",
         "x-speakeasy-name-override": "getGasPrice",
@@ -3009,7 +3334,7 @@
     },
     "/v3/faucet/{network}": {
       "post": {
-        "operationId": "FaucetHttpController_post",
+        "operationId": "claimFaucet",
         "summary": "Request faucet",
         "description": "Request faucet. You can do it one time per day.",
         "x-speakeasy-name-override": "requestFaucet",
@@ -3102,252 +3427,32 @@
         ]
       }
     },
-    "/v3/smart-contract-template": {
-      "get": {
-        "operationId": "SmartContractTemplateHttpController_get",
-        "summary": "Get all templates",
-        "description": "Return all templates created by starton",
-        "x-speakeasy-name-override": "getAll",
-        "x-speakeasy-group": "smart-contract.template",
-        "parameters": [
-          {
-            "name": "page",
-            "required": false,
-            "in": "query",
-            "description": "Number of returned page. By default the returned page is the first.",
-            "example": 0,
-            "schema": {
-              "type": "integer"
-            }
-          },
-          {
-            "name": "limit",
-            "required": false,
-            "in": "query",
-            "example": 20,
-            "description": "Number of entities returned on each page. By default this number is set to 100.",
-            "schema": {
-              "maximum": 100,
-              "type": "integer"
-            }
-          },
-          {
-            "name": "isAudited",
-            "required": false,
-            "in": "query",
-            "description": "",
-            "example": true,
-            "schema": {
-              "type": "boolean"
-            }
-          },
-          {
-            "name": "isActivated",
-            "required": false,
-            "in": "query",
-            "description": "",
-            "example": true,
-            "schema": {
-              "type": "boolean"
-            }
-          },
-          {
-            "name": "name",
-            "required": false,
-            "in": "query",
-            "description": "",
-            "example": "ERC",
-            "schema": {
-              "pattern": "^[\\w\\-\\s]+$",
-              "type": "string"
-            }
-          },
-          {
-            "name": "blockchain",
-            "required": false,
-            "in": "query",
-            "description": "",
-            "example": "polygon",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "category",
-            "required": false,
-            "in": "query",
-            "description": "",
-            "example": "NFT",
-            "schema": {
-              "enum": [
-                "NFT",
-                "FUNGIBLE",
-                "OTHER",
-                "DEPRECATED",
-                "SALE",
-                "TOOL"
-              ],
-              "type": "string"
-            }
-          },
-          {
-            "name": "includeCompilationDetails",
-            "required": false,
-            "in": "query",
-            "description": "",
-            "example": true,
-            "schema": {
-              "type": "boolean"
-            }
-          },
-          {
-            "name": "includeForm",
-            "required": false,
-            "in": "query",
-            "description": "",
-            "example": true,
-            "schema": {
-              "type": "boolean"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "title": "SmartContractTemplate",
-                  "allOf": [
-                    {
-                      "$ref": "#/components/schemas/Paginate"
-                    },
-                    {
-                      "properties": {
-                        "items": {
-                          "type": "array",
-                          "items": {
-                            "$ref": "#/components/schemas/SmartContractTemplate"
-                          }
-                        }
-                      }
-                    }
-                  ]
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "oneOf": [
-                    {
-                      "$ref": "#/components/schemas/BAD_REQUEST_EXCEPTION"
-                    }
-                  ]
-                }
-              }
-            }
-          }
-        },
-        "tags": [
-          "Smart Contract Library"
-        ],
-        "security": [
-          {
-            "starton-api-key": []
-          }
-        ]
-      }
-    },
-    "/v3/smart-contract-template/{id}": {
-      "get": {
-        "operationId": "SmartContractTemplateHttpController_findOne",
-        "summary": "Get a template",
-        "description": "Return a template.",
-        "x-speakeasy-name-override": "getOne",
-        "x-speakeasy-group": "smart-contract.template",
-        "parameters": [
-          {
-            "name": "id",
-            "required": true,
-            "in": "path",
-            "description": "",
-            "example": "ERC721_META_TRANSACTION",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "includeForm",
-            "required": false,
-            "in": "query",
-            "description": "",
-            "example": true,
-            "schema": {
-              "type": "boolean"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/SmartContractTemplate"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "oneOf": [
-                    {
-                      "$ref": "#/components/schemas/BAD_REQUEST_EXCEPTION"
-                    }
-                  ]
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "oneOf": [
-                    {
-                      "$ref": "#/components/schemas/COULD_NOT_FIND_RESOURCE"
-                    }
-                  ]
-                }
-              }
-            }
-          }
-        },
-        "tags": [
-          "Smart Contract Library"
-        ],
-        "security": [
-          {
-            "starton-api-key": []
-          }
-        ]
-      }
-    },
     "/v3/network/{name}/rpc": {
       "get": {
-        "operationId": "RpcHttpController_get",
+        "operationId": "getAllRpc",
         "summary": "Get all rpc (enterprise)",
         "description": "Return all rpc for a specific network",
         "x-speakeasy-name-override": "getAll",
         "x-speakeasy-group": "network.rpc",
+        "x-speakeasy-pagination": {
+          "type": "offsetLimit",
+          "inputs": [
+            {
+              "name": "page",
+              "in": "parameters",
+              "type": "page"
+            },
+            {
+              "name": "limit",
+              "in": "parameters",
+              "type": "limit"
+            }
+          ],
+          "outputs": {
+            "results": "$.items",
+            "numPages": "$.meta.totalPages"
+          }
+        },
         "parameters": [
           {
             "name": "name",
@@ -3387,7 +3492,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "title": "Rpc",
+                  "title": "RpcPaginated",
                   "allOf": [
                     {
                       "$ref": "#/components/schemas/Paginate"
@@ -3432,7 +3537,7 @@
         ]
       },
       "post": {
-        "operationId": "RpcHttpController_post",
+        "operationId": "createRpc",
         "summary": "Add a rpc (enterprise)",
         "description": "Add a rpc for a specific network",
         "x-speakeasy-name-override": "create",
@@ -3521,7 +3626,7 @@
     },
     "/v3/network/{name}/rpc/{id}": {
       "get": {
-        "operationId": "RpcHttpController_findOne",
+        "operationId": "getOneRpc",
         "summary": "Get a rpc (enterprise)",
         "description": "Return a specific rpc for a specific network",
         "x-speakeasy-name-override": "getOne",
@@ -3598,7 +3703,7 @@
         ]
       },
       "patch": {
-        "operationId": "RpcHttpController_update",
+        "operationId": "updateRpc",
         "summary": "Update a rpc (enterprise)",
         "description": "Update a specific rpc for a specific network",
         "x-speakeasy-name-override": "update",
@@ -3695,7 +3800,7 @@
         ]
       },
       "delete": {
-        "operationId": "RpcHttpController_delete",
+        "operationId": "deleteRpc",
         "summary": "Delete a rpc (enterprise)",
         "description": "Delete a rpc for a specific network",
         "x-speakeasy-name-override": "delete",
@@ -3772,10 +3877,29 @@
     },
     "/v3/network": {
       "get": {
-        "operationId": "NetworkHttpController_get",
+        "operationId": "getAllNetwork",
         "summary": "Get all networks",
         "description": "Return all networks",
         "x-speakeasy-name-override": "getAll",
+        "x-speakeasy-pagination": {
+          "type": "offsetLimit",
+          "inputs": [
+            {
+              "name": "page",
+              "in": "parameters",
+              "type": "page"
+            },
+            {
+              "name": "limit",
+              "in": "parameters",
+              "type": "limit"
+            }
+          ],
+          "outputs": {
+            "results": "$.items",
+            "numPages": "$.meta.totalPages"
+          }
+        },
         "parameters": [
           {
             "name": "page",
@@ -3824,7 +3948,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "title": "Network",
+                  "title": "NetworkPaginated",
                   "allOf": [
                     {
                       "$ref": "#/components/schemas/Paginate"
@@ -3869,7 +3993,7 @@
         ]
       },
       "post": {
-        "operationId": "NetworkHttpController_post",
+        "operationId": "createNetwork",
         "summary": "Create a network (enterprise)",
         "description": "Create a network (enterprise).",
         "x-speakeasy-name-override": "create",
@@ -3887,7 +4011,7 @@
                   "summary": "Private network creation",
                   "description": "",
                   "value": {
-                    "name": "optimism-functionnal-tests1698021528791",
+                    "name": "optimism-functionnal-tests1698325289920",
                     "displayName": "optimism-private",
                     "logo": "https://optimism-invalid-test-logo.com",
                     "chainId": 10,
@@ -3942,7 +4066,7 @@
     },
     "/v3/network/{name}": {
       "get": {
-        "operationId": "NetworkHttpController_findOne",
+        "operationId": "getOneNetwork",
         "summary": "Get a network",
         "description": "Return a network.",
         "x-speakeasy-name-override": "getOne",
@@ -4008,7 +4132,7 @@
         ]
       },
       "patch": {
-        "operationId": "NetworkHttpController_update",
+        "operationId": "updateNetwork",
         "summary": "Update a network (enterprise)",
         "description": "Update a network.",
         "x-speakeasy-name-override": "update",
@@ -4094,7 +4218,7 @@
         ]
       },
       "delete": {
-        "operationId": "NetworkHttpController_delete",
+        "operationId": "deleteNetwork",
         "summary": "Delete a network (enterprise)",
         "description": "Delete a network (enterprise).",
         "x-speakeasy-name-override": "delete",
@@ -4104,7 +4228,7 @@
             "required": true,
             "in": "path",
             "description": "",
-            "example": "optimism-functionnal-tests1698021528793",
+            "example": "optimism-functionnal-tests1698325289920",
             "schema": {
               "type": "string"
             }
@@ -4162,10 +4286,29 @@
     },
     "/v3/watcher": {
       "get": {
-        "operationId": "WatcherHttpController_get",
+        "operationId": "getAllWatcher",
         "summary": "Get all watcher",
         "description": "Return all the watcher created on starton.",
         "x-speakeasy-name-override": "getAll",
+        "x-speakeasy-pagination": {
+          "type": "offsetLimit",
+          "inputs": [
+            {
+              "name": "page",
+              "in": "parameters",
+              "type": "page"
+            },
+            {
+              "name": "limit",
+              "in": "parameters",
+              "type": "limit"
+            }
+          ],
+          "outputs": {
+            "results": "$.items",
+            "numPages": "$.meta.totalPages"
+          }
+        },
         "parameters": [
           {
             "name": "page",
@@ -4279,7 +4422,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "title": "Watcher",
+                  "title": "WatcherPaginated",
                   "allOf": [
                     {
                       "$ref": "#/components/schemas/Paginate"
@@ -4324,7 +4467,7 @@
         ]
       },
       "post": {
-        "operationId": "WatcherHttpController_post",
+        "operationId": "createWatcher",
         "summary": "Create a watcher",
         "description": "Create a watcher.",
         "x-speakeasy-name-override": "create",
@@ -4343,7 +4486,7 @@
                   "description": "",
                   "value": {
                     "name": "watcher test",
-                    "address": "0xfdf96b8e5a00deb18542ecf946a314c7dd4e8765",
+                    "address": "0x4bb1f3542d8497e6abe01a69768eae5dda27f5e5",
                     "network": "polygon-mumbai",
                     "type": "ADDRESS_ACTIVITY",
                     "webhookUrl": "https://webhook.site/db756457-9ca1-4975-9a3d-6257c9e0601e",
@@ -4434,7 +4577,7 @@
     },
     "/v3/watcher/{id}": {
       "get": {
-        "operationId": "WatcherHttpController_findOne",
+        "operationId": "getOneWatcher",
         "summary": "Get a watcher",
         "description": "Return a watcher.",
         "x-speakeasy-name-override": "getOne",
@@ -4500,7 +4643,7 @@
         ]
       },
       "patch": {
-        "operationId": "WatcherHttpController_update",
+        "operationId": "updateWatcher",
         "summary": "Update a watcher",
         "description": "Update a watcher.",
         "x-speakeasy-name-override": "update",
@@ -4587,7 +4730,7 @@
         ]
       },
       "delete": {
-        "operationId": "WatcherHttpController_delete",
+        "operationId": "deleteWatcher",
         "summary": "Delete a watcher",
         "description": "Delete a watcher.",
         "x-speakeasy-name-override": "delete",
@@ -4651,128 +4794,31 @@
         ]
       }
     },
-    "/v3/watcher/many-networks": {
-      "post": {
-        "operationId": "WatcherHttpController_postMany",
-        "summary": "Create many watchers",
-        "description": "Create many watchers.",
-        "x-speakeasy-name-override": "createMany",
-        "parameters": [],
-        "requestBody": {
-          "required": true,
-          "description": "",
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/CreateManyWatcherDto"
-              },
-              "examples": {
-                "a": {
-                  "summary": "",
-                  "description": "",
-                  "value": {
-                    "name": "watcher test on random address",
-                    "address": "0xd13c0d191e0d822d821a709bf05cc5ad496a0318",
-                    "networks": [
-                      "polygon-mumbai",
-                      "polygon-mainnet"
-                    ],
-                    "type": "ADDRESS_ACTIVITY",
-                    "webhookUrl": "https://webhook.site/db756457-9ca1-4975-9a3d-6257c9e0601e",
-                    "confirmationsBlocks": 0
-                  }
-                }
-              }
-            }
-          }
-        },
-        "responses": {
-          "201": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/Watcher"
-                  }
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "oneOf": [
-                    {
-                      "$ref": "#/components/schemas/BAD_REQUEST_EXCEPTION"
-                    }
-                  ]
-                }
-              }
-            }
-          },
-          "409": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "oneOf": [
-                    {
-                      "$ref": "#/components/schemas/DATABASE_DUPLICATE"
-                    }
-                  ]
-                }
-              }
-            }
-          },
-          "412": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "oneOf": [
-                    {
-                      "$ref": "#/components/schemas/SERVER_NOT_RESPONDING"
-                    }
-                  ]
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "oneOf": [
-                    {
-                      "$ref": "#/components/schemas/MICROSERVICE_NOT_RESPONDING"
-                    }
-                  ]
-                }
-              }
-            }
-          }
-        },
-        "tags": [
-          "Monitor"
-        ],
-        "security": [
-          {
-            "starton-api-key": []
-          }
-        ]
-      }
-    },
     "/v3/watcher/{id}/event": {
       "get": {
-        "operationId": "WatcherEventHttpController_get",
+        "operationId": "getAllWatcherEvent",
         "summary": "Get all events",
         "description": "Return all events",
         "x-speakeasy-name-override": "getAllEvents",
+        "x-speakeasy-pagination": {
+          "type": "offsetLimit",
+          "inputs": [
+            {
+              "name": "page",
+              "in": "parameters",
+              "type": "page"
+            },
+            {
+              "name": "limit",
+              "in": "parameters",
+              "type": "limit"
+            }
+          ],
+          "outputs": {
+            "results": "$.items",
+            "numPages": "$.meta.totalPages"
+          }
+        },
         "parameters": [
           {
             "name": "page",
@@ -4812,7 +4858,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "title": "WatcherEvent",
+                  "title": "WatcherEventPaginated",
                   "allOf": [
                     {
                       "$ref": "#/components/schemas/Paginate"
@@ -4859,7 +4905,7 @@
     },
     "/v3/watcher/{id}/event/{eventId}": {
       "get": {
-        "operationId": "WatcherEventHttpController_findOne",
+        "operationId": "getOneWatcherEvent",
         "summary": "Get a watcher event",
         "description": "Return a watcher event.",
         "x-speakeasy-name-override": "getOneEvent",
@@ -4937,7 +4983,7 @@
     },
     "/v3/webhook/signing-secret": {
       "get": {
-        "operationId": "WebhookSigningSecretHttpController_findOne",
+        "operationId": "getOneWebhookSigningSecret",
         "summary": "Get signing secret",
         "description": "Get your signing secret. It allow you to verify the payload sent by starton api to your server",
         "x-speakeasy-name-override": "getSigningSecret",
@@ -4980,7 +5026,7 @@
     },
     "/v3/webhook/signing-secret/regenerate": {
       "post": {
-        "operationId": "WebhookSigningSecretHttpController_post",
+        "operationId": "createWebhookSigningSecret",
         "summary": "Regenerate signing secret",
         "description": "Delete your old signing secret and create a new one. All new payload will be sign with this secret.",
         "x-speakeasy-name-override": "regenerateSigningSecret",
@@ -5023,10 +5069,29 @@
     },
     "/v3/webhook": {
       "get": {
-        "operationId": "WebhookHttpController_get",
+        "operationId": "getAllWebhook",
         "summary": "Get all webhooks",
         "description": "Return the list of all webhook sent to your server",
         "x-speakeasy-name-override": "getAll",
+        "x-speakeasy-pagination": {
+          "type": "offsetLimit",
+          "inputs": [
+            {
+              "name": "page",
+              "in": "parameters",
+              "type": "page"
+            },
+            {
+              "name": "limit",
+              "in": "parameters",
+              "type": "limit"
+            }
+          ],
+          "outputs": {
+            "results": "$.items",
+            "numPages": "$.meta.totalPages"
+          }
+        },
         "parameters": [
           {
             "name": "page",
@@ -5072,7 +5137,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "title": "Webhook",
+                  "title": "WebhookPaginated",
                   "allOf": [
                     {
                       "$ref": "#/components/schemas/Paginate"
@@ -5119,7 +5184,7 @@
     },
     "/v3/webhook/{id}": {
       "get": {
-        "operationId": "WebhookHttpController_findOne",
+        "operationId": "getOneWebhook",
         "summary": "Get a webhook",
         "description": "RReturn a specific webhook sent by starton.",
         "x-speakeasy-name-override": "getOne",
@@ -5187,7 +5252,7 @@
     },
     "/v3/webhook/{id}/resend": {
       "post": {
-        "operationId": "WebhookHttpController_resend",
+        "operationId": "resendWebhook",
         "summary": "Resend a webhook",
         "description": "Resend a specific webhook to your server. Useful if you mist an event or for test purpose",
         "x-speakeasy-name-override": "resend",
@@ -5269,7 +5334,7 @@
     },
     "/v3/webhook/{id}/cancel": {
       "post": {
-        "operationId": "WebhookHttpController_cancel",
+        "operationId": "cancelWebhook",
         "summary": "Cancel a webhook",
         "description": "Cancel a specific webhook",
         "x-speakeasy-name-override": "cancel",
@@ -5351,10 +5416,29 @@
     },
     "/v3/ipfs/pin": {
       "get": {
-        "operationId": "PinHttpController_get",
+        "operationId": "getAllPin",
         "summary": "Get all files",
         "description": "Return all files pinned on IPFS",
         "x-speakeasy-name-override": "getAll",
+        "x-speakeasy-pagination": {
+          "type": "offsetLimit",
+          "inputs": [
+            {
+              "name": "page",
+              "in": "parameters",
+              "type": "page"
+            },
+            {
+              "name": "limit",
+              "in": "parameters",
+              "type": "limit"
+            }
+          ],
+          "outputs": {
+            "results": "$.items",
+            "numPages": "$.meta.totalPages"
+          }
+        },
         "parameters": [
           {
             "name": "page",
@@ -5424,7 +5508,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "title": "Pin",
+                  "title": "PinPaginated",
                   "allOf": [
                     {
                       "$ref": "#/components/schemas/Paginate"
@@ -5464,7 +5548,7 @@
         ]
       },
       "post": {
-        "operationId": "PinHttpController_post",
+        "operationId": "createPin",
         "summary": "Pin a file already on IPFS",
         "description": "Pin a file already uploaded on IPFS and ask starton to keep a copy of it",
         "x-speakeasy-name-override": "pinExistingFile",
@@ -5536,7 +5620,7 @@
     },
     "/v3/ipfs/pin/{id}": {
       "get": {
-        "operationId": "PinHttpController_findOne",
+        "operationId": "getOnePin",
         "summary": "Get a file",
         "description": "Return a file already uploaded on IPFS.",
         "x-speakeasy-name-override": "getOne",
@@ -5605,7 +5689,7 @@
         ]
       },
       "patch": {
-        "operationId": "PinHttpController_update",
+        "operationId": "updatePin",
         "summary": "Update a file name/metadata",
         "description": "Update a file name or metadata. If you want to edit a file directly, you need to delete it and upload a new one, on IPFS file are referenced by unique hash",
         "x-speakeasy-name-override": "update",
@@ -5689,7 +5773,7 @@
         ]
       },
       "delete": {
-        "operationId": "PinHttpController_delete",
+        "operationId": "deletePin",
         "summary": "Delete a pin",
         "description": "Delete a pin.",
         "x-speakeasy-name-override": "delete",
@@ -5752,7 +5836,7 @@
     },
     "/v3/ipfs/storage-used": {
       "get": {
-        "operationId": "PinHttpController_getStorageUsedForProject",
+        "operationId": "getStorageUsedPin",
         "summary": "Get storage used",
         "description": "Get storage used",
         "x-speakeasy-name-override": "getStorageUsed",
@@ -5790,7 +5874,7 @@
     },
     "/v3/ipfs/file": {
       "post": {
-        "operationId": "PinHttpController_fromFile",
+        "operationId": "uploadFromFilePin",
         "summary": "Upload a file",
         "description": "Upload a new file on IPFS",
         "x-speakeasy-name-override": "uploadFile",
@@ -5864,7 +5948,7 @@
     },
     "/v3/ipfs/folder": {
       "post": {
-        "operationId": "PinHttpController_fromFolder",
+        "operationId": "uploadFromFolderPin",
         "summary": "Upload a folder",
         "description": "Upload a new folder on IPFS",
         "x-speakeasy-name-override": "uploadFolder",
@@ -5941,7 +6025,7 @@
     },
     "/v3/ipfs/json": {
       "post": {
-        "operationId": "PinHttpController_fromJson",
+        "operationId": "uploadFromJsonPin",
         "summary": "Upload a json",
         "description": "Upload a json.",
         "x-speakeasy-name-override": "uploadJson",
@@ -6032,7 +6116,7 @@
     },
     "/v3/project-member": {
       "get": {
-        "operationId": "ProjectMemberHttpController_get",
+        "operationId": "getAllProjectMember",
         "summary": "Get all members",
         "description": "Return all members",
         "x-speakeasy-name-override": "getAll",
@@ -6044,7 +6128,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "title": "ProjectMember",
+                  "title": "ProjectMemberPaginated",
                   "allOf": [
                     {
                       "$ref": "#/components/schemas/Paginate"
@@ -6086,7 +6170,7 @@
     },
     "/v3/project-member/{userId}": {
       "delete": {
-        "operationId": "ProjectMemberHttpController_delete",
+        "operationId": "deleteProjectMember",
         "summary": "Delete a member",
         "description": "Delete a member.",
         "x-speakeasy-name-override": "delete",
@@ -6162,11 +6246,30 @@
     },
     "/v3/project-member/invitation": {
       "get": {
-        "operationId": "InvitationHttpController_get",
+        "operationId": "getAllInvitation",
         "summary": "Get all member invitation",
         "description": "Get all member invitation",
         "x-speakeasy-name-override": "getAll",
         "x-speakeasy-group": "project.member.invitation",
+        "x-speakeasy-pagination": {
+          "type": "offsetLimit",
+          "inputs": [
+            {
+              "name": "page",
+              "in": "parameters",
+              "type": "page"
+            },
+            {
+              "name": "limit",
+              "in": "parameters",
+              "type": "limit"
+            }
+          ],
+          "outputs": {
+            "results": "$.items",
+            "numPages": "$.meta.totalPages"
+          }
+        },
         "parameters": [
           {
             "name": "page",
@@ -6196,7 +6299,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "title": "Invitation",
+                  "title": "InvitationPaginated",
                   "allOf": [
                     {
                       "$ref": "#/components/schemas/Paginate"
@@ -6236,7 +6339,7 @@
         ]
       },
       "post": {
-        "operationId": "InvitationHttpController_post",
+        "operationId": "createInvitation",
         "summary": "Invite a member",
         "description": "Invite a member.",
         "x-speakeasy-name-override": "create",
@@ -6299,7 +6402,7 @@
     },
     "/v3/project-member/invitation/{id}": {
       "delete": {
-        "operationId": "InvitationHttpController_delete",
+        "operationId": "deleteInvitation",
         "summary": "Delete an invitation",
         "description": "Delete an invitation.",
         "x-speakeasy-name-override": "delete",
@@ -6370,6 +6473,10 @@
   },
   "tags": [
     {
+      "name": "Smart Contract Library",
+      "description": "A list of audited template you can deploy with one API call."
+    },
+    {
       "name": "Smart Contract Management",
       "description": "The Smart contract management is an abstraction on top of our **Transaction Manager** and it allow you to build and automate your smart contract transaction easily, without struggling with the ABI and params encoding. With it you can:\n- **Deploying smart contract:** Deploy **audited** contract from our library or your own smart contract\n- **Import existing contract:** Import existing contract to view them on your dashboard and interact with them.\n- **Interact:** Read state and interact with the smart contract previously deployed or imported"
     },
@@ -6388,10 +6495,6 @@
     {
       "name": "Data",
       "description": "Starton Blockchain data endpoints."
-    },
-    {
-      "name": "Smart Contract Library",
-      "description": "A list of audited template you can deploy with one API call."
     },
     {
       "name": "Network",
@@ -6430,11 +6533,6 @@
         "type": "apiKey",
         "in": "header",
         "name": "ory_kratos_session"
-      },
-      "bearer": {
-        "scheme": "bearer",
-        "bearerFormat": "JWT",
-        "type": "http"
       },
       "starton-session-token": {
         "type": "apiKey",
@@ -6512,6 +6610,168 @@
           "message",
           "timestamp",
           "path"
+        ]
+      },
+      "SmartContractTemplate": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": ""
+          },
+          "name": {
+            "type": "string",
+            "description": ""
+          },
+          "description": {
+            "type": "string",
+            "description": ""
+          },
+          "shortDescription": {
+            "type": "string",
+            "description": ""
+          },
+          "githubUrl": {
+            "type": "string",
+            "description": ""
+          },
+          "blockchains": {
+            "type": "array",
+            "description": "",
+            "items": {
+              "type": "string"
+            }
+          },
+          "tags": {
+            "type": "array",
+            "description": "",
+            "items": {
+              "type": "string"
+            }
+          },
+          "category": {
+            "enum": [
+              "NFT",
+              "FUNGIBLE",
+              "OTHER",
+              "DEPRECATED",
+              "SALE",
+              "TOOL"
+            ],
+            "type": "string",
+            "description": ""
+          },
+          "humanReadableAbi": {
+            "type": "array",
+            "description": "",
+            "items": {
+              "type": "string"
+            }
+          },
+          "abi": {
+            "type": "array",
+            "description": "",
+            "items": {
+              "type": "object"
+            }
+          },
+          "form": {
+            "type": "object",
+            "description": "",
+            "nullable": true
+          },
+          "compilationDetails": {
+            "type": "object",
+            "description": "",
+            "nullable": true
+          },
+          "isAudited": {
+            "type": "boolean",
+            "default": false,
+            "description": ""
+          },
+          "isActivated": {
+            "type": "boolean",
+            "default": true,
+            "description": ""
+          },
+          "order": {
+            "type": "number",
+            "default": 0,
+            "description": ""
+          },
+          "createdAt": {
+            "format": "date-time",
+            "type": "string",
+            "default": "2023-10-26T13:01:40.117Z",
+            "description": ""
+          },
+          "updatedAt": {
+            "format": "date-time",
+            "type": "string",
+            "default": "2023-10-26T13:01:40.117Z",
+            "description": ""
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "description",
+          "shortDescription",
+          "githubUrl",
+          "blockchains",
+          "tags",
+          "category",
+          "humanReadableAbi",
+          "abi",
+          "isAudited",
+          "isActivated",
+          "order",
+          "createdAt",
+          "updatedAt"
+        ]
+      },
+      "PaginationData": {
+        "type": "object",
+        "properties": {
+          "itemCount": {
+            "type": "number"
+          },
+          "totalItems": {
+            "type": "number"
+          },
+          "itemsPerPage": {
+            "type": "number"
+          },
+          "totalPages": {
+            "type": "number"
+          },
+          "currentPage": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "itemCount",
+          "itemsPerPage",
+          "currentPage"
+        ]
+      },
+      "Paginate": {
+        "type": "object",
+        "properties": {
+          "meta": {
+            "$ref": "#/components/schemas/PaginationData"
+          },
+          "items": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "required": [
+          "meta",
+          "items"
         ]
       },
       "SmartContract": {
@@ -6639,13 +6899,13 @@
           "createdAt": {
             "format": "date-time",
             "type": "string",
-            "default": "2023-10-23T01:06:33.939Z",
+            "default": "2023-10-26T13:01:51.827Z",
             "description": ""
           },
           "updatedAt": {
             "format": "date-time",
             "type": "string",
-            "default": "2023-10-23T01:06:33.939Z",
+            "default": "2023-10-26T13:01:51.827Z",
             "description": ""
           }
         },
@@ -7489,10 +7749,26 @@
           },
           "params": {
             "default": [],
-            "description": "",
+            "description": "Smart contract constructor parameters.",
+            "example": [
+              "TestToken",
+              "TEST",
+              "1000000000000000000000000",
+              "0x298e760768c8481780397eE28A127eAd584df4ee"
+            ],
             "type": "array",
             "items": {
-              "type": "object"
+              "oneOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "number"
+                },
+                {
+                  "$ref": "#/components/schemas/DeployFromBytecodeDto/properties/params"
+                }
+              ]
             }
           },
           "speed": {
@@ -7814,13 +8090,13 @@
           "createdAt": {
             "format": "date-time",
             "type": "string",
-            "default": "2023-10-23T01:06:33.951Z",
+            "default": "2023-10-26T13:01:51.839Z",
             "description": ""
           },
           "updatedAt": {
             "format": "date-time",
             "type": "string",
-            "default": "2023-10-23T01:06:33.951Z",
+            "default": "2023-10-26T13:01:51.839Z",
             "description": ""
           }
         },
@@ -7961,7 +8237,17 @@
             ],
             "type": "array",
             "items": {
-              "type": "object"
+              "oneOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "number"
+                },
+                {
+                  "$ref": "#/components/schemas/DeployFromTemplateDto/properties/params"
+                }
+              ]
             }
           },
           "gasLimit": {
@@ -8079,10 +8365,26 @@
           },
           "params": {
             "default": [],
-            "description": "",
+            "description": "Smart contract parameters.",
+            "example": [
+              "TestToken",
+              "TEST",
+              "1000000000000000000000000",
+              "0x298e760768c8481780397eE28A127eAd584df4ee"
+            ],
             "type": "array",
             "items": {
-              "type": "object"
+              "oneOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "number"
+                },
+                {
+                  "$ref": "#/components/schemas/CallDto/properties/params"
+                }
+              ]
             }
           },
           "speed": {
@@ -8136,10 +8438,26 @@
           },
           "params": {
             "default": [],
-            "description": "",
+            "description": "Smart contract parameters.",
+            "example": [
+              "TestToken",
+              "TEST",
+              "1000000000000000000000000",
+              "0x298e760768c8481780397eE28A127eAd584df4ee"
+            ],
             "type": "array",
             "items": {
-              "type": "object"
+              "oneOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "number"
+                },
+                {
+                  "$ref": "#/components/schemas/ReadDto/properties/params"
+                }
+              ]
             }
           }
         },
@@ -8301,10 +8619,19 @@
               "1000000000000000000000000",
               "0x298e760768c8481780397eE28A127eAd584df4ee"
             ],
-            "nullable": true,
             "type": "array",
             "items": {
-              "type": "object"
+              "oneOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "number"
+                },
+                {
+                  "$ref": "#/components/schemas/ImportSmartContractDto/properties/params"
+                }
+              ]
             }
           }
         },
@@ -8417,13 +8744,13 @@
           "createdAt": {
             "format": "date-time",
             "type": "string",
-            "default": "2023-10-23T01:06:34.002Z",
+            "default": "2023-10-26T13:01:51.898Z",
             "description": ""
           },
           "updatedAt": {
             "format": "date-time",
             "type": "string",
-            "default": "2023-10-23T01:06:34.002Z",
+            "default": "2023-10-26T13:01:51.898Z",
             "description": ""
           }
         },
@@ -8609,13 +8936,13 @@
           "createdAt": {
             "format": "date-time",
             "type": "string",
-            "default": "2023-10-23T01:06:34.008Z",
+            "default": "2023-10-26T13:01:51.907Z",
             "description": ""
           },
           "updatedAt": {
             "format": "date-time",
             "type": "string",
-            "default": "2023-10-23T01:06:34.008Z",
+            "default": "2023-10-26T13:01:51.907Z",
             "description": ""
           }
         },
@@ -9035,13 +9362,13 @@
           "createdAt": {
             "format": "date-time",
             "type": "string",
-            "default": "2023-10-23T01:06:34.016Z",
+            "default": "2023-10-26T13:01:51.918Z",
             "description": ""
           },
           "updatedAt": {
             "format": "date-time",
             "type": "string",
-            "default": "2023-10-23T01:06:34.016Z",
+            "default": "2023-10-26T13:01:51.918Z",
             "description": ""
           }
         },
@@ -9283,7 +9610,7 @@
           "createdAt": {
             "format": "date-time",
             "type": "string",
-            "default": "2023-10-23T01:06:34.018Z",
+            "default": "2023-10-26T13:01:51.920Z",
             "description": "Claim date."
           }
         },
@@ -9293,161 +9620,6 @@
           "wallet",
           "network",
           "createdAt"
-        ]
-      },
-      "PaginationData": {
-        "type": "object",
-        "properties": {
-          "itemCount": {
-            "type": "number"
-          },
-          "totalItems": {
-            "type": "number"
-          },
-          "itemsPerPage": {
-            "type": "number"
-          },
-          "totalPages": {
-            "type": "number"
-          },
-          "currentPage": {
-            "type": "number"
-          }
-        },
-        "required": [
-          "itemCount",
-          "itemsPerPage",
-          "currentPage"
-        ]
-      },
-      "Paginate": {
-        "type": "object",
-        "properties": {
-          "meta": {
-            "$ref": "#/components/schemas/PaginationData"
-          }
-        },
-        "required": [
-          "meta"
-        ]
-      },
-      "SmartContractTemplate": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "string",
-            "description": ""
-          },
-          "name": {
-            "type": "string",
-            "description": ""
-          },
-          "description": {
-            "type": "string",
-            "description": ""
-          },
-          "shortDescription": {
-            "type": "string",
-            "description": ""
-          },
-          "githubUrl": {
-            "type": "string",
-            "description": ""
-          },
-          "blockchains": {
-            "type": "array",
-            "description": "",
-            "items": {
-              "type": "string"
-            }
-          },
-          "tags": {
-            "type": "array",
-            "description": "",
-            "items": {
-              "type": "string"
-            }
-          },
-          "category": {
-            "enum": [
-              "NFT",
-              "FUNGIBLE",
-              "OTHER",
-              "DEPRECATED",
-              "SALE",
-              "TOOL"
-            ],
-            "type": "string",
-            "description": ""
-          },
-          "humanReadableAbi": {
-            "type": "array",
-            "description": "",
-            "items": {
-              "type": "string"
-            }
-          },
-          "abi": {
-            "type": "array",
-            "description": "",
-            "items": {
-              "type": "object"
-            }
-          },
-          "form": {
-            "type": "object",
-            "description": "",
-            "nullable": true
-          },
-          "compilationDetails": {
-            "type": "object",
-            "description": "",
-            "nullable": true
-          },
-          "isAudited": {
-            "type": "boolean",
-            "default": false,
-            "description": ""
-          },
-          "isActivated": {
-            "type": "boolean",
-            "default": true,
-            "description": ""
-          },
-          "order": {
-            "type": "number",
-            "default": 0,
-            "description": ""
-          },
-          "createdAt": {
-            "format": "date-time",
-            "type": "string",
-            "default": "2023-10-23T01:04:31.519Z",
-            "description": ""
-          },
-          "updatedAt": {
-            "format": "date-time",
-            "type": "string",
-            "default": "2023-10-23T01:04:31.519Z",
-            "description": ""
-          }
-        },
-        "required": [
-          "id",
-          "name",
-          "description",
-          "shortDescription",
-          "githubUrl",
-          "blockchains",
-          "tags",
-          "category",
-          "humanReadableAbi",
-          "abi",
-          "isAudited",
-          "isActivated",
-          "order",
-          "createdAt",
-          "updatedAt"
         ]
       },
       "Rpc": {
@@ -9468,13 +9640,13 @@
           "createdAt": {
             "format": "date-time",
             "type": "string",
-            "default": "2023-10-23T00:38:51.217Z",
+            "default": "2023-10-26T13:01:31.131Z",
             "description": ""
           },
           "updatedAt": {
             "format": "date-time",
             "type": "string",
-            "default": "2023-10-23T00:38:51.217Z",
+            "default": "2023-10-26T13:01:31.131Z",
             "description": ""
           }
         },
@@ -9591,13 +9763,13 @@
           "createdAt": {
             "format": "date-time",
             "type": "string",
-            "default": "2023-10-23T00:38:51.237Z",
+            "default": "2023-10-26T13:01:31.140Z",
             "description": ""
           },
           "updatedAt": {
             "format": "date-time",
             "type": "string",
-            "default": "2023-10-23T00:38:51.237Z",
+            "default": "2023-10-26T13:01:31.140Z",
             "description": ""
           }
         },
@@ -9940,13 +10112,13 @@
           "createdAt": {
             "format": "date-time",
             "type": "string",
-            "default": "2023-10-23T00:39:17.288Z",
+            "default": "2023-10-26T13:01:55.097Z",
             "description": ""
           },
           "updatedAt": {
             "format": "date-time",
             "type": "string",
-            "default": "2023-10-23T00:39:17.288Z",
+            "default": "2023-10-26T13:01:55.097Z",
             "description": ""
           },
           "customFilters": {
@@ -10152,90 +10324,6 @@
           "confirmationsBlocks"
         ]
       },
-      "CreateManyWatcherDto": {
-        "type": "object",
-        "properties": {
-          "name": {
-            "type": "string",
-            "description": "",
-            "example": "watcher tests",
-            "nullable": true
-          },
-          "description": {
-            "type": "string",
-            "description": "",
-            "example": "watcher tests",
-            "nullable": true
-          },
-          "address": {
-            "type": "string",
-            "description": "",
-            "example": "0x298e760768c8481780397eE28A127eAd584df4ee"
-          },
-          "type": {
-            "enum": [
-              "MINED_TRANSACTION",
-              "ADDRESS_ACTIVITY",
-              "ADDRESS_RECEIVED_NATIVE_CURRENCY",
-              "ADDRESS_SENT_NATIVE_CURRENCY",
-              "EVENT_TRANSFER",
-              "ERC721_EVENT_TRANSFER",
-              "ERC1155_EVENT_TRANSFER_SINGLE",
-              "ERC1155_EVENT_TRANSFER_BATCH",
-              "EVENT_MINT",
-              "EVENT_APPROVAL",
-              "EVENT_CUSTOM"
-            ],
-            "type": "string",
-            "description": "",
-            "example": "ADDRESS_ACTIVITY"
-          },
-          "customEventAbi": {
-            "type": "object",
-            "description": ""
-          },
-          "webhookUrl": {
-            "type": "string",
-            "description": "",
-            "example": ""
-          },
-          "confirmationsBlocks": {
-            "type": "number",
-            "minimum": 0,
-            "maximum": 180,
-            "description": "",
-            "example": 0
-          },
-          "metadata": {
-            "type": "object",
-            "description": "",
-            "example": {
-              "test": "metadata"
-            }
-          },
-          "networks": {
-            "description": "",
-            "example": [
-              "polygon-mainnet",
-              "polygon-mumbai"
-            ],
-            "type": "array",
-            "items": {
-              "type": "string"
-            }
-          },
-          "customFilters": {
-            "type": "object"
-          }
-        },
-        "required": [
-          "address",
-          "type",
-          "webhookUrl",
-          "confirmationsBlocks",
-          "networks"
-        ]
-      },
       "WatcherEvent": {
         "type": "object",
         "properties": {
@@ -10283,13 +10371,13 @@
           "createdAt": {
             "format": "date-time",
             "type": "string",
-            "default": "2023-10-23T00:39:17.444Z",
+            "default": "2023-10-26T13:01:55.107Z",
             "description": ""
           },
           "updatedAt": {
             "format": "date-time",
             "type": "string",
-            "default": "2023-10-23T00:39:17.444Z",
+            "default": "2023-10-26T13:01:55.107Z",
             "description": ""
           }
         },
@@ -10321,13 +10409,13 @@
           "createdAt": {
             "format": "date-time",
             "type": "string",
-            "default": "2023-10-23T00:39:10.707Z",
+            "default": "2023-10-26T13:01:48.284Z",
             "description": ""
           },
           "updatedAt": {
             "format": "date-time",
             "type": "string",
-            "default": "2023-10-23T00:39:10.707Z",
+            "default": "2023-10-26T13:01:48.284Z",
             "description": ""
           }
         },
@@ -10380,13 +10468,13 @@
           "createdAt": {
             "format": "date-time",
             "type": "string",
-            "default": "2023-10-23T00:39:10.712Z",
+            "default": "2023-10-26T13:01:48.290Z",
             "description": ""
           },
           "updatedAt": {
             "format": "date-time",
             "type": "string",
-            "default": "2023-10-23T00:39:10.712Z",
+            "default": "2023-10-26T13:01:48.290Z",
             "description": ""
           }
         },
@@ -10553,12 +10641,12 @@
           "createdAt": {
             "format": "date-time",
             "type": "string",
-            "default": "2023-10-23T00:39:13.763Z"
+            "default": "2023-10-26T13:01:40.710Z"
           },
           "updatedAt": {
             "format": "date-time",
             "type": "string",
-            "default": "2023-10-23T00:39:13.763Z"
+            "default": "2023-10-26T13:01:40.710Z"
           }
         },
         "required": [
@@ -11206,12 +11294,12 @@
           "createdAt": {
             "format": "date-time",
             "type": "string",
-            "default": "2023-10-23T00:39:33.233Z"
+            "default": "2023-10-26T13:07:13.514Z"
           },
           "updatedAt": {
             "format": "date-time",
             "type": "string",
-            "default": "2023-10-23T00:39:33.233Z"
+            "default": "2023-10-26T13:07:13.514Z"
           }
         },
         "required": [
@@ -11418,12 +11506,12 @@
           "createdAt": {
             "format": "date-time",
             "type": "string",
-            "default": "2023-10-23T00:39:33.251Z"
+            "default": "2023-10-26T13:07:13.587Z"
           },
           "updatedAt": {
             "format": "date-time",
             "type": "string",
-            "default": "2023-10-23T00:39:33.251Z"
+            "default": "2023-10-26T13:07:13.587Z"
           }
         },
         "required": [
@@ -11514,12 +11602,12 @@
           "createdAt": {
             "format": "date-time",
             "type": "string",
-            "default": "2023-10-23T00:39:33.260Z"
+            "default": "2023-10-26T13:07:13.597Z"
           },
           "updatedAt": {
             "format": "date-time",
             "type": "string",
-            "default": "2023-10-23T00:39:33.260Z"
+            "default": "2023-10-26T13:07:13.597Z"
           }
         },
         "required": [
@@ -11610,13 +11698,13 @@
           "createdAt": {
             "format": "date-time",
             "type": "string",
-            "default": "2023-10-23T00:39:33.335Z",
+            "default": "2023-10-26T13:07:13.604Z",
             "description": ""
           },
           "updatedAt": {
             "format": "date-time",
             "type": "string",
-            "default": "2023-10-23T00:39:33.335Z",
+            "default": "2023-10-26T13:07:13.604Z",
             "description": ""
           },
           "ownerId": {
@@ -11663,7 +11751,7 @@
           "day": {
             "format": "date-time",
             "type": "string",
-            "default": "2023-10-23T00:39:33.336Z"
+            "default": "2023-10-26T13:07:13.605Z"
           },
           "computeUnit": {
             "type": "number"
