@@ -4,29 +4,10 @@
     "/v3/smart-contract-template": {
       "get": {
         "operationId": "getAllSmartContractTemplate",
-        "summary": "Get all templates",
-        "description": "Return all templates created by starton",
+        "summary": "Fetch the list of Smart Contract Templates",
+        "description": "Retrieves a paginated list of smart contract templates, you can use filters and pagination options to tailor the results to your specific needs.",
         "x-speakeasy-name-override": "getAll",
         "x-speakeasy-group": "smart-contract.template",
-        "x-speakeasy-pagination": {
-          "type": "offsetLimit",
-          "inputs": [
-            {
-              "name": "page",
-              "in": "parameters",
-              "type": "page"
-            },
-            {
-              "name": "limit",
-              "in": "parameters",
-              "type": "limit"
-            }
-          ],
-          "outputs": {
-            "results": "$.items",
-            "numPages": "$.meta.totalPages"
-          }
-        },
         "parameters": [
           {
             "name": "page",
@@ -183,8 +164,8 @@
     "/v3/smart-contract-template/{id}": {
       "get": {
         "operationId": "getOneSmartContractTemplate",
-        "summary": "Get a template",
-        "description": "Return a template.",
+        "summary": "Retrieve a Specific Smart Contract Template",
+        "description": "Fetches the details of a particular smart contract template using its unique identifier.",
         "x-speakeasy-name-override": "getOne",
         "x-speakeasy-group": "smart-contract.template",
         "parameters": [
@@ -192,7 +173,7 @@
             "name": "id",
             "required": true,
             "in": "path",
-            "description": "",
+            "description": "Unique identifier of the smart contract template.",
             "example": "ERC721_META_TRANSACTION",
             "schema": {
               "type": "string"
@@ -262,28 +243,9 @@
     "/v3/smart-contract": {
       "get": {
         "operationId": "getAllSmartContract",
-        "summary": "Get all smart contract",
-        "description": "Return all smart contract",
+        "summary": "Get all smart contracts",
+        "description": "Fetches and returns the list of smart contracts.",
         "x-speakeasy-name-override": "getAll",
-        "x-speakeasy-pagination": {
-          "type": "offsetLimit",
-          "inputs": [
-            {
-              "name": "page",
-              "in": "parameters",
-              "type": "page"
-            },
-            {
-              "name": "limit",
-              "in": "parameters",
-              "type": "limit"
-            }
-          ],
-          "outputs": {
-            "results": "$.items",
-            "numPages": "$.meta.totalPages"
-          }
-        },
         "parameters": [
           {
             "name": "page",
@@ -401,8 +363,8 @@
     "/v3/smart-contract/{network}/{address}": {
       "get": {
         "operationId": "getOneSmartContract",
-        "summary": "Get a smart contract",
-        "description": "Return a smart contract.",
+        "summary": "Get a single smart contract",
+        "description": "Fetches details of a specific smart contract based on network and address.",
         "x-speakeasy-name-override": "getOne",
         "parameters": [
           {
@@ -498,7 +460,7 @@
       "patch": {
         "operationId": "updateSmartContract",
         "summary": "Update a smart contract",
-        "description": "Update a smart contract.",
+        "description": "Updates and returns details of a specific smart contract based on network and address.",
         "x-speakeasy-name-override": "update",
         "parameters": [
           {
@@ -598,7 +560,7 @@
       "delete": {
         "operationId": "deleteSmartContract",
         "summary": "Delete a smart contract",
-        "description": "Delete a smart contract.",
+        "description": "Deletes a specific smart contract based on network and address.",
         "x-speakeasy-name-override": "delete",
         "parameters": [
           {
@@ -674,7 +636,7 @@
       "post": {
         "operationId": "deployFromBytecodeSmartContract",
         "summary": "Deploy from bytecode (your own contract)",
-        "description": "Deploy from bytecode allow you to deploy your own solidity code.",
+        "description": "Deploys a smart contract from bytecode and returns transaction details.",
         "x-speakeasy-name-override": "deployFromBytecode",
         "parameters": [
           {
@@ -857,8 +819,8 @@
     "/v3/smart-contract/from-template": {
       "post": {
         "operationId": "deployFromTemplateSmartContract",
-        "summary": "Deploy from template",
-        "description": "Deploy from starton audited template.",
+        "summary": "Deploy Smart Contract from Template",
+        "description": "Deploy from Starton audited smart contract template.",
         "x-speakeasy-name-override": "deployFromTemplate",
         "parameters": [
           {
@@ -1031,8 +993,8 @@
     "/v3/smart-contract/{network}/{address}/call": {
       "post": {
         "operationId": "callSmartContract",
-        "summary": "Call smart contract",
-        "description": "Call a specific function from a smart contract",
+        "summary": "Execute Smart Contract Function",
+        "description": "Calls a specific function within a deployed smart contract, enabling interactions such as executing transactions or querying state. The method parameters, including the smart contract address and network, need to be specified.",
         "x-speakeasy-name-override": "call",
         "parameters": [
           {
@@ -1235,8 +1197,8 @@
     "/v3/smart-contract/{network}/{address}/read": {
       "post": {
         "operationId": "readSmartContract",
-        "summary": "Read smart contract",
-        "description": "Read a specific function from a smart contract",
+        "summary": "Query Smart Contract Function",
+        "description": "Reads data from a smart contract by calling one of its functions without making any state changes on the blockchain. This is typically used for retrieving information from the contract.",
         "x-speakeasy-name-override": "read",
         "parameters": [
           {
@@ -1380,8 +1342,8 @@
     "/v3/smart-contract/{network}/{address}/available-functions": {
       "get": {
         "operationId": "getAvailableFunctionsSmartContract",
-        "summary": "Get functions & events",
-        "description": "Return the read functions, write functions and events of a smart contract",
+        "summary": "Retrieves Smart Contract Functions and Events",
+        "description": "Provides a list of the available read and write functions, as well as events, of a specified smart contract. This can be used to understand how to interact with the contract.",
         "x-speakeasy-name-override": "getFunctions",
         "parameters": [
           {
@@ -1478,13 +1440,13 @@
     "/v3/smart-contract/import-existing": {
       "post": {
         "operationId": "importExistingSmartContract",
-        "summary": "Import existing contract",
-        "description": "Import a contract already deployed",
+        "summary": "Import Existing Smart Contract",
+        "description": "Import an already deployed smart contract into the project. This requires providing the smart contract’s address, ABI, and the network it’s deployed on.",
         "x-speakeasy-name-override": "importExisting",
         "parameters": [],
         "requestBody": {
           "required": true,
-          "description": "",
+          "description": "Import on-chain Smart Contract",
           "content": {
             "application/json": {
               "schema": {
@@ -1492,8 +1454,8 @@
               },
               "examples": {
                 "a": {
-                  "summary": "",
-                  "description": "",
+                  "summary": "Importing an ERC20 Contract",
+                  "description": "This example demonstrates how to import an ERC20 smart contract, providing its name, a brief description, the contract address, ABI, and specifying the network it's deployed on.",
                   "value": {
                     "name": "Minimal contract tests.",
                     "description": "Test minimal contract tests.",
@@ -1557,28 +1519,9 @@
     "/v3/transaction": {
       "get": {
         "operationId": "getAllTransaction",
-        "summary": "Get all transactions",
-        "description": "Return all transactions",
+        "summary": "Retrieve a List of Transactions",
+        "description": "Retrieves a list of transactions.",
         "x-speakeasy-name-override": "getAll",
-        "x-speakeasy-pagination": {
-          "type": "offsetLimit",
-          "inputs": [
-            {
-              "name": "page",
-              "in": "parameters",
-              "type": "page"
-            },
-            {
-              "name": "limit",
-              "in": "parameters",
-              "type": "limit"
-            }
-          ],
-          "outputs": {
-            "results": "$.items",
-            "numPages": "$.meta.totalPages"
-          }
-        },
         "parameters": [
           {
             "name": "page",
@@ -1704,8 +1647,8 @@
       },
       "post": {
         "operationId": "createTransaction",
-        "summary": "Create a transaction",
-        "description": "Create a transaction.",
+        "summary": "Create a new transaction",
+        "description": "Create a new blockchain transaction",
         "x-speakeasy-name-override": "create",
         "parameters": [
           {
@@ -1871,8 +1814,8 @@
     "/v3/transaction/{id}": {
       "get": {
         "operationId": "getOneTransaction",
-        "summary": "Get a transaction",
-        "description": "Return a transaction.",
+        "summary": "Get a Specific Transaction",
+        "description": "Retrieves the details of a specific transaction using its unique identifier.",
         "x-speakeasy-name-override": "getOne",
         "parameters": [
           {
@@ -1939,28 +1882,9 @@
     "/v3/kms/wallet": {
       "get": {
         "operationId": "getAllWallet",
-        "summary": "Get all wallet",
-        "description": "Return all wallet",
+        "summary": "Retrieve the list of Wallets",
+        "description": "Fetches the list of wallets of the project",
         "x-speakeasy-name-override": "getAll",
-        "x-speakeasy-pagination": {
-          "type": "offsetLimit",
-          "inputs": [
-            {
-              "name": "page",
-              "in": "parameters",
-              "type": "page"
-            },
-            {
-              "name": "limit",
-              "in": "parameters",
-              "type": "limit"
-            }
-          ],
-          "outputs": {
-            "results": "$.items",
-            "numPages": "$.meta.totalPages"
-          }
-        },
         "parameters": [
           {
             "name": "page",
@@ -2045,8 +1969,8 @@
       },
       "post": {
         "operationId": "createWallet",
-        "summary": "Create a wallet",
-        "description": "Create a wallet.",
+        "summary": "Create a new wallet",
+        "description": "Create a new wallet for the project.",
         "x-speakeasy-name-override": "create",
         "parameters": [],
         "requestBody": {
@@ -2098,15 +2022,15 @@
     "/v3/kms/wallet/{address}": {
       "get": {
         "operationId": "getOneWallet",
-        "summary": "Get a wallet",
-        "description": "Return a wallet.",
+        "summary": "Fetch Wallet Details",
+        "description": "Retrieves information about a specific wallet.",
         "x-speakeasy-name-override": "getOne",
         "parameters": [
           {
             "name": "address",
             "required": true,
             "in": "path",
-            "description": "",
+            "description": "The address of the wallet.",
             "example": "0x1f9090aaE28b8a3dCeaDf281B0F12828e676c326",
             "schema": {
               "type": "string"
@@ -2164,15 +2088,15 @@
       },
       "patch": {
         "operationId": "updateWallet",
-        "summary": "Update a wallet",
-        "description": "Update a wallet.",
+        "summary": "Update Wallet Information",
+        "description": "Modifies details of an existing wallet using its address.",
         "x-speakeasy-name-override": "update",
         "parameters": [
           {
             "name": "address",
             "required": true,
             "in": "path",
-            "description": "",
+            "description": "The address of the wallet to update.",
             "example": "0x1f9090aaE28b8a3dCeaDf281B0F12828e676c326",
             "schema": {
               "type": "string"
@@ -2241,7 +2165,7 @@
       "delete": {
         "operationId": "deleteWallet",
         "summary": "Delete a wallet",
-        "description": "Delete a wallet.",
+        "description": "Removes a wallet from the Key Management System.",
         "x-speakeasy-name-override": "delete",
         "parameters": [
           {
@@ -2316,8 +2240,8 @@
     "/v3/kms/wallet/import-provider-key": {
       "post": {
         "operationId": "importProviderKeyWallet",
-        "summary": "Import a wallet",
-        "description": "Import a wallet.",
+        "summary": "Import Wallet from Provider Key",
+        "description": "Imports a wallet using a Key Management System.",
         "x-speakeasy-name-override": "import",
         "parameters": [],
         "requestBody": {
@@ -2370,7 +2294,7 @@
       "post": {
         "operationId": "signMessageWallet",
         "summary": "Sign a message",
-        "description": "Sign a message.",
+        "description": "Generates a cryptographic signature for a given message using a specified wallet.",
         "x-speakeasy-name-override": "sign",
         "parameters": [
           {
@@ -2447,8 +2371,8 @@
     "/v3/kms/wallet/{address}/{network}/nonce/available": {
       "get": {
         "operationId": "getAvailableNoncesWallet",
-        "summary": "Get available nonce for a wallet",
-        "description": "Get available nonce for a wallet",
+        "summary": "Retrieve Available Nonces for a wallet",
+        "description": "Gets all available nonces for a wallet, ensuring transaction integrity on the blockchain.",
         "x-speakeasy-name-override": "getAvailableNonces",
         "x-speakeasy-group": "Transaction Manager",
         "parameters": [
@@ -2456,7 +2380,7 @@
             "name": "address",
             "required": true,
             "in": "path",
-            "description": "",
+            "description": "the address of the wallet from which you need to retrieve available nonces",
             "example": "0x1f9090aaE28b8a3dCeaDf281B0F12828e676c326",
             "schema": {
               "type": "string"
@@ -2467,7 +2391,7 @@
             "required": true,
             "in": "path",
             "example": "polygon-mumbai",
-            "description": "",
+            "description": "the network from which you need to retrieve available nonces",
             "schema": {
               "type": "string"
             }
@@ -2555,15 +2479,15 @@
     "/v3/kms/wallet/{address}/{network}/nonce/resync": {
       "post": {
         "operationId": "resyncNoncesWallet",
-        "summary": "Resync nonce for a wallet",
-        "description": "Resync nonce for a wallet",
+        "summary": "Synchronize Nonces for a wallet",
+        "description": "Updates the stored nonce values for a wallet, synchronizing them with the current blockchain state.",
         "x-speakeasy-name-override": "resyncNonce",
         "parameters": [
           {
             "name": "address",
             "required": true,
             "in": "path",
-            "description": "",
+            "description": "the address of the wallet on which you need to resynchronize nonces",
             "example": "0x1f9090aaE28b8a3dCeaDf281B0F12828e676c326",
             "schema": {
               "type": "string"
@@ -2574,7 +2498,7 @@
             "required": true,
             "in": "path",
             "example": "polygon-mumbai",
-            "description": "",
+            "description": "the network on which you need to resynchronize a nonce",
             "schema": {
               "type": "string"
             }
@@ -2662,28 +2586,9 @@
     "/v3/kms": {
       "get": {
         "operationId": "getAllKms",
-        "summary": "Get all kms",
-        "description": "Return all kms",
+        "summary": "Retrieve all Key Management Systems (KMS)",
+        "description": "Provides a list of all Key Management Systems entries associated with the current project",
         "x-speakeasy-name-override": "getAll",
-        "x-speakeasy-pagination": {
-          "type": "offsetLimit",
-          "inputs": [
-            {
-              "name": "page",
-              "in": "parameters",
-              "type": "page"
-            },
-            {
-              "name": "limit",
-              "in": "parameters",
-              "type": "limit"
-            }
-          ],
-          "outputs": {
-            "results": "$.items",
-            "numPages": "$.meta.totalPages"
-          }
-        },
         "parameters": [
           {
             "name": "page",
@@ -2754,8 +2659,8 @@
       },
       "post": {
         "operationId": "createKms",
-        "summary": "Create a kms",
-        "description": "Create a kms.",
+        "summary": "Create a new KMS entry",
+        "description": "Add a new Key Management System entry to the project.",
         "x-speakeasy-name-override": "create",
         "parameters": [],
         "requestBody": {
@@ -2802,15 +2707,15 @@
     "/v3/kms/{id}": {
       "get": {
         "operationId": "getOneKms",
-        "summary": "Get a kms",
-        "description": "Return a kms.",
+        "summary": "Retrieve details of a specific KMS",
+        "description": "Returns information of a particular Key Management Systems entry using its unique identifier.",
         "x-speakeasy-name-override": "getOne",
         "parameters": [
           {
             "name": "id",
             "required": true,
             "in": "path",
-            "description": "",
+            "description": "The unique identifier of the KMS entry. ",
             "example": "kms_000",
             "schema": {
               "type": "string"
@@ -2863,15 +2768,15 @@
       },
       "patch": {
         "operationId": "updateKms",
-        "summary": "Update a kms",
-        "description": "Update a kms.",
+        "summary": "Update the details of a KMS",
+        "description": "Updates changes to a particular Key Management Systems entry.",
         "x-speakeasy-name-override": "update",
         "parameters": [
           {
             "name": "id",
             "required": true,
             "in": "path",
-            "description": "",
+            "description": "The unique identifier of the KMS entry to update.",
             "example": "kms_000",
             "schema": {
               "type": "string"
@@ -2934,15 +2839,15 @@
       },
       "delete": {
         "operationId": "deleteKms",
-        "summary": "Delete a kms",
-        "description": "Delete a kms.",
+        "summary": "Remove a specific KMS entry",
+        "description": "Delete a Key Management System entry from the project. ",
         "x-speakeasy-name-override": "delete",
         "parameters": [
           {
             "name": "id",
             "required": true,
             "in": "path",
-            "description": "",
+            "description": " The unique identifier of the KMS entry to delete.",
             "example": "kms_000",
             "schema": {
               "type": "string"
@@ -2997,8 +2902,8 @@
     "/v3/data/{network}/address/{address}/balance/native": {
       "get": {
         "operationId": "getBalanceAddress",
-        "summary": "Get native balance",
-        "description": "Get native balance",
+        "summary": "Retrieve the native token balance of a specific blockchain address",
+        "description": "Checks the native balance of a given address on a specified blockchain network. ",
         "x-speakeasy-name-override": "getBalance",
         "parameters": [
           {
@@ -3061,8 +2966,8 @@
     "/v3/data/{network}/erc20/{contractAddress}/balance": {
       "get": {
         "operationId": "getBalanceErc20",
-        "summary": "Get erc20 balance",
-        "description": "Get erc20 balance",
+        "summary": "Retrieve the ERC20 token balance for a specific address",
+        "description": "Fetches the balance of ERC20 tokens held by a specific address. You must specify the blockchain network, the contract address of the ERC20 token, and the address of the token holder. ",
         "x-speakeasy-name-override": "getERC20Balance",
         "parameters": [
           {
@@ -3135,8 +3040,8 @@
     "/v3/setting/relayer/{network}": {
       "get": {
         "operationId": "getAllSettingRelayer",
-        "summary": "Get settings",
-        "description": "Return settings",
+        "summary": "Get Relayer settings",
+        "description": "Retrieve the Relayer settings for a specific network within the current project.",
         "x-speakeasy-name-override": "get",
         "x-speakeasy-group": "transaction-manager.setting",
         "parameters": [
@@ -3145,7 +3050,7 @@
             "required": true,
             "in": "path",
             "example": "polygon-mumbai",
-            "description": "",
+            "description": "The blockchain network for which the Relayer settings should be retrieved.",
             "schema": {
               "type": "string"
             }
@@ -3202,8 +3107,8 @@
       },
       "patch": {
         "operationId": "updateSettingRelayer",
-        "summary": "Update settings",
-        "description": "Update settings",
+        "summary": "Update Relayer Settings",
+        "description": "Update the Relayer settings for a specific network within the current project.",
         "x-speakeasy-name-override": "update",
         "x-speakeasy-group": "transaction-manager.setting",
         "parameters": [
@@ -3212,7 +3117,7 @@
             "required": true,
             "in": "path",
             "example": "polygon-mumbai",
-            "description": "",
+            "description": "The blockchain network for which the Relayer settings should be updated.",
             "schema": {
               "type": "string"
             }
@@ -3281,8 +3186,8 @@
     "/v3/data/{network}/gas-price": {
       "get": {
         "operationId": "getAllGasPrice",
-        "summary": "Get gas price",
-        "description": "Return gas price",
+        "summary": " Retrieve the current gas prices",
+        "description": "Provides the current gas prices for the specified blockchain network, offering crucial information to estimate transaction costs.",
         "x-speakeasy-name-override": "getGasPrice",
         "parameters": [
           {
@@ -3290,7 +3195,7 @@
             "required": true,
             "in": "path",
             "example": "polygon-mainnet",
-            "description": "The blockchain network you are checking data on.",
+            "description": "The blockchain network you are checking gas prices on.",
             "schema": {
               "type": "string"
             }
@@ -3335,8 +3240,8 @@
     "/v3/faucet/{network}": {
       "post": {
         "operationId": "claimFaucet",
-        "summary": "Request faucet",
-        "description": "Request faucet. You can do it one time per day.",
+        "summary": "Request tokens from faucet",
+        "description": "Request tokens from the faucet, which can be used for testing and development purposes on testnet networks. Each user is limited to one request per day.",
         "x-speakeasy-name-override": "requestFaucet",
         "parameters": [
           {
@@ -3434,25 +3339,6 @@
         "description": "Return all rpc for a specific network",
         "x-speakeasy-name-override": "getAll",
         "x-speakeasy-group": "network.rpc",
-        "x-speakeasy-pagination": {
-          "type": "offsetLimit",
-          "inputs": [
-            {
-              "name": "page",
-              "in": "parameters",
-              "type": "page"
-            },
-            {
-              "name": "limit",
-              "in": "parameters",
-              "type": "limit"
-            }
-          ],
-          "outputs": {
-            "results": "$.items",
-            "numPages": "$.meta.totalPages"
-          }
-        },
         "parameters": [
           {
             "name": "name",
@@ -3878,28 +3764,9 @@
     "/v3/network": {
       "get": {
         "operationId": "getAllNetwork",
-        "summary": "Get all networks",
-        "description": "Return all networks",
+        "summary": "Retrieve the list of supported networks",
+        "description": "Fetches a paginated list of networks available in the current project.",
         "x-speakeasy-name-override": "getAll",
-        "x-speakeasy-pagination": {
-          "type": "offsetLimit",
-          "inputs": [
-            {
-              "name": "page",
-              "in": "parameters",
-              "type": "page"
-            },
-            {
-              "name": "limit",
-              "in": "parameters",
-              "type": "limit"
-            }
-          ],
-          "outputs": {
-            "results": "$.items",
-            "numPages": "$.meta.totalPages"
-          }
-        },
         "parameters": [
           {
             "name": "page",
@@ -3994,13 +3861,13 @@
       },
       "post": {
         "operationId": "createNetwork",
-        "summary": "Create a network (enterprise)",
-        "description": "Create a network (enterprise).",
+        "summary": "Create a new network (Enterprise)",
+        "description": "Adds a new network to the project, available only for Enterprise plans.",
         "x-speakeasy-name-override": "create",
         "parameters": [],
         "requestBody": {
           "required": true,
-          "description": "",
+          "description": "Network details for Creation",
           "content": {
             "application/json": {
               "schema": {
@@ -4008,10 +3875,10 @@
               },
               "examples": {
                 "a": {
-                  "summary": "Private network creation",
-                  "description": "",
+                  "summary": "Example creating a private network",
+                  "description": "An example showing how to create a private network",
                   "value": {
-                    "name": "optimism-functionnal-tests1698325289920",
+                    "name": "optimism-functional-tests1698339653851",
                     "displayName": "optimism-private",
                     "logo": "https://optimism-invalid-test-logo.com",
                     "chainId": 10,
@@ -4067,16 +3934,16 @@
     "/v3/network/{name}": {
       "get": {
         "operationId": "getOneNetwork",
-        "summary": "Get a network",
-        "description": "Return a network.",
+        "summary": "Fetch a specific network",
+        "description": "Retrieves detailed information about a specific network based on its name.",
         "x-speakeasy-name-override": "getOne",
         "parameters": [
           {
             "name": "name",
             "required": true,
             "in": "path",
-            "description": "",
-            "example": "optimism-functionnal-tests",
+            "description": "The unique name of the network to retrieve",
+            "example": "optimism-functional-tests",
             "schema": {
               "type": "string"
             }
@@ -4133,16 +4000,16 @@
       },
       "patch": {
         "operationId": "updateNetwork",
-        "summary": "Update a network (enterprise)",
-        "description": "Update a network.",
+        "summary": "Update specific network details (Enterprise)",
+        "description": "Modifies the details of a specific network based on its unique name. This feature is only available to Entreprise plans. ",
         "x-speakeasy-name-override": "update",
         "parameters": [
           {
             "name": "name",
             "required": true,
             "in": "path",
-            "description": "",
-            "example": "optimism-functionnal-tests",
+            "description": "The unique name of the network to update",
+            "example": "optimism-functional-tests",
             "schema": {
               "type": "string"
             }
@@ -4150,7 +4017,7 @@
         ],
         "requestBody": {
           "required": true,
-          "description": "",
+          "description": "Network details to update",
           "content": {
             "application/json": {
               "schema": {
@@ -4158,8 +4025,8 @@
               },
               "examples": {
                 "a": {
-                  "summary": "Update displayName",
-                  "description": "",
+                  "summary": "Example updating displayName",
+                  "description": "An example showing how to update the displayName of a network",
                   "value": {
                     "displayName": "optimism-private-tests"
                   }
@@ -4219,16 +4086,16 @@
       },
       "delete": {
         "operationId": "deleteNetwork",
-        "summary": "Delete a network (enterprise)",
-        "description": "Delete a network (enterprise).",
+        "summary": "Delete a network (Enterprise)",
+        "description": "Removes a network from the project, available only for Enterprise plans.",
         "x-speakeasy-name-override": "delete",
         "parameters": [
           {
             "name": "name",
             "required": true,
             "in": "path",
-            "description": "",
-            "example": "optimism-functionnal-tests1698325289920",
+            "description": "The name of the network to delete",
+            "example": "optimism-functional-tests1698339653851",
             "schema": {
               "type": "string"
             }
@@ -4287,28 +4154,9 @@
     "/v3/watcher": {
       "get": {
         "operationId": "getAllWatcher",
-        "summary": "Get all watcher",
-        "description": "Return all the watcher created on starton.",
+        "summary": "Retrieve List of Watchers",
+        "description": "Fetches list of all watchers associated with the current project.",
         "x-speakeasy-name-override": "getAll",
-        "x-speakeasy-pagination": {
-          "type": "offsetLimit",
-          "inputs": [
-            {
-              "name": "page",
-              "in": "parameters",
-              "type": "page"
-            },
-            {
-              "name": "limit",
-              "in": "parameters",
-              "type": "limit"
-            }
-          ],
-          "outputs": {
-            "results": "$.items",
-            "numPages": "$.meta.totalPages"
-          }
-        },
         "parameters": [
           {
             "name": "page",
@@ -4468,13 +4316,13 @@
       },
       "post": {
         "operationId": "createWatcher",
-        "summary": "Create a watcher",
-        "description": "Create a watcher.",
+        "summary": "Create a New Watcher",
+        "description": "Adds a new watcher to the current project to start monitoring an address.",
         "x-speakeasy-name-override": "create",
         "parameters": [],
         "requestBody": {
           "required": true,
-          "description": "",
+          "description": "Object containing the data required to create a new watcher.",
           "content": {
             "application/json": {
               "schema": {
@@ -4482,11 +4330,11 @@
               },
               "examples": {
                 "a": {
-                  "summary": "",
-                  "description": "",
+                  "summary": "Example of address activity monitoring",
+                  "description": "Creates a watcher monitoring any activity on Starton Test wallet.",
                   "value": {
                     "name": "watcher test",
-                    "address": "0x4bb1f3542d8497e6abe01a69768eae5dda27f5e5",
+                    "address": "0xbdb8b7b56598e13eb1a9767ff61468a08def4457",
                     "network": "polygon-mumbai",
                     "type": "ADDRESS_ACTIVITY",
                     "webhookUrl": "https://webhook.site/db756457-9ca1-4975-9a3d-6257c9e0601e",
@@ -4578,15 +4426,15 @@
     "/v3/watcher/{id}": {
       "get": {
         "operationId": "getOneWatcher",
-        "summary": "Get a watcher",
-        "description": "Return a watcher.",
+        "summary": "Get a specific watcher",
+        "description": "Retrieves detailed information about a specific watcher identified by its unique {id} within the current project.",
         "x-speakeasy-name-override": "getOne",
         "parameters": [
           {
             "name": "id",
             "required": true,
             "in": "path",
-            "description": "",
+            "description": "The unique identifier of the watcher to retrieve.",
             "example": "ntif_f94e4a79611947d48254537a8861265d",
             "schema": {
               "type": "string"
@@ -4645,14 +4493,14 @@
       "patch": {
         "operationId": "updateWatcher",
         "summary": "Update a watcher",
-        "description": "Update a watcher.",
+        "description": "Modifies the properties of an existing watcher. Only the fields provided in the request body will be updated.",
         "x-speakeasy-name-override": "update",
         "parameters": [
           {
             "name": "id",
             "required": true,
             "in": "path",
-            "description": "",
+            "description": "The unique identifier of the watcher to update. ",
             "example": "ntif_f94e4a79611947d48254537a8861265d",
             "schema": {
               "type": "string"
@@ -4661,7 +4509,7 @@
         ],
         "requestBody": {
           "required": true,
-          "description": "",
+          "description": "Object containing the fields to update on the watcher.",
           "content": {
             "application/json": {
               "schema": {
@@ -4669,8 +4517,8 @@
               },
               "examples": {
                 "a": {
-                  "summary": "",
-                  "description": "",
+                  "summary": "Example of watcher update to resume a watcher and change its confiramtion blocks number",
+                  "description": "Number of confirmations blocks to wait for before triggering the watcher. Setting this to 0 triggers the watcher immediately upon event detection.",
                   "value": {
                     "paused": false,
                     "confirmationsBlocks": 0
@@ -4732,7 +4580,7 @@
       "delete": {
         "operationId": "deleteWatcher",
         "summary": "Delete a watcher",
-        "description": "Delete a watcher.",
+        "description": "Removes a specific watcher from the current project. This action is irreversible.",
         "x-speakeasy-name-override": "delete",
         "parameters": [
           {
@@ -4797,28 +4645,9 @@
     "/v3/watcher/{id}/event": {
       "get": {
         "operationId": "getAllWatcherEvent",
-        "summary": "Get all events",
-        "description": "Return all events",
+        "summary": "Fetches the list of events for a watcher ",
+        "description": "Fetches a list of all events linked to a specific watcher, identified by {id}. ",
         "x-speakeasy-name-override": "getAllEvents",
-        "x-speakeasy-pagination": {
-          "type": "offsetLimit",
-          "inputs": [
-            {
-              "name": "page",
-              "in": "parameters",
-              "type": "page"
-            },
-            {
-              "name": "limit",
-              "in": "parameters",
-              "type": "limit"
-            }
-          ],
-          "outputs": {
-            "results": "$.items",
-            "numPages": "$.meta.totalPages"
-          }
-        },
         "parameters": [
           {
             "name": "page",
@@ -4845,7 +4674,7 @@
             "name": "id",
             "required": true,
             "in": "path",
-            "description": "",
+            "description": "The unique identifier of the watcher from which you'll retrieve events.",
             "example": "ntif_f94e4a79611947d48254537a8861265d",
             "schema": {
               "type": "string"
@@ -4907,14 +4736,14 @@
       "get": {
         "operationId": "getOneWatcherEvent",
         "summary": "Get a watcher event",
-        "description": "Return a watcher event.",
+        "description": "Retrieves information about a specific watcher event.",
         "x-speakeasy-name-override": "getOneEvent",
         "parameters": [
           {
             "name": "id",
             "required": true,
             "in": "path",
-            "description": "",
+            "description": "The unique identifier of the watcher.",
             "example": "ntif_f94e4a79611947d48254537a8861265d",
             "schema": {
               "type": "string"
@@ -4924,7 +4753,7 @@
             "name": "eventId",
             "required": true,
             "in": "path",
-            "description": "",
+            "description": "The unique identifier of the watcher event.",
             "example": "wevent_437e18e7470944099bd094e1c936e4cd",
             "schema": {
               "type": "string"
@@ -4984,8 +4813,8 @@
     "/v3/webhook/signing-secret": {
       "get": {
         "operationId": "getOneWebhookSigningSecret",
-        "summary": "Get signing secret",
-        "description": "Get your signing secret. It allow you to verify the payload sent by starton api to your server",
+        "summary": "Retrieve Webhook Signing Secret",
+        "description": "Fetches the signing secret associated with your project. Use this secret to securely verify the integrity and authenticity of payloads received from Starton's API in your server-side webhook implementations.",
         "x-speakeasy-name-override": "getSigningSecret",
         "parameters": [],
         "responses": {
@@ -5027,8 +4856,8 @@
     "/v3/webhook/signing-secret/regenerate": {
       "post": {
         "operationId": "createWebhookSigningSecret",
-        "summary": "Regenerate signing secret",
-        "description": "Delete your old signing secret and create a new one. All new payload will be sign with this secret.",
+        "summary": "Regenerate Webhook signing secret",
+        "description": "Generates a new signing secret for your project, invalidating the old one. All subsequent payloads from Starton's API will be signed using this new secret, enhancing the security of your webhook integrations.",
         "x-speakeasy-name-override": "regenerateSigningSecret",
         "parameters": [],
         "responses": {
@@ -5070,28 +4899,9 @@
     "/v3/webhook": {
       "get": {
         "operationId": "getAllWebhook",
-        "summary": "Get all webhooks",
-        "description": "Return the list of all webhook sent to your server",
+        "summary": "Retrieve the list of Webhooks",
+        "description": "Fetches the list of all webhooks dispatched to your server. You can apply filters and pagination for more tailored results.",
         "x-speakeasy-name-override": "getAll",
-        "x-speakeasy-pagination": {
-          "type": "offsetLimit",
-          "inputs": [
-            {
-              "name": "page",
-              "in": "parameters",
-              "type": "page"
-            },
-            {
-              "name": "limit",
-              "in": "parameters",
-              "type": "limit"
-            }
-          ],
-          "outputs": {
-            "results": "$.items",
-            "numPages": "$.meta.totalPages"
-          }
-        },
         "parameters": [
           {
             "name": "page",
@@ -5185,15 +4995,15 @@
     "/v3/webhook/{id}": {
       "get": {
         "operationId": "getOneWebhook",
-        "summary": "Get a webhook",
-        "description": "RReturn a specific webhook sent by starton.",
+        "summary": "Retrieve a Specific Webhook",
+        "description": "Fetches the details of a specific webhook dispatched by Starton, identified uniquely by its {id}.",
         "x-speakeasy-name-override": "getOne",
         "parameters": [
           {
             "name": "id",
             "required": true,
             "in": "path",
-            "description": "",
+            "description": "The unique identifier of the target webhook.",
             "example": "wh_4c2905f7276b415fac02ee3682189940",
             "schema": {
               "type": "string"
@@ -5253,15 +5063,15 @@
     "/v3/webhook/{id}/resend": {
       "post": {
         "operationId": "resendWebhook",
-        "summary": "Resend a webhook",
-        "description": "Resend a specific webhook to your server. Useful if you mist an event or for test purpose",
+        "summary": "Resend a Webhook",
+        "description": "Initiates the resend process for a particular webhook to your server, facilitating testing scenarios or handling missed events.",
         "x-speakeasy-name-override": "resend",
         "parameters": [
           {
             "name": "id",
             "required": true,
             "in": "path",
-            "description": "",
+            "description": "The unique identifier of the webhook to be resent.",
             "example": "wh_4c2905f7276b415fac02ee3682189940",
             "schema": {
               "type": "string"
@@ -5336,14 +5146,14 @@
       "post": {
         "operationId": "cancelWebhook",
         "summary": "Cancel a webhook",
-        "description": "Cancel a specific webhook",
+        "description": "Terminates the designated webhook, identified by its {id}, preventing any further processing.",
         "x-speakeasy-name-override": "cancel",
         "parameters": [
           {
             "name": "id",
             "required": true,
             "in": "path",
-            "description": "",
+            "description": "The unique identifier of the webhook to be canceled.",
             "example": "wh_4c2905f7276b415fac02ee3682189940",
             "schema": {
               "type": "string"
@@ -5420,25 +5230,6 @@
         "summary": "Get all files",
         "description": "Return all files pinned on IPFS",
         "x-speakeasy-name-override": "getAll",
-        "x-speakeasy-pagination": {
-          "type": "offsetLimit",
-          "inputs": [
-            {
-              "name": "page",
-              "in": "parameters",
-              "type": "page"
-            },
-            {
-              "name": "limit",
-              "in": "parameters",
-              "type": "limit"
-            }
-          ],
-          "outputs": {
-            "results": "$.items",
-            "numPages": "$.meta.totalPages"
-          }
-        },
         "parameters": [
           {
             "name": "page",
@@ -6251,25 +6042,6 @@
         "description": "Get all member invitation",
         "x-speakeasy-name-override": "getAll",
         "x-speakeasy-group": "project.member.invitation",
-        "x-speakeasy-pagination": {
-          "type": "offsetLimit",
-          "inputs": [
-            {
-              "name": "page",
-              "in": "parameters",
-              "type": "page"
-            },
-            {
-              "name": "limit",
-              "in": "parameters",
-              "type": "limit"
-            }
-          ],
-          "outputs": {
-            "results": "$.items",
-            "numPages": "$.meta.totalPages"
-          }
-        },
         "parameters": [
           {
             "name": "page",
@@ -6703,13 +6475,13 @@
           "createdAt": {
             "format": "date-time",
             "type": "string",
-            "default": "2023-10-26T13:01:40.117Z",
+            "default": "2023-10-26T17:00:54.541Z",
             "description": ""
           },
           "updatedAt": {
             "format": "date-time",
             "type": "string",
-            "default": "2023-10-26T13:01:40.117Z",
+            "default": "2023-10-26T17:00:54.541Z",
             "description": ""
           }
         },
@@ -6899,13 +6671,13 @@
           "createdAt": {
             "format": "date-time",
             "type": "string",
-            "default": "2023-10-26T13:01:51.827Z",
+            "default": "2023-10-26T17:00:56.975Z",
             "description": ""
           },
           "updatedAt": {
             "format": "date-time",
             "type": "string",
-            "default": "2023-10-26T13:01:51.827Z",
+            "default": "2023-10-26T17:00:56.975Z",
             "description": ""
           }
         },
@@ -8090,13 +7862,13 @@
           "createdAt": {
             "format": "date-time",
             "type": "string",
-            "default": "2023-10-26T13:01:51.839Z",
+            "default": "2023-10-26T17:00:56.987Z",
             "description": ""
           },
           "updatedAt": {
             "format": "date-time",
             "type": "string",
-            "default": "2023-10-26T13:01:51.839Z",
+            "default": "2023-10-26T17:00:56.987Z",
             "description": ""
           }
         },
@@ -8744,13 +8516,13 @@
           "createdAt": {
             "format": "date-time",
             "type": "string",
-            "default": "2023-10-26T13:01:51.898Z",
+            "default": "2023-10-26T17:00:57.041Z",
             "description": ""
           },
           "updatedAt": {
             "format": "date-time",
             "type": "string",
-            "default": "2023-10-26T13:01:51.898Z",
+            "default": "2023-10-26T17:00:57.041Z",
             "description": ""
           }
         },
@@ -8936,13 +8708,13 @@
           "createdAt": {
             "format": "date-time",
             "type": "string",
-            "default": "2023-10-26T13:01:51.907Z",
+            "default": "2023-10-26T17:00:57.108Z",
             "description": ""
           },
           "updatedAt": {
             "format": "date-time",
             "type": "string",
-            "default": "2023-10-26T13:01:51.907Z",
+            "default": "2023-10-26T17:00:57.108Z",
             "description": ""
           }
         },
@@ -9362,13 +9134,13 @@
           "createdAt": {
             "format": "date-time",
             "type": "string",
-            "default": "2023-10-26T13:01:51.918Z",
+            "default": "2023-10-26T17:00:57.122Z",
             "description": ""
           },
           "updatedAt": {
             "format": "date-time",
             "type": "string",
-            "default": "2023-10-26T13:01:51.918Z",
+            "default": "2023-10-26T17:00:57.122Z",
             "description": ""
           }
         },
@@ -9610,7 +9382,7 @@
           "createdAt": {
             "format": "date-time",
             "type": "string",
-            "default": "2023-10-26T13:01:51.920Z",
+            "default": "2023-10-26T17:00:57.125Z",
             "description": "Claim date."
           }
         },
@@ -9640,13 +9412,13 @@
           "createdAt": {
             "format": "date-time",
             "type": "string",
-            "default": "2023-10-26T13:01:31.131Z",
+            "default": "2023-10-26T17:00:55.106Z",
             "description": ""
           },
           "updatedAt": {
             "format": "date-time",
             "type": "string",
-            "default": "2023-10-26T13:01:31.131Z",
+            "default": "2023-10-26T17:00:55.106Z",
             "description": ""
           }
         },
@@ -9763,13 +9535,13 @@
           "createdAt": {
             "format": "date-time",
             "type": "string",
-            "default": "2023-10-26T13:01:31.140Z",
+            "default": "2023-10-26T17:00:55.125Z",
             "description": ""
           },
           "updatedAt": {
             "format": "date-time",
             "type": "string",
-            "default": "2023-10-26T13:01:31.140Z",
+            "default": "2023-10-26T17:00:55.125Z",
             "description": ""
           }
         },
@@ -10112,13 +9884,13 @@
           "createdAt": {
             "format": "date-time",
             "type": "string",
-            "default": "2023-10-26T13:01:55.097Z",
+            "default": "2023-10-26T17:00:55.648Z",
             "description": ""
           },
           "updatedAt": {
             "format": "date-time",
             "type": "string",
-            "default": "2023-10-26T13:01:55.097Z",
+            "default": "2023-10-26T17:00:55.648Z",
             "description": ""
           },
           "customFilters": {
@@ -10371,13 +10143,13 @@
           "createdAt": {
             "format": "date-time",
             "type": "string",
-            "default": "2023-10-26T13:01:55.107Z",
+            "default": "2023-10-26T17:00:55.714Z",
             "description": ""
           },
           "updatedAt": {
             "format": "date-time",
             "type": "string",
-            "default": "2023-10-26T13:01:55.107Z",
+            "default": "2023-10-26T17:00:55.714Z",
             "description": ""
           }
         },
@@ -10409,13 +10181,13 @@
           "createdAt": {
             "format": "date-time",
             "type": "string",
-            "default": "2023-10-26T13:01:48.284Z",
+            "default": "2023-10-26T17:00:54.920Z",
             "description": ""
           },
           "updatedAt": {
             "format": "date-time",
             "type": "string",
-            "default": "2023-10-26T13:01:48.284Z",
+            "default": "2023-10-26T17:00:54.920Z",
             "description": ""
           }
         },
@@ -10468,13 +10240,13 @@
           "createdAt": {
             "format": "date-time",
             "type": "string",
-            "default": "2023-10-26T13:01:48.290Z",
+            "default": "2023-10-26T17:00:54.930Z",
             "description": ""
           },
           "updatedAt": {
             "format": "date-time",
             "type": "string",
-            "default": "2023-10-26T13:01:48.290Z",
+            "default": "2023-10-26T17:00:54.930Z",
             "description": ""
           }
         },
@@ -10641,12 +10413,12 @@
           "createdAt": {
             "format": "date-time",
             "type": "string",
-            "default": "2023-10-26T13:01:40.710Z"
+            "default": "2023-10-26T16:51:19.267Z"
           },
           "updatedAt": {
             "format": "date-time",
             "type": "string",
-            "default": "2023-10-26T13:01:40.710Z"
+            "default": "2023-10-26T16:51:19.267Z"
           }
         },
         "required": [
@@ -11294,12 +11066,12 @@
           "createdAt": {
             "format": "date-time",
             "type": "string",
-            "default": "2023-10-26T13:07:13.514Z"
+            "default": "2023-10-26T16:51:19.750Z"
           },
           "updatedAt": {
             "format": "date-time",
             "type": "string",
-            "default": "2023-10-26T13:07:13.514Z"
+            "default": "2023-10-26T16:51:19.750Z"
           }
         },
         "required": [
@@ -11506,12 +11278,12 @@
           "createdAt": {
             "format": "date-time",
             "type": "string",
-            "default": "2023-10-26T13:07:13.587Z"
+            "default": "2023-10-26T16:51:19.828Z"
           },
           "updatedAt": {
             "format": "date-time",
             "type": "string",
-            "default": "2023-10-26T13:07:13.587Z"
+            "default": "2023-10-26T16:51:19.828Z"
           }
         },
         "required": [
@@ -11602,12 +11374,12 @@
           "createdAt": {
             "format": "date-time",
             "type": "string",
-            "default": "2023-10-26T13:07:13.597Z"
+            "default": "2023-10-26T16:51:19.847Z"
           },
           "updatedAt": {
             "format": "date-time",
             "type": "string",
-            "default": "2023-10-26T13:07:13.597Z"
+            "default": "2023-10-26T16:51:19.847Z"
           }
         },
         "required": [
@@ -11698,13 +11470,13 @@
           "createdAt": {
             "format": "date-time",
             "type": "string",
-            "default": "2023-10-26T13:07:13.604Z",
+            "default": "2023-10-26T16:51:19.908Z",
             "description": ""
           },
           "updatedAt": {
             "format": "date-time",
             "type": "string",
-            "default": "2023-10-26T13:07:13.604Z",
+            "default": "2023-10-26T16:51:19.908Z",
             "description": ""
           },
           "ownerId": {
@@ -11751,7 +11523,7 @@
           "day": {
             "format": "date-time",
             "type": "string",
-            "default": "2023-10-26T13:07:13.605Z"
+            "default": "2023-10-26T16:51:19.909Z"
           },
           "computeUnit": {
             "type": "number"
