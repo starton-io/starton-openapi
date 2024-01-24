@@ -2883,7 +2883,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "type": "string"
+                "$ref": "#/components/schemas/UpdateKmsDto"
               }
             }
           }
@@ -3433,7 +3433,6 @@
         "summary": "Get all rpc (enterprise)",
         "description": "Return all rpc for a specific network",
         "x-speakeasy-name-override": "getAll",
-        "x-speakeasy-group": "network.rpc",
         "x-speakeasy-pagination": {
           "type": "offsetLimit",
           "inputs": [
@@ -3528,7 +3527,7 @@
           }
         },
         "tags": [
-          "Network"
+          "Network.rpc"
         ],
         "security": [
           {
@@ -3541,7 +3540,6 @@
         "summary": "Add a rpc (enterprise)",
         "description": "Add a rpc for a specific network",
         "x-speakeasy-name-override": "create",
-        "x-speakeasy-group": "network.rpc",
         "parameters": [
           {
             "name": "name",
@@ -3615,7 +3613,7 @@
           }
         },
         "tags": [
-          "Network"
+          "Network.rpc"
         ],
         "security": [
           {
@@ -3630,7 +3628,6 @@
         "summary": "Get a rpc (enterprise)",
         "description": "Return a specific rpc for a specific network",
         "x-speakeasy-name-override": "getOne",
-        "x-speakeasy-group": "network.rpc",
         "parameters": [
           {
             "name": "name",
@@ -3694,7 +3691,7 @@
           }
         },
         "tags": [
-          "Network"
+          "Network.rpc"
         ],
         "security": [
           {
@@ -3707,7 +3704,6 @@
         "summary": "Update a rpc (enterprise)",
         "description": "Update a specific rpc for a specific network",
         "x-speakeasy-name-override": "update",
-        "x-speakeasy-group": "network.rpc",
         "parameters": [
           {
             "name": "name",
@@ -3791,7 +3787,7 @@
           }
         },
         "tags": [
-          "Network"
+          "Network.rpc"
         ],
         "security": [
           {
@@ -3804,7 +3800,6 @@
         "summary": "Delete a rpc (enterprise)",
         "description": "Delete a rpc for a specific network",
         "x-speakeasy-name-override": "delete",
-        "x-speakeasy-group": "network.rpc",
         "parameters": [
           {
             "name": "id",
@@ -3866,7 +3861,7 @@
           }
         },
         "tags": [
-          "Network"
+          "Network.rpc"
         ],
         "security": [
           {
@@ -3940,6 +3935,14 @@
             "schema": {
               "type": "boolean"
             }
+          },
+          {
+            "name": "origin",
+            "required": true,
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
           }
         ],
         "responses": {
@@ -4011,7 +4014,7 @@
                   "summary": "Example creating a private network",
                   "description": "An example showing how to create a private network",
                   "value": {
-                    "name": "optimism-functional-tests1698347295166",
+                    "name": "optimism-functional-tests1706103879681",
                     "displayName": "optimism-private",
                     "logo": "https://optimism-invalid-test-logo.com",
                     "chainId": 10,
@@ -4228,7 +4231,7 @@
             "required": true,
             "in": "path",
             "description": "The name of the network to delete",
-            "example": "optimism-functional-tests1698347295166",
+            "example": "optimism-functional-tests1706103879681",
             "schema": {
               "type": "string"
             }
@@ -4486,7 +4489,7 @@
                   "description": "Creates a watcher monitoring any activity on Starton Test wallet.",
                   "value": {
                     "name": "watcher test",
-                    "address": "0x5ae0da37bede79b267ca6e17b4f8f28539e57345",
+                    "address": "0x98adea39c400f79a2f230fda7e4761a1e5e4b0a5",
                     "network": "polygon-mumbai",
                     "type": "ADDRESS_ACTIVITY",
                     "webhookUrl": "https://webhook.site/db756457-9ca1-4975-9a3d-6257c9e0601e",
@@ -5050,6 +5053,20 @@
                   "oneOf": [
                     {
                       "$ref": "#/components/schemas/BAD_REQUEST_EXCEPTION"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "oneOf": [
+                    {
+                      "$ref": "#/components/schemas/NOT_AUTHENTICATED"
                     }
                   ]
                 }
@@ -6467,7 +6484,7 @@
   },
   "info": {
     "title": "Starton API: Documentation",
-    "description": "# Introduction\n\nStarton is the all-in-one WEB3 api to integrate blockchain feature inside your project.\n\n# Authentication\n\nTo access API endpoints, you must provide a valid API key. You can create new\nAPI keys in your [account settings](https://app.starton.com/projects/default/developer). Be\ncareful when handling your keys as they give access to all your project,\nyou should treat them like passwords and they should never be committed to\nsource control.\n\nTo authenticate with API, you can supply the API key as a header\n(`x-api-key: YOUR_API_KEY`).\n\nSome API endpoints allow unauthenticated requests for public resources and\nthey can be called without an API key.\n\n# Errors\n\nAll successful API requests will be returned with a 200 or 201 status code.\n If there’s an error while making the\nrequest, the appropriate status code is returned with the error message:\n\n```\n{\n\t\"statusCode\": 401,\n\t\"errorCode\": \"NOT_AUTHENTICATED\",\n\t\"message\": \"Not authenticated\",\n\t\"timestamp\": \"2023-10-14T00:12:22.470Z\",\n\t\"path\": \"/v3/project\",\n\t\"context\": {},\n}\n```\n\n# Pagination\n\nMost top-level API resources have support for `getAll` API methods. For instance,\nyou can list smart contracts, webhooks, templates etc. These list methods share\ncommon parameters, taking both `limit` and `page`.\n\nResponses will be in the root `meta` and `items` key. For example:\n\n```\n{\n\tdata: […],\n\tmeta: {\n\t\titemCount: 10,\n\t\ttotalItems: 50,\n\t\titemsPerPage: 10,\n\t\ttotalPages: 5\n\t\tcurrentPage: 1\n\t}\n}\n```\n\n\n# Rate limits\n\nDepending on your plan, you will benefit from a specific rate limit.\n\n| Plan      | Rate limit               |\n|-----------|--------------------------|\n| Free      | 50 requests/min          |\n| Developer | 100 requests/min         |\n| Business  | up to 10000 requests/min |\n",
+    "description": "# Introduction\n\nStarton is the all-in-one WEB3 api to integrate blockchain feature inside your project.\n\n# Authentication\n\nTo access API endpoints, you must provide a valid API key. You can create new\nAPI keys in your [account settings](https://app.starton.com/projects/default/developer). Be\ncareful when handling your keys as they give access to all your project,\nyou should treat them like passwords and they should never be committed to\nsource control.\n\nTo authenticate with API, you can supply the API key as a header\n(`x-api-key: YOUR_API_KEY`).\n\nSome API endpoints allow unauthenticated requests for public resources and\nthey can be called without an API key.\n\n# Errors\n\nAll successful API requests will be returned with a 200 or 201 status code.\n If there’s an error while making the\nrequest, the appropriate status code is returned with the error message:\n\n```\n{\n\t\"statusCode\": 401,\n\t\"errorCode\": \"NOT_AUTHENTICATED\",\n\t\"message\": \"Not authenticated\",\n\t\"timestamp\": \"2023-10-14T00:12:22.470Z\",\n\t\"path\": \"/v3/project\",\n\t\"context\": {},\n}\n```\n\n# Pagination\n\nMost top-level API resources have support for `getAll` API methods. For instance,\nyou can list smart contracts, webhooks, templates etc. These list methods share\ncommon parameters, taking both `limit` and `page`.\n\nResponses will be in the root `meta` and `items` key. For example:\n\n```\n{\n\titems: […],\n\tmeta: {\n\t\titemCount: 10,\n\t\ttotalItems: 50,\n\t\titemsPerPage: 10,\n\t\ttotalPages: 5\n\t\tcurrentPage: 1\n\t}\n}\n```\n\n\n# Rate limits\n\nDepending on your plan, you will benefit from a specific rate limit.\n\n| Plan      | Rate limit               |\n|-----------|--------------------------|\n| Free      | 50 requests/min          |\n| Developer | 100 requests/min         |\n| Business  | up to 10000 requests/min |\n",
     "version": "1.0",
     "contact": {}
   },
@@ -6533,6 +6550,11 @@
         "type": "apiKey",
         "in": "header",
         "name": "ory_kratos_session"
+      },
+      "bearer": {
+        "scheme": "bearer",
+        "bearerFormat": "JWT",
+        "type": "http"
       },
       "starton-session-token": {
         "type": "apiKey",
@@ -6703,13 +6725,13 @@
           "createdAt": {
             "format": "date-time",
             "type": "string",
-            "default": "2023-10-26T19:08:23.502Z",
+            "default": "2024-01-24T13:44:40.754Z",
             "description": ""
           },
           "updatedAt": {
             "format": "date-time",
             "type": "string",
-            "default": "2023-10-26T19:08:23.502Z",
+            "default": "2024-01-24T13:44:40.754Z",
             "description": ""
           }
         },
@@ -6899,13 +6921,13 @@
           "createdAt": {
             "format": "date-time",
             "type": "string",
-            "default": "2023-10-26T19:08:35.216Z",
+            "default": "2024-01-24T13:51:31.632Z",
             "description": ""
           },
           "updatedAt": {
             "format": "date-time",
             "type": "string",
-            "default": "2023-10-26T19:08:35.216Z",
+            "default": "2024-01-24T13:51:31.632Z",
             "description": ""
           }
         },
@@ -8090,13 +8112,13 @@
           "createdAt": {
             "format": "date-time",
             "type": "string",
-            "default": "2023-10-26T19:08:35.233Z",
+            "default": "2024-01-24T13:51:31.641Z",
             "description": ""
           },
           "updatedAt": {
             "format": "date-time",
             "type": "string",
-            "default": "2023-10-26T19:08:35.233Z",
+            "default": "2024-01-24T13:51:31.641Z",
             "description": ""
           }
         },
@@ -8474,10 +8496,26 @@
             "description": ""
           },
           "params": {
+            "description": "Smart contract parameters.",
+            "example": [
+              "TestToken",
+              "TEST",
+              "1000000000000000000000000",
+              "0x298e760768c8481780397eE28A127eAd584df4ee"
+            ],
             "type": "array",
-            "description": "",
             "items": {
-              "type": "object"
+              "oneOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "number"
+                },
+                {
+                  "$ref": "#/components/schemas/CallDto/properties/params"
+                }
+              ]
             }
           },
           "functionName": {
@@ -8744,13 +8782,13 @@
           "createdAt": {
             "format": "date-time",
             "type": "string",
-            "default": "2023-10-26T19:08:35.302Z",
+            "default": "2024-01-24T13:51:31.661Z",
             "description": ""
           },
           "updatedAt": {
             "format": "date-time",
             "type": "string",
-            "default": "2023-10-26T19:08:35.302Z",
+            "default": "2024-01-24T13:51:31.661Z",
             "description": ""
           }
         },
@@ -8936,13 +8974,13 @@
           "createdAt": {
             "format": "date-time",
             "type": "string",
-            "default": "2023-10-26T19:08:35.368Z",
+            "default": "2024-01-24T13:51:31.667Z",
             "description": ""
           },
           "updatedAt": {
             "format": "date-time",
             "type": "string",
-            "default": "2023-10-26T19:08:35.368Z",
+            "default": "2024-01-24T13:51:31.667Z",
             "description": ""
           }
         },
@@ -8956,27 +8994,33 @@
           "updatedAt"
         ]
       },
-      "AwsKmsCredentialsDto": {
+      "UpdateKmsDto": {
         "type": "object",
         "properties": {
-          "accountId": {
+          "name": {
             "type": "string",
             "description": ""
           },
-          "accessKeyId": {
-            "type": "string",
+          "metadata": {
+            "type": "object",
             "description": ""
           },
-          "region": {
+          "credentials": {
+            "description": "",
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/AwsKmsCredentialsDto"
+              },
+              {
+                "$ref": "#/components/schemas/VaultKmsCredentialsDto"
+              }
+            ]
+          },
+          "secret": {
             "type": "string",
             "description": ""
           }
-        },
-        "required": [
-          "accountId",
-          "accessKeyId",
-          "region"
-        ]
+        }
       },
       "CreateKmsDto": {
         "type": "object",
@@ -8991,9 +9035,12 @@
           },
           "credentials": {
             "description": "",
-            "allOf": [
+            "oneOf": [
               {
                 "$ref": "#/components/schemas/AwsKmsCredentialsDto"
+              },
+              {
+                "$ref": "#/components/schemas/VaultKmsCredentialsDto"
               }
             ]
           },
@@ -9362,13 +9409,13 @@
           "createdAt": {
             "format": "date-time",
             "type": "string",
-            "default": "2023-10-26T19:08:35.384Z",
+            "default": "2024-01-24T13:51:31.673Z",
             "description": ""
           },
           "updatedAt": {
             "format": "date-time",
             "type": "string",
-            "default": "2023-10-26T19:08:35.384Z",
+            "default": "2024-01-24T13:51:31.673Z",
             "description": ""
           }
         },
@@ -9610,7 +9657,7 @@
           "createdAt": {
             "format": "date-time",
             "type": "string",
-            "default": "2023-10-26T19:08:35.391Z",
+            "default": "2024-01-24T13:51:31.676Z",
             "description": "Claim date."
           }
         },
@@ -9640,13 +9687,13 @@
           "createdAt": {
             "format": "date-time",
             "type": "string",
-            "default": "2023-10-26T19:08:17.009Z",
+            "default": "2024-01-24T13:44:40.921Z",
             "description": ""
           },
           "updatedAt": {
             "format": "date-time",
             "type": "string",
-            "default": "2023-10-26T19:08:17.009Z",
+            "default": "2024-01-24T13:44:40.921Z",
             "description": ""
           }
         },
@@ -9744,6 +9791,10 @@
             "type": "boolean",
             "description": ""
           },
+          "loadbalancerUrl": {
+            "type": "string",
+            "description": ""
+          },
           "eip1159": {
             "type": "boolean",
             "description": ""
@@ -9763,13 +9814,13 @@
           "createdAt": {
             "format": "date-time",
             "type": "string",
-            "default": "2023-10-26T19:08:17.022Z",
+            "default": "2024-01-24T13:44:40.941Z",
             "description": ""
           },
           "updatedAt": {
             "format": "date-time",
             "type": "string",
-            "default": "2023-10-26T19:08:17.022Z",
+            "default": "2024-01-24T13:44:40.941Z",
             "description": ""
           }
         },
@@ -9787,6 +9838,7 @@
           "enableRelayer",
           "enableExternalWallet",
           "enableListener",
+          "loadbalancerUrl",
           "eip1159",
           "verifyTxIntegrity",
           "verifyBlockIntegrity",
@@ -10112,13 +10164,13 @@
           "createdAt": {
             "format": "date-time",
             "type": "string",
-            "default": "2023-10-26T19:08:43.670Z",
+            "default": "2024-01-24T13:44:45.243Z",
             "description": ""
           },
           "updatedAt": {
             "format": "date-time",
             "type": "string",
-            "default": "2023-10-26T19:08:43.670Z",
+            "default": "2024-01-24T13:44:45.243Z",
             "description": ""
           },
           "customFilters": {
@@ -10371,13 +10423,13 @@
           "createdAt": {
             "format": "date-time",
             "type": "string",
-            "default": "2023-10-26T19:08:43.685Z",
+            "default": "2024-01-24T13:44:45.251Z",
             "description": ""
           },
           "updatedAt": {
             "format": "date-time",
             "type": "string",
-            "default": "2023-10-26T19:08:43.685Z",
+            "default": "2024-01-24T13:44:45.251Z",
             "description": ""
           }
         },
@@ -10409,13 +10461,13 @@
           "createdAt": {
             "format": "date-time",
             "type": "string",
-            "default": "2023-10-26T19:08:36.663Z",
+            "default": "2024-01-24T13:44:41.625Z",
             "description": ""
           },
           "updatedAt": {
             "format": "date-time",
             "type": "string",
-            "default": "2023-10-26T19:08:36.663Z",
+            "default": "2024-01-24T13:44:41.625Z",
             "description": ""
           }
         },
@@ -10468,13 +10520,13 @@
           "createdAt": {
             "format": "date-time",
             "type": "string",
-            "default": "2023-10-26T19:08:36.681Z",
+            "default": "2024-01-24T13:44:41.636Z",
             "description": ""
           },
           "updatedAt": {
             "format": "date-time",
             "type": "string",
-            "default": "2023-10-26T19:08:36.681Z",
+            "default": "2024-01-24T13:44:41.636Z",
             "description": ""
           }
         },
@@ -10641,12 +10693,12 @@
           "createdAt": {
             "format": "date-time",
             "type": "string",
-            "default": "2023-10-26T19:08:27.557Z"
+            "default": "2024-01-24T13:44:44.657Z"
           },
           "updatedAt": {
             "format": "date-time",
             "type": "string",
-            "default": "2023-10-26T19:08:27.557Z"
+            "default": "2024-01-24T13:44:44.657Z"
           }
         },
         "required": [
@@ -11294,12 +11346,12 @@
           "createdAt": {
             "format": "date-time",
             "type": "string",
-            "default": "2023-10-26T19:08:56.564Z"
+            "default": "2024-01-24T13:44:45.734Z"
           },
           "updatedAt": {
             "format": "date-time",
             "type": "string",
-            "default": "2023-10-26T19:08:56.564Z"
+            "default": "2024-01-24T13:44:45.734Z"
           }
         },
         "required": [
@@ -11506,12 +11558,12 @@
           "createdAt": {
             "format": "date-time",
             "type": "string",
-            "default": "2023-10-26T19:08:56.580Z"
+            "default": "2024-01-24T13:44:45.742Z"
           },
           "updatedAt": {
             "format": "date-time",
             "type": "string",
-            "default": "2023-10-26T19:08:56.580Z"
+            "default": "2024-01-24T13:44:45.742Z"
           }
         },
         "required": [
@@ -11602,12 +11654,12 @@
           "createdAt": {
             "format": "date-time",
             "type": "string",
-            "default": "2023-10-26T19:08:56.588Z"
+            "default": "2024-01-24T13:44:45.748Z"
           },
           "updatedAt": {
             "format": "date-time",
             "type": "string",
-            "default": "2023-10-26T19:08:56.588Z"
+            "default": "2024-01-24T13:44:45.748Z"
           }
         },
         "required": [
@@ -11698,13 +11750,13 @@
           "createdAt": {
             "format": "date-time",
             "type": "string",
-            "default": "2023-10-26T19:08:56.593Z",
+            "default": "2024-01-24T13:44:45.751Z",
             "description": ""
           },
           "updatedAt": {
             "format": "date-time",
             "type": "string",
-            "default": "2023-10-26T19:08:56.593Z",
+            "default": "2024-01-24T13:44:45.751Z",
             "description": ""
           },
           "ownerId": {
@@ -11751,7 +11803,7 @@
           "day": {
             "format": "date-time",
             "type": "string",
-            "default": "2023-10-26T19:08:56.662Z"
+            "default": "2024-01-24T13:44:45.752Z"
           },
           "computeUnit": {
             "type": "number"
