@@ -4014,7 +4014,7 @@
                   "summary": "Example creating a private network",
                   "description": "An example showing how to create a private network",
                   "value": {
-                    "name": "optimism-functional-tests1706103879681",
+                    "name": "optimism-functional-tests1706110932649",
                     "displayName": "optimism-private",
                     "logo": "https://optimism-invalid-test-logo.com",
                     "chainId": 10,
@@ -4231,7 +4231,7 @@
             "required": true,
             "in": "path",
             "description": "The name of the network to delete",
-            "example": "optimism-functional-tests1706103879681",
+            "example": "optimism-functional-tests1706110932649",
             "schema": {
               "type": "string"
             }
@@ -4489,7 +4489,7 @@
                   "description": "Creates a watcher monitoring any activity on Starton Test wallet.",
                   "value": {
                     "name": "watcher test",
-                    "address": "0x98adea39c400f79a2f230fda7e4761a1e5e4b0a5",
+                    "address": "0xad0e249eac1d9780026150f8f67813be5c602d4a",
                     "network": "polygon-mumbai",
                     "type": "ADDRESS_ACTIVITY",
                     "webhookUrl": "https://webhook.site/db756457-9ca1-4975-9a3d-6257c9e0601e",
@@ -6725,13 +6725,13 @@
           "createdAt": {
             "format": "date-time",
             "type": "string",
-            "default": "2024-01-24T13:44:40.754Z",
+            "default": "2024-01-24T15:42:39.070Z",
             "description": ""
           },
           "updatedAt": {
             "format": "date-time",
             "type": "string",
-            "default": "2024-01-24T13:44:40.754Z",
+            "default": "2024-01-24T15:42:39.070Z",
             "description": ""
           }
         },
@@ -6921,13 +6921,13 @@
           "createdAt": {
             "format": "date-time",
             "type": "string",
-            "default": "2024-01-24T13:51:31.632Z",
+            "default": "2024-01-24T15:42:51.525Z",
             "description": ""
           },
           "updatedAt": {
             "format": "date-time",
             "type": "string",
-            "default": "2024-01-24T13:51:31.632Z",
+            "default": "2024-01-24T15:42:51.525Z",
             "description": ""
           }
         },
@@ -8112,13 +8112,13 @@
           "createdAt": {
             "format": "date-time",
             "type": "string",
-            "default": "2024-01-24T13:51:31.641Z",
+            "default": "2024-01-24T15:42:51.535Z",
             "description": ""
           },
           "updatedAt": {
             "format": "date-time",
             "type": "string",
-            "default": "2024-01-24T13:51:31.641Z",
+            "default": "2024-01-24T15:42:51.535Z",
             "description": ""
           }
         },
@@ -8782,13 +8782,13 @@
           "createdAt": {
             "format": "date-time",
             "type": "string",
-            "default": "2024-01-24T13:51:31.661Z",
+            "default": "2024-01-24T15:42:51.554Z",
             "description": ""
           },
           "updatedAt": {
             "format": "date-time",
             "type": "string",
-            "default": "2024-01-24T13:51:31.661Z",
+            "default": "2024-01-24T15:42:51.554Z",
             "description": ""
           }
         },
@@ -8974,13 +8974,13 @@
           "createdAt": {
             "format": "date-time",
             "type": "string",
-            "default": "2024-01-24T13:51:31.667Z",
+            "default": "2024-01-24T15:42:51.564Z",
             "description": ""
           },
           "updatedAt": {
             "format": "date-time",
             "type": "string",
-            "default": "2024-01-24T13:51:31.667Z",
+            "default": "2024-01-24T15:42:51.564Z",
             "description": ""
           }
         },
@@ -8992,6 +8992,71 @@
           "projectId",
           "createdAt",
           "updatedAt"
+        ]
+      },
+      "VaultKmsCredentialsDto": {
+        "type": "object",
+        "properties": {
+          "role": {
+            "type": "string",
+            "description": "Role from vault app-role"
+          },
+          "selfSigned": {
+            "type": "boolean",
+            "description": "Check if the ssl certificate is self signed"
+          },
+          "baseUrl": {
+            "type": "string",
+            "description": "Vault base url"
+          },
+          "rootPath": {
+            "type": "string",
+            "description": "URL that will be used for your plugin"
+          },
+          "loginPath": {
+            "type": "string",
+            "description": "URL that will give you a jwt to use the plugin"
+          },
+          "tokenPath": {
+            "type": "string",
+            "description": "URL that will allow you to interact with the token"
+          },
+          "id": {
+            "type": "string",
+            "description": "Will be generated by starton"
+          },
+          "timeout": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "role",
+          "selfSigned",
+          "baseUrl",
+          "rootPath",
+          "loginPath",
+          "tokenPath",
+          "id",
+          "timeout"
+        ]
+      },
+      "AwsKmsCredentialsDto": {
+        "type": "object",
+        "properties": {
+          "accountId": {
+            "type": "string"
+          },
+          "accessKeyId": {
+            "type": "string"
+          },
+          "region": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "accountId",
+          "accessKeyId",
+          "region"
         ]
       },
       "UpdateKmsDto": {
@@ -9006,7 +9071,6 @@
             "description": ""
           },
           "credentials": {
-            "description": "",
             "oneOf": [
               {
                 "$ref": "#/components/schemas/AwsKmsCredentialsDto"
@@ -9034,7 +9098,6 @@
             "description": ""
           },
           "credentials": {
-            "description": "",
             "oneOf": [
               {
                 "$ref": "#/components/schemas/AwsKmsCredentialsDto"
@@ -9409,13 +9472,13 @@
           "createdAt": {
             "format": "date-time",
             "type": "string",
-            "default": "2024-01-24T13:51:31.673Z",
+            "default": "2024-01-24T15:42:51.572Z",
             "description": ""
           },
           "updatedAt": {
             "format": "date-time",
             "type": "string",
-            "default": "2024-01-24T13:51:31.673Z",
+            "default": "2024-01-24T15:42:51.572Z",
             "description": ""
           }
         },
@@ -9657,7 +9720,7 @@
           "createdAt": {
             "format": "date-time",
             "type": "string",
-            "default": "2024-01-24T13:51:31.676Z",
+            "default": "2024-01-24T15:42:51.573Z",
             "description": "Claim date."
           }
         },
@@ -9687,13 +9750,13 @@
           "createdAt": {
             "format": "date-time",
             "type": "string",
-            "default": "2024-01-24T13:44:40.921Z",
+            "default": "2024-01-24T15:42:13.067Z",
             "description": ""
           },
           "updatedAt": {
             "format": "date-time",
             "type": "string",
-            "default": "2024-01-24T13:44:40.921Z",
+            "default": "2024-01-24T15:42:13.067Z",
             "description": ""
           }
         },
@@ -9814,13 +9877,13 @@
           "createdAt": {
             "format": "date-time",
             "type": "string",
-            "default": "2024-01-24T13:44:40.941Z",
+            "default": "2024-01-24T15:42:13.077Z",
             "description": ""
           },
           "updatedAt": {
             "format": "date-time",
             "type": "string",
-            "default": "2024-01-24T13:44:40.941Z",
+            "default": "2024-01-24T15:42:13.077Z",
             "description": ""
           }
         },
@@ -10164,13 +10227,13 @@
           "createdAt": {
             "format": "date-time",
             "type": "string",
-            "default": "2024-01-24T13:44:45.243Z",
+            "default": "2024-01-24T15:42:43.916Z",
             "description": ""
           },
           "updatedAt": {
             "format": "date-time",
             "type": "string",
-            "default": "2024-01-24T13:44:45.243Z",
+            "default": "2024-01-24T15:42:43.916Z",
             "description": ""
           },
           "customFilters": {
@@ -10423,13 +10486,13 @@
           "createdAt": {
             "format": "date-time",
             "type": "string",
-            "default": "2024-01-24T13:44:45.251Z",
+            "default": "2024-01-24T15:42:43.928Z",
             "description": ""
           },
           "updatedAt": {
             "format": "date-time",
             "type": "string",
-            "default": "2024-01-24T13:44:45.251Z",
+            "default": "2024-01-24T15:42:43.928Z",
             "description": ""
           }
         },
@@ -10461,13 +10524,13 @@
           "createdAt": {
             "format": "date-time",
             "type": "string",
-            "default": "2024-01-24T13:44:41.625Z",
+            "default": "2024-01-24T15:42:45.355Z",
             "description": ""
           },
           "updatedAt": {
             "format": "date-time",
             "type": "string",
-            "default": "2024-01-24T13:44:41.625Z",
+            "default": "2024-01-24T15:42:45.355Z",
             "description": ""
           }
         },
@@ -10520,13 +10583,13 @@
           "createdAt": {
             "format": "date-time",
             "type": "string",
-            "default": "2024-01-24T13:44:41.636Z",
+            "default": "2024-01-24T15:42:45.360Z",
             "description": ""
           },
           "updatedAt": {
             "format": "date-time",
             "type": "string",
-            "default": "2024-01-24T13:44:41.636Z",
+            "default": "2024-01-24T15:42:45.360Z",
             "description": ""
           }
         },
@@ -10693,12 +10756,12 @@
           "createdAt": {
             "format": "date-time",
             "type": "string",
-            "default": "2024-01-24T13:44:44.657Z"
+            "default": "2024-01-24T15:42:20.751Z"
           },
           "updatedAt": {
             "format": "date-time",
             "type": "string",
-            "default": "2024-01-24T13:44:44.657Z"
+            "default": "2024-01-24T15:42:20.751Z"
           }
         },
         "required": [
@@ -11346,12 +11409,12 @@
           "createdAt": {
             "format": "date-time",
             "type": "string",
-            "default": "2024-01-24T13:44:45.734Z"
+            "default": "2024-01-24T15:42:49.475Z"
           },
           "updatedAt": {
             "format": "date-time",
             "type": "string",
-            "default": "2024-01-24T13:44:45.734Z"
+            "default": "2024-01-24T15:42:49.475Z"
           }
         },
         "required": [
@@ -11558,12 +11621,12 @@
           "createdAt": {
             "format": "date-time",
             "type": "string",
-            "default": "2024-01-24T13:44:45.742Z"
+            "default": "2024-01-24T15:42:49.494Z"
           },
           "updatedAt": {
             "format": "date-time",
             "type": "string",
-            "default": "2024-01-24T13:44:45.742Z"
+            "default": "2024-01-24T15:42:49.494Z"
           }
         },
         "required": [
@@ -11654,12 +11717,12 @@
           "createdAt": {
             "format": "date-time",
             "type": "string",
-            "default": "2024-01-24T13:44:45.748Z"
+            "default": "2024-01-24T15:42:49.502Z"
           },
           "updatedAt": {
             "format": "date-time",
             "type": "string",
-            "default": "2024-01-24T13:44:45.748Z"
+            "default": "2024-01-24T15:42:49.502Z"
           }
         },
         "required": [
@@ -11750,13 +11813,13 @@
           "createdAt": {
             "format": "date-time",
             "type": "string",
-            "default": "2024-01-24T13:44:45.751Z",
+            "default": "2024-01-24T15:42:49.510Z",
             "description": ""
           },
           "updatedAt": {
             "format": "date-time",
             "type": "string",
-            "default": "2024-01-24T13:44:45.751Z",
+            "default": "2024-01-24T15:42:49.510Z",
             "description": ""
           },
           "ownerId": {
@@ -11803,7 +11866,7 @@
           "day": {
             "format": "date-time",
             "type": "string",
-            "default": "2024-01-24T13:44:45.752Z"
+            "default": "2024-01-24T15:42:49.511Z"
           },
           "computeUnit": {
             "type": "number"
