@@ -4014,7 +4014,7 @@
                   "summary": "Example creating a private network",
                   "description": "An example showing how to create a private network",
                   "value": {
-                    "name": "optimism-functional-tests1706115148517",
+                    "name": "optimism-functional-tests1706709455336",
                     "displayName": "optimism-private",
                     "logo": "https://optimism-invalid-test-logo.com",
                     "chainId": 10,
@@ -4231,7 +4231,7 @@
             "required": true,
             "in": "path",
             "description": "The name of the network to delete",
-            "example": "optimism-functional-tests1706115148517",
+            "example": "optimism-functional-tests1706709455337",
             "schema": {
               "type": "string"
             }
@@ -4489,7 +4489,7 @@
                   "description": "Creates a watcher monitoring any activity on Starton Test wallet.",
                   "value": {
                     "name": "watcher test",
-                    "address": "0xc51cd00e540c961c99d7bf09b5071f69d6bdf96d",
+                    "address": "0xd73da0912e663bf1c0180de8e3e5ed2cc456f018",
                     "network": "polygon-mumbai",
                     "type": "ADDRESS_ACTIVITY",
                     "webhookUrl": "https://webhook.site/db756457-9ca1-4975-9a3d-6257c9e0601e",
@@ -6725,13 +6725,13 @@
           "createdAt": {
             "format": "date-time",
             "type": "string",
-            "default": "2024-01-24T16:52:29.229Z",
+            "default": "2024-01-31T13:57:36.374Z",
             "description": ""
           },
           "updatedAt": {
             "format": "date-time",
             "type": "string",
-            "default": "2024-01-24T16:52:29.229Z",
+            "default": "2024-01-31T13:57:36.374Z",
             "description": ""
           }
         },
@@ -6921,13 +6921,13 @@
           "createdAt": {
             "format": "date-time",
             "type": "string",
-            "default": "2024-01-24T16:52:30.490Z",
+            "default": "2024-01-31T13:57:38.131Z",
             "description": ""
           },
           "updatedAt": {
             "format": "date-time",
             "type": "string",
-            "default": "2024-01-24T16:52:30.490Z",
+            "default": "2024-01-31T13:57:38.131Z",
             "description": ""
           }
         },
@@ -8115,13 +8115,13 @@
           "createdAt": {
             "format": "date-time",
             "type": "string",
-            "default": "2024-01-24T16:52:30.499Z",
+            "default": "2024-01-31T13:57:38.141Z",
             "description": ""
           },
           "updatedAt": {
             "format": "date-time",
             "type": "string",
-            "default": "2024-01-24T16:52:30.499Z",
+            "default": "2024-01-31T13:57:38.141Z",
             "description": ""
           }
         },
@@ -8496,16 +8496,32 @@
           }
         },
         "required": [
-          "functionName",
-          "params"
+          "functionName"
         ]
       },
       "ReadSmartContractResponse": {
         "type": "object",
         "properties": {
           "response": {
-            "type": "string",
-            "description": ""
+            "description": "",
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "number"
+              },
+              {
+                "type": "object"
+              },
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "array",
+                "items": {}
+              }
+            ]
           },
           "params": {
             "description": "Smart contract parameters.",
@@ -8800,13 +8816,13 @@
           "createdAt": {
             "format": "date-time",
             "type": "string",
-            "default": "2024-01-24T16:52:30.516Z",
+            "default": "2024-01-31T13:57:38.161Z",
             "description": ""
           },
           "updatedAt": {
             "format": "date-time",
             "type": "string",
-            "default": "2024-01-24T16:52:30.516Z",
+            "default": "2024-01-31T13:57:38.161Z",
             "description": ""
           }
         },
@@ -8992,13 +9008,13 @@
           "createdAt": {
             "format": "date-time",
             "type": "string",
-            "default": "2024-01-24T16:52:30.521Z",
+            "default": "2024-01-31T13:57:38.167Z",
             "description": ""
           },
           "updatedAt": {
             "format": "date-time",
             "type": "string",
-            "default": "2024-01-24T16:52:30.521Z",
+            "default": "2024-01-31T13:57:38.167Z",
             "description": ""
           }
         },
@@ -9490,13 +9506,13 @@
           "createdAt": {
             "format": "date-time",
             "type": "string",
-            "default": "2024-01-24T16:52:30.530Z",
+            "default": "2024-01-31T13:57:38.175Z",
             "description": ""
           },
           "updatedAt": {
             "format": "date-time",
             "type": "string",
-            "default": "2024-01-24T16:52:30.530Z",
+            "default": "2024-01-31T13:57:38.175Z",
             "description": ""
           }
         },
@@ -9738,7 +9754,7 @@
           "createdAt": {
             "format": "date-time",
             "type": "string",
-            "default": "2024-01-24T16:52:30.532Z",
+            "default": "2024-01-31T13:57:38.178Z",
             "description": "Claim date."
           }
         },
@@ -9768,13 +9784,13 @@
           "createdAt": {
             "format": "date-time",
             "type": "string",
-            "default": "2024-01-24T16:52:29.318Z",
+            "default": "2024-01-31T13:57:36.269Z",
             "description": ""
           },
           "updatedAt": {
             "format": "date-time",
             "type": "string",
-            "default": "2024-01-24T16:52:29.318Z",
+            "default": "2024-01-31T13:57:36.269Z",
             "description": ""
           }
         },
@@ -9895,13 +9911,13 @@
           "createdAt": {
             "format": "date-time",
             "type": "string",
-            "default": "2024-01-24T16:52:29.330Z",
+            "default": "2024-01-31T13:57:36.282Z",
             "description": ""
           },
           "updatedAt": {
             "format": "date-time",
             "type": "string",
-            "default": "2024-01-24T16:52:29.330Z",
+            "default": "2024-01-31T13:57:36.282Z",
             "description": ""
           }
         },
@@ -10245,13 +10261,13 @@
           "createdAt": {
             "format": "date-time",
             "type": "string",
-            "default": "2024-01-24T16:52:29.373Z",
+            "default": "2024-01-31T13:57:36.353Z",
             "description": ""
           },
           "updatedAt": {
             "format": "date-time",
             "type": "string",
-            "default": "2024-01-24T16:52:29.373Z",
+            "default": "2024-01-31T13:57:36.353Z",
             "description": ""
           },
           "customFilters": {
@@ -10504,13 +10520,13 @@
           "createdAt": {
             "format": "date-time",
             "type": "string",
-            "default": "2024-01-24T16:52:29.398Z",
+            "default": "2024-01-31T13:57:36.375Z",
             "description": ""
           },
           "updatedAt": {
             "format": "date-time",
             "type": "string",
-            "default": "2024-01-24T16:52:29.398Z",
+            "default": "2024-01-31T13:57:36.375Z",
             "description": ""
           }
         },
@@ -10542,13 +10558,13 @@
           "createdAt": {
             "format": "date-time",
             "type": "string",
-            "default": "2024-01-24T16:52:29.274Z",
+            "default": "2024-01-31T13:57:35.786Z",
             "description": ""
           },
           "updatedAt": {
             "format": "date-time",
             "type": "string",
-            "default": "2024-01-24T16:52:29.274Z",
+            "default": "2024-01-31T13:57:35.786Z",
             "description": ""
           }
         },
@@ -10601,13 +10617,13 @@
           "createdAt": {
             "format": "date-time",
             "type": "string",
-            "default": "2024-01-24T16:52:29.292Z",
+            "default": "2024-01-31T13:57:35.791Z",
             "description": ""
           },
           "updatedAt": {
             "format": "date-time",
             "type": "string",
-            "default": "2024-01-24T16:52:29.292Z",
+            "default": "2024-01-31T13:57:35.791Z",
             "description": ""
           }
         },
@@ -10774,12 +10790,12 @@
           "createdAt": {
             "format": "date-time",
             "type": "string",
-            "default": "2024-01-24T16:52:28.173Z"
+            "default": "2024-01-31T13:57:35.191Z"
           },
           "updatedAt": {
             "format": "date-time",
             "type": "string",
-            "default": "2024-01-24T16:52:28.173Z"
+            "default": "2024-01-31T13:57:35.191Z"
           }
         },
         "required": [
@@ -11427,12 +11443,12 @@
           "createdAt": {
             "format": "date-time",
             "type": "string",
-            "default": "2024-01-24T16:52:29.276Z"
+            "default": "2024-01-31T13:57:37.231Z"
           },
           "updatedAt": {
             "format": "date-time",
             "type": "string",
-            "default": "2024-01-24T16:52:29.276Z"
+            "default": "2024-01-31T13:57:37.231Z"
           }
         },
         "required": [
@@ -11639,12 +11655,12 @@
           "createdAt": {
             "format": "date-time",
             "type": "string",
-            "default": "2024-01-24T16:52:29.298Z"
+            "default": "2024-01-31T13:57:37.243Z"
           },
           "updatedAt": {
             "format": "date-time",
             "type": "string",
-            "default": "2024-01-24T16:52:29.298Z"
+            "default": "2024-01-31T13:57:37.243Z"
           }
         },
         "required": [
@@ -11735,12 +11751,12 @@
           "createdAt": {
             "format": "date-time",
             "type": "string",
-            "default": "2024-01-24T16:52:29.312Z"
+            "default": "2024-01-31T13:57:37.250Z"
           },
           "updatedAt": {
             "format": "date-time",
             "type": "string",
-            "default": "2024-01-24T16:52:29.312Z"
+            "default": "2024-01-31T13:57:37.250Z"
           }
         },
         "required": [
@@ -11831,13 +11847,13 @@
           "createdAt": {
             "format": "date-time",
             "type": "string",
-            "default": "2024-01-24T16:52:29.318Z",
+            "default": "2024-01-31T13:57:37.255Z",
             "description": ""
           },
           "updatedAt": {
             "format": "date-time",
             "type": "string",
-            "default": "2024-01-24T16:52:29.318Z",
+            "default": "2024-01-31T13:57:37.255Z",
             "description": ""
           },
           "ownerId": {
@@ -11884,7 +11900,7 @@
           "day": {
             "format": "date-time",
             "type": "string",
-            "default": "2024-01-24T16:52:29.319Z"
+            "default": "2024-01-31T13:57:37.256Z"
           },
           "computeUnit": {
             "type": "number"
