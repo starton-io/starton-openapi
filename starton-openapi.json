@@ -45,7 +45,8 @@
             "example": 20,
             "description": "Number of entities returned on each page. By default this number is set to 100.",
             "schema": {
-              "maximum": 100,
+              "maximum": 2500,
+              "default": 100,
               "type": "integer"
             }
           },
@@ -175,7 +176,7 @@
         ],
         "security": [
           {
-            "starton-api-key": []
+            "api-key": []
           }
         ]
       }
@@ -254,7 +255,7 @@
         ],
         "security": [
           {
-            "starton-api-key": []
+            "api-key": []
           }
         ]
       }
@@ -302,7 +303,8 @@
             "example": 20,
             "description": "Number of entities returned on each page. By default this number is set to 100.",
             "schema": {
-              "maximum": 100,
+              "maximum": 2500,
+              "default": 100,
               "type": "integer"
             }
           },
@@ -393,7 +395,7 @@
         ],
         "security": [
           {
-            "starton-api-key": []
+            "api-key": []
           }
         ]
       }
@@ -491,7 +493,7 @@
         ],
         "security": [
           {
-            "starton-api-key": []
+            "api-key": []
           }
         ]
       },
@@ -591,7 +593,7 @@
         ],
         "security": [
           {
-            "starton-api-key": []
+            "api-key": []
           }
         ]
       },
@@ -665,7 +667,7 @@
         ],
         "security": [
           {
-            "starton-api-key": []
+            "api-key": []
           }
         ]
       }
@@ -849,7 +851,7 @@
         ],
         "security": [
           {
-            "starton-api-key": []
+            "api-key": []
           }
         ]
       }
@@ -1023,7 +1025,7 @@
         ],
         "security": [
           {
-            "starton-api-key": []
+            "api-key": []
           }
         ]
       }
@@ -1227,7 +1229,7 @@
         ],
         "security": [
           {
-            "starton-api-key": []
+            "api-key": []
           }
         ]
       }
@@ -1372,7 +1374,153 @@
         ],
         "security": [
           {
-            "starton-api-key": []
+            "api-key": []
+          }
+        ]
+      }
+    },
+    "/v3/smart-contract/{network}/{address}/encode": {
+      "post": {
+        "operationId": "encodeSmartContract",
+        "summary": "Encode data for a Smart Contract call",
+        "description": "Display the encoded data that is sent to a smart contract",
+        "x-speakeasy-name-override": "encode",
+        "parameters": [
+          {
+            "name": "network",
+            "required": true,
+            "in": "path",
+            "example": "polygon-mumbai",
+            "description": "EVM starton supported network.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "address",
+            "required": true,
+            "in": "path",
+            "description": "Smart contract address.",
+            "example": "0x820f8728E32519b9C91B2406BF48AF80711aFecD",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "description": "Encode your smartcontract call.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EncodeDto"
+              },
+              "examples": {
+                "a": {
+                  "summary": "Call mint function of ERC20_MINT_META_TRANSACTIONS",
+                  "description": "Mint of one ERC20 token.",
+                  "value": {
+                    "functionName": "mint",
+                    "params": [
+                      "0x298e760768c8481780397eE28A127eAd584df4ee",
+                      "1000000000000000000"
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EncodeSmartContractResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "oneOf": [
+                    {
+                      "$ref": "#/components/schemas/INVALID_BYTECODE"
+                    },
+                    {
+                      "$ref": "#/components/schemas/INVALID_ABI"
+                    },
+                    {
+                      "$ref": "#/components/schemas/INVALID_FUNCTION"
+                    },
+                    {
+                      "$ref": "#/components/schemas/MISSING_ARGUMENT"
+                    },
+                    {
+                      "$ref": "#/components/schemas/UNEXPECTED_ARGUMENT"
+                    },
+                    {
+                      "$ref": "#/components/schemas/INVALID_ARGUMENT"
+                    },
+                    {
+                      "$ref": "#/components/schemas/CALL_EXCEPTION"
+                    },
+                    {
+                      "$ref": "#/components/schemas/NUMERIC_FAULT"
+                    },
+                    {
+                      "$ref": "#/components/schemas/EXECUTION_WILL_FAIL"
+                    },
+                    {
+                      "$ref": "#/components/schemas/ENS_NOT_SUPPORTED"
+                    },
+                    {
+                      "$ref": "#/components/schemas/BAD_REQUEST_EXCEPTION"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "oneOf": [
+                    {
+                      "$ref": "#/components/schemas/COULD_NOT_FIND_RESOURCE"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "oneOf": [
+                    {
+                      "$ref": "#/components/schemas/UNKNOWN"
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Smart Contract Management"
+        ],
+        "security": [
+          {
+            "api-key": []
           }
         ]
       }
@@ -1470,7 +1618,7 @@
         ],
         "security": [
           {
-            "starton-api-key": []
+            "api-key": []
           }
         ]
       }
@@ -1530,9 +1678,6 @@
                 "schema": {
                   "oneOf": [
                     {
-                      "$ref": "#/components/schemas/INVALID_CONTRACT_ADDRESS"
-                    },
-                    {
                       "$ref": "#/components/schemas/INVALID_ABI"
                     },
                     {
@@ -1549,7 +1694,7 @@
         ],
         "security": [
           {
-            "starton-api-key": []
+            "api-key": []
           }
         ]
       }
@@ -1597,7 +1742,8 @@
             "example": 20,
             "description": "Number of entities returned on each page. By default this number is set to 100.",
             "schema": {
-              "maximum": 100,
+              "maximum": 2500,
+              "default": 100,
               "type": "integer"
             }
           },
@@ -1698,7 +1844,7 @@
         ],
         "security": [
           {
-            "starton-api-key": []
+            "api-key": []
           }
         ]
       },
@@ -1863,7 +2009,7 @@
         ],
         "security": [
           {
-            "starton-api-key": []
+            "api-key": []
           }
         ]
       }
@@ -1931,7 +2077,7 @@
         ],
         "security": [
           {
-            "starton-api-key": []
+            "api-key": []
           }
         ]
       }
@@ -1979,7 +2125,8 @@
             "example": 20,
             "description": "Number of entities returned on each page. By default this number is set to 100.",
             "schema": {
-              "maximum": 100,
+              "maximum": 2500,
+              "default": 100,
               "type": "integer"
             }
           },
@@ -2039,7 +2186,7 @@
         ],
         "security": [
           {
-            "starton-api-key": []
+            "api-key": []
           }
         ]
       },
@@ -2083,6 +2230,20 @@
                 }
               }
             }
+          },
+          "412": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "oneOf": [
+                    {
+                      "$ref": "#/components/schemas/MAXIMUM_WALLET_REACHED"
+                    }
+                  ]
+                }
+              }
+            }
           }
         },
         "tags": [
@@ -2090,7 +2251,7 @@
         ],
         "security": [
           {
-            "starton-api-key": []
+            "api-key": []
           }
         ]
       }
@@ -2158,7 +2319,7 @@
         ],
         "security": [
           {
-            "starton-api-key": []
+            "api-key": []
           }
         ]
       },
@@ -2234,7 +2395,7 @@
         ],
         "security": [
           {
-            "starton-api-key": []
+            "api-key": []
           }
         ]
       },
@@ -2308,7 +2469,7 @@
         ],
         "security": [
           {
-            "starton-api-key": []
+            "api-key": []
           }
         ]
       }
@@ -2361,7 +2522,7 @@
         ],
         "security": [
           {
-            "starton-api-key": []
+            "api-key": []
           }
         ]
       }
@@ -2400,7 +2561,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object"
+                  "$ref": "#/components/schemas/SignMessageResponse"
                 }
               }
             }
@@ -2413,6 +2574,20 @@
                   "oneOf": [
                     {
                       "$ref": "#/components/schemas/BAD_REQUEST_EXCEPTION"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "oneOf": [
+                    {
+                      "$ref": "#/components/schemas/FORBIDDEN"
                     }
                   ]
                 }
@@ -2439,7 +2614,7 @@
         ],
         "security": [
           {
-            "starton-api-key": []
+            "api-key": []
           }
         ]
       }
@@ -2547,7 +2722,7 @@
         ],
         "security": [
           {
-            "starton-api-key": []
+            "api-key": []
           }
         ]
       }
@@ -2654,7 +2829,7 @@
         ],
         "security": [
           {
-            "starton-api-key": []
+            "api-key": []
           }
         ]
       }
@@ -2702,7 +2877,8 @@
             "example": 20,
             "description": "Number of entities returned on each page. By default this number is set to 100.",
             "schema": {
-              "maximum": 100,
+              "maximum": 2500,
+              "default": 100,
               "type": "integer"
             }
           }
@@ -3053,7 +3229,7 @@
         ],
         "security": [
           {
-            "starton-api-key": []
+            "api-key": []
           }
         ]
       }
@@ -3127,7 +3303,7 @@
         ],
         "security": [
           {
-            "starton-api-key": []
+            "api-key": []
           }
         ]
       }
@@ -3196,7 +3372,7 @@
         ],
         "security": [
           {
-            "starton-api-key": []
+            "api-key": []
           }
         ]
       },
@@ -3273,7 +3449,7 @@
         ],
         "security": [
           {
-            "starton-api-key": []
+            "api-key": []
           }
         ]
       }
@@ -3327,7 +3503,7 @@
         ],
         "security": [
           {
-            "starton-api-key": []
+            "api-key": []
           }
         ]
       }
@@ -3422,7 +3598,7 @@
         ],
         "security": [
           {
-            "starton-api-key": []
+            "api-key": []
           }
         ]
       }
@@ -3480,7 +3656,8 @@
             "example": 20,
             "description": "Number of entities returned on each page. By default this number is set to 100.",
             "schema": {
-              "maximum": 100,
+              "maximum": 2500,
+              "default": 100,
               "type": "integer"
             }
           }
@@ -3531,7 +3708,7 @@
         ],
         "security": [
           {
-            "starton-api-key": []
+            "api-key": []
           }
         ]
       },
@@ -3617,7 +3794,7 @@
         ],
         "security": [
           {
-            "starton-api-key": []
+            "api-key": []
           }
         ]
       }
@@ -3695,7 +3872,7 @@
         ],
         "security": [
           {
-            "starton-api-key": []
+            "api-key": []
           }
         ]
       },
@@ -3791,7 +3968,7 @@
         ],
         "security": [
           {
-            "starton-api-key": []
+            "api-key": []
           }
         ]
       },
@@ -3865,7 +4042,7 @@
         ],
         "security": [
           {
-            "starton-api-key": []
+            "api-key": []
           }
         ]
       }
@@ -3913,7 +4090,8 @@
             "example": 20,
             "description": "Number of entities returned on each page. By default this number is set to 100.",
             "schema": {
-              "maximum": 100,
+              "maximum": 2500,
+              "default": 100,
               "type": "integer"
             }
           },
@@ -3942,6 +4120,25 @@
             "in": "header",
             "schema": {
               "type": "string"
+            }
+          },
+          {
+            "name": "x-platform-hostname",
+            "required": true,
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "chainIds",
+            "required": true,
+            "in": "query",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
             }
           }
         ],
@@ -3991,7 +4188,7 @@
         ],
         "security": [
           {
-            "starton-api-key": []
+            "api-key": []
           }
         ]
       },
@@ -4014,7 +4211,7 @@
                   "summary": "Example creating a private network",
                   "description": "An example showing how to create a private network",
                   "value": {
-                    "name": "optimism-functional-tests1706709455336",
+                    "name": "optimism-functional-tests1714642436107",
                     "displayName": "optimism-private",
                     "logo": "https://optimism-invalid-test-logo.com",
                     "chainId": 10,
@@ -4062,7 +4259,7 @@
         ],
         "security": [
           {
-            "starton-api-key": []
+            "api-key": []
           }
         ]
       }
@@ -4130,7 +4327,7 @@
         ],
         "security": [
           {
-            "starton-api-key": []
+            "api-key": []
           }
         ]
       },
@@ -4216,7 +4413,7 @@
         ],
         "security": [
           {
-            "starton-api-key": []
+            "api-key": []
           }
         ]
       },
@@ -4231,7 +4428,7 @@
             "required": true,
             "in": "path",
             "description": "The name of the network to delete",
-            "example": "optimism-functional-tests1706709455337",
+            "example": "optimism-functional-tests1714642436107",
             "schema": {
               "type": "string"
             }
@@ -4282,7 +4479,7 @@
         ],
         "security": [
           {
-            "starton-api-key": []
+            "api-key": []
           }
         ]
       }
@@ -4330,7 +4527,8 @@
             "example": 20,
             "description": "Number of entities returned on each page. By default this number is set to 100.",
             "schema": {
-              "maximum": 100,
+              "maximum": 2500,
+              "default": 100,
               "type": "integer"
             }
           },
@@ -4465,7 +4663,7 @@
         ],
         "security": [
           {
-            "starton-api-key": []
+            "api-key": []
           }
         ]
       },
@@ -4489,7 +4687,7 @@
                   "description": "Creates a watcher monitoring any activity on Starton Test wallet.",
                   "value": {
                     "name": "watcher test",
-                    "address": "0xd73da0912e663bf1c0180de8e3e5ed2cc456f018",
+                    "address": "0xf96aeba5b2df4ba7b69e5f61fe1d963840ededb1",
                     "network": "polygon-mumbai",
                     "type": "ADDRESS_ACTIVITY",
                     "webhookUrl": "https://webhook.site/db756457-9ca1-4975-9a3d-6257c9e0601e",
@@ -4573,7 +4771,7 @@
         ],
         "security": [
           {
-            "starton-api-key": []
+            "api-key": []
           }
         ]
       }
@@ -4641,7 +4839,7 @@
         ],
         "security": [
           {
-            "starton-api-key": []
+            "api-key": []
           }
         ]
       },
@@ -4728,7 +4926,7 @@
         ],
         "security": [
           {
-            "starton-api-key": []
+            "api-key": []
           }
         ]
       },
@@ -4792,7 +4990,7 @@
         ],
         "security": [
           {
-            "starton-api-key": []
+            "api-key": []
           }
         ]
       }
@@ -4840,7 +5038,8 @@
             "example": 20,
             "description": "Number of entities returned on each page. By default this number is set to 100.",
             "schema": {
-              "maximum": 100,
+              "maximum": 2500,
+              "default": 100,
               "type": "integer"
             }
           },
@@ -4901,7 +5100,7 @@
         ],
         "security": [
           {
-            "starton-api-key": []
+            "api-key": []
           }
         ]
       }
@@ -4979,7 +5178,7 @@
         ],
         "security": [
           {
-            "starton-api-key": []
+            "api-key": []
           }
         ]
       }
@@ -5022,7 +5221,7 @@
         ],
         "security": [
           {
-            "starton-api-key": []
+            "api-key": []
           }
         ]
       }
@@ -5079,7 +5278,7 @@
         ],
         "security": [
           {
-            "starton-api-key": []
+            "api-key": []
           }
         ]
       }
@@ -5127,7 +5326,8 @@
             "example": 20,
             "description": "Number of entities returned on each page. By default this number is set to 100.",
             "schema": {
-              "maximum": 100,
+              "maximum": 2500,
+              "default": 100,
               "type": "integer"
             }
           },
@@ -5194,7 +5394,7 @@
         ],
         "security": [
           {
-            "starton-api-key": []
+            "api-key": []
           }
         ]
       }
@@ -5262,7 +5462,7 @@
         ],
         "security": [
           {
-            "starton-api-key": []
+            "api-key": []
           }
         ]
       }
@@ -5344,7 +5544,7 @@
         ],
         "security": [
           {
-            "starton-api-key": []
+            "api-key": []
           }
         ]
       }
@@ -5426,7 +5626,7 @@
         ],
         "security": [
           {
-            "starton-api-key": []
+            "api-key": []
           }
         ]
       }
@@ -5474,7 +5674,8 @@
             "example": 20,
             "description": "Number of entities returned on each page. By default this number is set to 100.",
             "schema": {
-              "maximum": 100,
+              "maximum": 2500,
+              "default": 100,
               "type": "integer"
             }
           },
@@ -6305,7 +6506,8 @@
             "example": 20,
             "description": "Number of entities returned on each page. By default this number is set to 100.",
             "schema": {
-              "maximum": 100,
+              "maximum": 2500,
+              "default": 100,
               "type": "integer"
             }
           }
@@ -6541,7 +6743,7 @@
   ],
   "components": {
     "securitySchemes": {
-      "starton-api-key": {
+      "api-key": {
         "type": "apiKey",
         "in": "header",
         "name": "x-api-key"
@@ -6590,7 +6792,8 @@
             "type": "string"
           },
           "context": {
-            "type": "object"
+            "type": "object",
+            "nullable": true
           }
         },
         "required": [
@@ -6623,7 +6826,8 @@
             "type": "string"
           },
           "context": {
-            "type": "object"
+            "type": "object",
+            "nullable": true
           }
         },
         "required": [
@@ -6725,13 +6929,13 @@
           "createdAt": {
             "format": "date-time",
             "type": "string",
-            "default": "2024-01-31T13:57:36.374Z",
+            "default": "2024-05-02T09:33:57.362Z",
             "description": ""
           },
           "updatedAt": {
             "format": "date-time",
             "type": "string",
-            "default": "2024-01-31T13:57:36.374Z",
+            "default": "2024-05-02T09:33:57.362Z",
             "description": ""
           }
         },
@@ -6794,6 +6998,43 @@
         "required": [
           "meta",
           "items"
+        ]
+      },
+      "SmartContractUIDto": {
+        "type": "object",
+        "properties": {
+          "version": {
+            "type": "string",
+            "enum": [
+              "1"
+            ],
+            "description": ""
+          },
+          "deployMethod": {
+            "enum": [
+              "web3",
+              "kms"
+            ],
+            "type": "string",
+            "description": ""
+          },
+          "imported": {
+            "type": "boolean",
+            "description": ""
+          },
+          "deployType": {
+            "type": "string",
+            "description": ""
+          },
+          "chainId": {
+            "type": "number",
+            "description": ""
+          }
+        },
+        "required": [
+          "version",
+          "deployMethod",
+          "imported"
         ]
       },
       "SmartContract": {
@@ -6918,16 +7159,30 @@
             "type": "string",
             "description": ""
           },
+          "metadata": {
+            "type": "object",
+            "nullable": true,
+            "description": ""
+          },
+          "uiData": {
+            "nullable": true,
+            "description": "",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/SmartContractUIDto"
+              }
+            ]
+          },
           "createdAt": {
             "format": "date-time",
             "type": "string",
-            "default": "2024-01-31T13:57:38.131Z",
+            "default": "2024-05-02T09:34:19.243Z",
             "description": ""
           },
           "updatedAt": {
             "format": "date-time",
             "type": "string",
-            "default": "2024-01-31T13:57:38.131Z",
+            "default": "2024-05-02T09:34:19.243Z",
             "description": ""
           }
         },
@@ -6983,7 +7238,8 @@
             "type": "string"
           },
           "context": {
-            "type": "object"
+            "type": "object",
+            "nullable": true
           }
         },
         "required": [
@@ -7016,7 +7272,8 @@
             "type": "string"
           },
           "context": {
-            "type": "object"
+            "type": "object",
+            "nullable": true
           }
         },
         "required": [
@@ -7049,7 +7306,8 @@
             "type": "string"
           },
           "context": {
-            "type": "object"
+            "type": "object",
+            "nullable": true
           }
         },
         "required": [
@@ -7082,7 +7340,8 @@
             "type": "string"
           },
           "context": {
-            "type": "object"
+            "type": "object",
+            "nullable": true
           }
         },
         "required": [
@@ -7115,7 +7374,8 @@
             "type": "string"
           },
           "context": {
-            "type": "object"
+            "type": "object",
+            "nullable": true
           }
         },
         "required": [
@@ -7148,7 +7408,8 @@
             "type": "string"
           },
           "context": {
-            "type": "object"
+            "type": "object",
+            "nullable": true
           }
         },
         "required": [
@@ -7181,7 +7442,8 @@
             "type": "string"
           },
           "context": {
-            "type": "object"
+            "type": "object",
+            "nullable": true
           }
         },
         "required": [
@@ -7214,7 +7476,8 @@
             "type": "string"
           },
           "context": {
-            "type": "object"
+            "type": "object",
+            "nullable": true
           }
         },
         "required": [
@@ -7247,7 +7510,8 @@
             "type": "string"
           },
           "context": {
-            "type": "object"
+            "type": "object",
+            "nullable": true
           }
         },
         "required": [
@@ -7280,7 +7544,8 @@
             "type": "string"
           },
           "context": {
-            "type": "object"
+            "type": "object",
+            "nullable": true
           }
         },
         "required": [
@@ -7313,7 +7578,8 @@
             "type": "string"
           },
           "context": {
-            "type": "object"
+            "type": "object",
+            "nullable": true
           }
         },
         "required": [
@@ -7346,7 +7612,8 @@
             "type": "string"
           },
           "context": {
-            "type": "object"
+            "type": "object",
+            "nullable": true
           }
         },
         "required": [
@@ -7379,7 +7646,8 @@
             "type": "string"
           },
           "context": {
-            "type": "object"
+            "type": "object",
+            "nullable": true
           }
         },
         "required": [
@@ -7412,7 +7680,8 @@
             "type": "string"
           },
           "context": {
-            "type": "object"
+            "type": "object",
+            "nullable": true
           }
         },
         "required": [
@@ -7445,7 +7714,8 @@
             "type": "string"
           },
           "context": {
-            "type": "object"
+            "type": "object",
+            "nullable": true
           }
         },
         "required": [
@@ -7478,7 +7748,8 @@
             "type": "string"
           },
           "context": {
-            "type": "object"
+            "type": "object",
+            "nullable": true
           }
         },
         "required": [
@@ -7511,7 +7782,8 @@
             "type": "string"
           },
           "context": {
-            "type": "object"
+            "type": "object",
+            "nullable": true
           }
         },
         "required": [
@@ -7544,7 +7816,8 @@
             "type": "string"
           },
           "context": {
-            "type": "object"
+            "type": "object",
+            "nullable": true
           }
         },
         "required": [
@@ -7577,7 +7850,8 @@
             "type": "string"
           },
           "context": {
-            "type": "object"
+            "type": "object",
+            "nullable": true
           }
         },
         "required": [
@@ -7610,7 +7884,8 @@
             "type": "string"
           },
           "context": {
-            "type": "object"
+            "type": "object",
+            "nullable": true
           }
         },
         "required": [
@@ -7643,7 +7918,8 @@
             "type": "string"
           },
           "context": {
-            "type": "object"
+            "type": "object",
+            "nullable": true
           }
         },
         "required": [
@@ -7847,6 +8123,17 @@
           "value": {
             "type": "string",
             "description": ""
+          },
+          "metadata": {
+            "type": "object"
+          },
+          "uiData": {
+            "nullable": true,
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/SmartContractUIDto"
+              }
+            ]
           }
         },
         "required": [
@@ -8115,13 +8402,13 @@
           "createdAt": {
             "format": "date-time",
             "type": "string",
-            "default": "2024-01-31T13:57:38.141Z",
+            "default": "2024-05-02T09:34:19.251Z",
             "description": ""
           },
           "updatedAt": {
             "format": "date-time",
             "type": "string",
-            "default": "2024-01-31T13:57:38.141Z",
+            "default": "2024-05-02T09:34:19.251Z",
             "description": ""
           }
         },
@@ -8179,7 +8466,8 @@
             "type": "string"
           },
           "context": {
-            "type": "object"
+            "type": "object",
+            "nullable": true
           }
         },
         "required": [
@@ -8212,7 +8500,8 @@
             "type": "string"
           },
           "context": {
-            "type": "object"
+            "type": "object",
+            "nullable": true
           }
         },
         "required": [
@@ -8308,6 +8597,17 @@
           "value": {
             "type": "string",
             "description": "If you want to put value in your smart contract deployment (Example: payable constructor)"
+          },
+          "metadata": {
+            "type": "object"
+          },
+          "uiData": {
+            "nullable": true,
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/SmartContractUIDto"
+              }
+            ]
           }
         },
         "required": [
@@ -8340,7 +8640,8 @@
             "type": "string"
           },
           "context": {
-            "type": "object"
+            "type": "object",
+            "nullable": true
           }
         },
         "required": [
@@ -8373,7 +8674,8 @@
             "type": "string"
           },
           "context": {
-            "type": "object"
+            "type": "object",
+            "nullable": true
           }
         },
         "required": [
@@ -8567,6 +8869,55 @@
           "network"
         ]
       },
+      "EncodeDto": {
+        "type": "object",
+        "properties": {
+          "functionName": {
+            "type": "string",
+            "description": ""
+          },
+          "params": {
+            "default": [],
+            "description": "Smart contract parameters.",
+            "example": [
+              "TestToken",
+              "TEST",
+              "1000000000000000000000000",
+              "0x298e760768c8481780397eE28A127eAd584df4ee"
+            ],
+            "type": "array",
+            "items": {
+              "oneOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "number"
+                },
+                {
+                  "type": "object"
+                },
+                {
+                  "type": "boolean"
+                }
+              ]
+            }
+          }
+        },
+        "required": [
+          "functionName"
+        ]
+      },
+      "EncodeSmartContractResponse": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": "string",
+            "nullable": true,
+            "description": ""
+          }
+        }
+      },
       "AvailableFunctions": {
         "type": "object",
         "properties": {
@@ -8596,39 +8947,6 @@
           "call",
           "read",
           "events"
-        ]
-      },
-      "INVALID_CONTRACT_ADDRESS": {
-        "type": "object",
-        "properties": {
-          "statusCode": {
-            "type": "number",
-            "default": 400
-          },
-          "errorCode": {
-            "type": "string",
-            "default": "INVALID_CONTRACT_ADDRESS"
-          },
-          "message": {
-            "type": "string",
-            "default": "This address doesn't refer to a smart-contract on this network."
-          },
-          "timestamp": {
-            "type": "string"
-          },
-          "path": {
-            "type": "string"
-          },
-          "context": {
-            "type": "object"
-          }
-        },
-        "required": [
-          "statusCode",
-          "errorCode",
-          "message",
-          "timestamp",
-          "path"
         ]
       },
       "ImportSmartContractDto": {
@@ -8705,6 +9023,17 @@
                 }
               ]
             }
+          },
+          "metadata": {
+            "type": "object"
+          },
+          "uiData": {
+            "nullable": true,
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/SmartContractUIDto"
+              }
+            ]
           }
         },
         "required": [
@@ -8807,7 +9136,8 @@
           },
           "metadata": {
             "type": "object",
-            "description": ""
+            "description": "",
+            "nullable": true
           },
           "projectId": {
             "type": "string",
@@ -8816,13 +9146,13 @@
           "createdAt": {
             "format": "date-time",
             "type": "string",
-            "default": "2024-01-31T13:57:38.161Z",
+            "default": "2024-05-02T09:34:19.272Z",
             "description": ""
           },
           "updatedAt": {
             "format": "date-time",
             "type": "string",
-            "default": "2024-01-31T13:57:38.161Z",
+            "default": "2024-05-02T09:34:19.272Z",
             "description": ""
           }
         },
@@ -8848,6 +9178,40 @@
             "type": "object"
           }
         }
+      },
+      "MAXIMUM_WALLET_REACHED": {
+        "type": "object",
+        "properties": {
+          "statusCode": {
+            "type": "number",
+            "default": 412
+          },
+          "errorCode": {
+            "type": "string",
+            "default": "MAXIMUM_WALLET_REACHED"
+          },
+          "message": {
+            "type": "string",
+            "default": "You can't create more than 1 address without your own KMS. You must specify AWS credentials to create more."
+          },
+          "timestamp": {
+            "type": "string"
+          },
+          "path": {
+            "type": "string"
+          },
+          "context": {
+            "type": "object",
+            "nullable": true
+          }
+        },
+        "required": [
+          "statusCode",
+          "errorCode",
+          "message",
+          "timestamp",
+          "path"
+        ]
       },
       "CreateWalletDto": {
         "type": "object",
@@ -8896,6 +9260,40 @@
           "provider"
         ]
       },
+      "FORBIDDEN": {
+        "type": "object",
+        "properties": {
+          "statusCode": {
+            "type": "number",
+            "default": 403
+          },
+          "errorCode": {
+            "type": "string",
+            "default": "FORBIDDEN"
+          },
+          "message": {
+            "type": "string",
+            "default": "Unauthorized."
+          },
+          "timestamp": {
+            "type": "string"
+          },
+          "path": {
+            "type": "string"
+          },
+          "context": {
+            "type": "object",
+            "nullable": true
+          }
+        },
+        "required": [
+          "statusCode",
+          "errorCode",
+          "message",
+          "timestamp",
+          "path"
+        ]
+      },
       "SignMessageDto": {
         "type": "object",
         "properties": {
@@ -8905,6 +9303,17 @@
         },
         "required": [
           "message"
+        ]
+      },
+      "SignMessageResponse": {
+        "type": "object",
+        "properties": {
+          "signature": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "signature"
         ]
       },
       "COULD_NOT_PROCESS_ENTITY": {
@@ -8929,7 +9338,8 @@
             "type": "string"
           },
           "context": {
-            "type": "object"
+            "type": "object",
+            "nullable": true
           }
         },
         "required": [
@@ -9008,13 +9418,13 @@
           "createdAt": {
             "format": "date-time",
             "type": "string",
-            "default": "2024-01-31T13:57:38.167Z",
+            "default": "2024-05-02T09:34:19.277Z",
             "description": ""
           },
           "updatedAt": {
             "format": "date-time",
             "type": "string",
-            "default": "2024-01-31T13:57:38.167Z",
+            "default": "2024-05-02T09:34:19.277Z",
             "description": ""
           }
         },
@@ -9181,40 +9591,8 @@
             "type": "string"
           },
           "context": {
-            "type": "object"
-          }
-        },
-        "required": [
-          "statusCode",
-          "errorCode",
-          "message",
-          "timestamp",
-          "path"
-        ]
-      },
-      "FORBIDDEN": {
-        "type": "object",
-        "properties": {
-          "statusCode": {
-            "type": "number",
-            "default": 403
-          },
-          "errorCode": {
-            "type": "string",
-            "default": "FORBIDDEN"
-          },
-          "message": {
-            "type": "string",
-            "default": "Unauthorized."
-          },
-          "timestamp": {
-            "type": "string"
-          },
-          "path": {
-            "type": "string"
-          },
-          "context": {
-            "type": "object"
+            "type": "object",
+            "nullable": true
           }
         },
         "required": [
@@ -9260,39 +9638,6 @@
           "external",
           "createdAt",
           "updatedAt"
-        ]
-      },
-      "MAXIMUM_WALLET_REACHED": {
-        "type": "object",
-        "properties": {
-          "statusCode": {
-            "type": "number",
-            "default": 412
-          },
-          "errorCode": {
-            "type": "string",
-            "default": "MAXIMUM_WALLET_REACHED"
-          },
-          "message": {
-            "type": "string",
-            "default": "You can't create more than 1 address without your own KMS. You must specify AWS credentials to create more."
-          },
-          "timestamp": {
-            "type": "string"
-          },
-          "path": {
-            "type": "string"
-          },
-          "context": {
-            "type": "object"
-          }
-        },
-        "required": [
-          "statusCode",
-          "errorCode",
-          "message",
-          "timestamp",
-          "path"
         ]
       },
       "AwsKmsCredentialsRetroDto": {
@@ -9389,7 +9734,8 @@
             "type": "string"
           },
           "context": {
-            "type": "object"
+            "type": "object",
+            "nullable": true
           }
         },
         "required": [
@@ -9506,13 +9852,13 @@
           "createdAt": {
             "format": "date-time",
             "type": "string",
-            "default": "2024-01-31T13:57:38.175Z",
+            "default": "2024-05-02T09:34:19.284Z",
             "description": ""
           },
           "updatedAt": {
             "format": "date-time",
             "type": "string",
-            "default": "2024-01-31T13:57:38.175Z",
+            "default": "2024-05-02T09:34:19.284Z",
             "description": ""
           }
         },
@@ -9659,7 +10005,8 @@
             "type": "string"
           },
           "context": {
-            "type": "object"
+            "type": "object",
+            "nullable": true
           }
         },
         "required": [
@@ -9692,7 +10039,8 @@
             "type": "string"
           },
           "context": {
-            "type": "object"
+            "type": "object",
+            "nullable": true
           }
         },
         "required": [
@@ -9754,7 +10102,7 @@
           "createdAt": {
             "format": "date-time",
             "type": "string",
-            "default": "2024-01-31T13:57:38.178Z",
+            "default": "2024-05-02T09:34:19.286Z",
             "description": "Claim date."
           }
         },
@@ -9781,25 +10129,38 @@
             "type": "string",
             "description": ""
           },
+          "isPublic": {
+            "type": "boolean",
+            "description": ""
+          },
           "createdAt": {
             "format": "date-time",
             "type": "string",
-            "default": "2024-01-31T13:57:36.269Z",
+            "default": "2024-05-02T09:33:57.043Z",
             "description": ""
           },
           "updatedAt": {
             "format": "date-time",
             "type": "string",
-            "default": "2024-01-31T13:57:36.269Z",
+            "default": "2024-05-02T09:33:57.043Z",
             "description": ""
+          },
+          "type": {
+            "enum": [
+              "archive",
+              "full"
+            ],
+            "type": "string"
           }
         },
         "required": [
           "id",
           "url",
           "networkName",
+          "isPublic",
           "createdAt",
-          "updatedAt"
+          "updatedAt",
+          "type"
         ]
       },
       "UpdateRpcDto": {
@@ -9808,6 +10169,13 @@
           "url": {
             "type": "string",
             "description": ""
+          },
+          "type": {
+            "type": "string",
+            "enum": [
+              "archive",
+              "full"
+            ]
           }
         }
       },
@@ -9817,10 +10185,18 @@
           "url": {
             "type": "string",
             "description": ""
+          },
+          "type": {
+            "type": "string",
+            "enum": [
+              "archive",
+              "full"
+            ]
           }
         },
         "required": [
-          "url"
+          "url",
+          "type"
         ]
       },
       "Network": {
@@ -9911,13 +10287,13 @@
           "createdAt": {
             "format": "date-time",
             "type": "string",
-            "default": "2024-01-31T13:57:36.282Z",
+            "default": "2024-05-02T09:33:57.058Z",
             "description": ""
           },
           "updatedAt": {
             "format": "date-time",
             "type": "string",
-            "default": "2024-01-31T13:57:36.282Z",
+            "default": "2024-05-02T09:33:57.058Z",
             "description": ""
           }
         },
@@ -10075,6 +10451,20 @@
           "testnet": {
             "type": "boolean",
             "description": ""
+          },
+          "loadbalancerUrl": {
+            "type": "string",
+            "description": ""
+          },
+          "faucetUrl": {
+            "type": "string",
+            "description": ""
+          },
+          "tenantHostnames": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
           }
         }
       },
@@ -10160,6 +10550,20 @@
           "testnet": {
             "type": "boolean",
             "description": ""
+          },
+          "loadbalancerUrl": {
+            "type": "string",
+            "description": ""
+          },
+          "faucetUrl": {
+            "type": "string",
+            "description": ""
+          },
+          "tenantHostnames": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
           }
         },
         "required": [
@@ -10261,13 +10665,13 @@
           "createdAt": {
             "format": "date-time",
             "type": "string",
-            "default": "2024-01-31T13:57:36.353Z",
+            "default": "2024-05-02T09:34:03.879Z",
             "description": ""
           },
           "updatedAt": {
             "format": "date-time",
             "type": "string",
-            "default": "2024-01-31T13:57:36.353Z",
+            "default": "2024-05-02T09:34:03.879Z",
             "description": ""
           },
           "customFilters": {
@@ -10351,7 +10755,8 @@
             "type": "string"
           },
           "context": {
-            "type": "object"
+            "type": "object",
+            "nullable": true
           }
         },
         "required": [
@@ -10384,7 +10789,8 @@
             "type": "string"
           },
           "context": {
-            "type": "object"
+            "type": "object",
+            "nullable": true
           }
         },
         "required": [
@@ -10520,13 +10926,13 @@
           "createdAt": {
             "format": "date-time",
             "type": "string",
-            "default": "2024-01-31T13:57:36.375Z",
+            "default": "2024-05-02T09:34:03.892Z",
             "description": ""
           },
           "updatedAt": {
             "format": "date-time",
             "type": "string",
-            "default": "2024-01-31T13:57:36.375Z",
+            "default": "2024-05-02T09:34:03.892Z",
             "description": ""
           }
         },
@@ -10558,13 +10964,13 @@
           "createdAt": {
             "format": "date-time",
             "type": "string",
-            "default": "2024-01-31T13:57:35.786Z",
+            "default": "2024-05-02T09:34:00.631Z",
             "description": ""
           },
           "updatedAt": {
             "format": "date-time",
             "type": "string",
-            "default": "2024-01-31T13:57:35.786Z",
+            "default": "2024-05-02T09:34:00.631Z",
             "description": ""
           }
         },
@@ -10617,13 +11023,13 @@
           "createdAt": {
             "format": "date-time",
             "type": "string",
-            "default": "2024-01-31T13:57:35.791Z",
+            "default": "2024-05-02T09:34:00.636Z",
             "description": ""
           },
           "updatedAt": {
             "format": "date-time",
             "type": "string",
-            "default": "2024-01-31T13:57:35.791Z",
+            "default": "2024-05-02T09:34:00.636Z",
             "description": ""
           }
         },
@@ -10661,7 +11067,8 @@
             "type": "string"
           },
           "context": {
-            "type": "object"
+            "type": "object",
+            "nullable": true
           }
         },
         "required": [
@@ -10694,7 +11101,8 @@
             "type": "string"
           },
           "context": {
-            "type": "object"
+            "type": "object",
+            "nullable": true
           }
         },
         "required": [
@@ -10738,19 +11146,23 @@
             "type": "string"
           },
           "name": {
-            "type": "string"
+            "type": "string",
+            "nullable": true
           },
           "cid": {
-            "type": "string"
+            "type": "string",
+            "nullable": true
           },
           "origins": {
+            "nullable": true,
             "type": "array",
             "items": {
               "type": "string"
             }
           },
           "metadata": {
-            "type": "object"
+            "type": "object",
+            "nullable": true
           },
           "status": {
             "enum": [
@@ -10763,22 +11175,26 @@
             "type": "string"
           },
           "delegates": {
+            "nullable": true,
             "type": "array",
             "items": {
               "type": "string"
             }
           },
           "size": {
-            "type": "number"
+            "type": "number",
+            "nullable": true
           },
           "type": {
             "enum": [
               "directory",
               "file"
             ],
-            "type": "string"
+            "type": "string",
+            "nullable": true
           },
           "directoryContent": {
+            "nullable": true,
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/DirectoryContent"
@@ -10790,12 +11206,12 @@
           "createdAt": {
             "format": "date-time",
             "type": "string",
-            "default": "2024-01-31T13:57:35.191Z"
+            "default": "2024-05-02T09:33:57.821Z"
           },
           "updatedAt": {
             "format": "date-time",
             "type": "string",
-            "default": "2024-01-31T13:57:35.191Z"
+            "default": "2024-05-02T09:33:57.821Z"
           }
         },
         "required": [
@@ -10840,7 +11256,8 @@
             "type": "string"
           },
           "context": {
-            "type": "object"
+            "type": "object",
+            "nullable": true
           }
         },
         "required": [
@@ -10910,7 +11327,8 @@
             "type": "string"
           },
           "context": {
-            "type": "object"
+            "type": "object",
+            "nullable": true
           }
         },
         "required": [
@@ -11133,7 +11551,8 @@
             "type": "string"
           },
           "context": {
-            "type": "object"
+            "type": "object",
+            "nullable": true
           }
         },
         "required": [
@@ -11443,12 +11862,12 @@
           "createdAt": {
             "format": "date-time",
             "type": "string",
-            "default": "2024-01-31T13:57:37.231Z"
+            "default": "2024-05-02T09:34:07.010Z"
           },
           "updatedAt": {
             "format": "date-time",
             "type": "string",
-            "default": "2024-01-31T13:57:37.231Z"
+            "default": "2024-05-02T09:34:07.010Z"
           }
         },
         "required": [
@@ -11545,7 +11964,8 @@
             "type": "string"
           },
           "context": {
-            "type": "object"
+            "type": "object",
+            "nullable": true
           }
         },
         "required": [
@@ -11578,7 +11998,8 @@
             "type": "string"
           },
           "context": {
-            "type": "object"
+            "type": "object",
+            "nullable": true
           }
         },
         "required": [
@@ -11655,12 +12076,12 @@
           "createdAt": {
             "format": "date-time",
             "type": "string",
-            "default": "2024-01-31T13:57:37.243Z"
+            "default": "2024-05-02T09:34:07.020Z"
           },
           "updatedAt": {
             "format": "date-time",
             "type": "string",
-            "default": "2024-01-31T13:57:37.243Z"
+            "default": "2024-05-02T09:34:07.020Z"
           }
         },
         "required": [
@@ -11751,12 +12172,12 @@
           "createdAt": {
             "format": "date-time",
             "type": "string",
-            "default": "2024-01-31T13:57:37.250Z"
+            "default": "2024-05-02T09:34:07.024Z"
           },
           "updatedAt": {
             "format": "date-time",
             "type": "string",
-            "default": "2024-01-31T13:57:37.250Z"
+            "default": "2024-05-02T09:34:07.024Z"
           }
         },
         "required": [
@@ -11847,13 +12268,13 @@
           "createdAt": {
             "format": "date-time",
             "type": "string",
-            "default": "2024-01-31T13:57:37.255Z",
+            "default": "2024-05-02T09:34:07.028Z",
             "description": ""
           },
           "updatedAt": {
             "format": "date-time",
             "type": "string",
-            "default": "2024-01-31T13:57:37.255Z",
+            "default": "2024-05-02T09:34:07.028Z",
             "description": ""
           },
           "ownerId": {
@@ -11900,7 +12321,7 @@
           "day": {
             "format": "date-time",
             "type": "string",
-            "default": "2024-01-31T13:57:37.256Z"
+            "default": "2024-05-02T09:34:07.028Z"
           },
           "computeUnit": {
             "type": "number"
