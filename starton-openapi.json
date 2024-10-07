@@ -1796,6 +1796,73 @@
               "format": "date-time",
               "type": "string"
             }
+          },
+          {
+            "name": "status",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "enum": [
+                  "UNSIGNED",
+                  "ERROR_TX",
+                  "ERROR_PUBLISH",
+                  "PUBLISHED",
+                  "RECEIVED_BY_STARTON",
+                  "CREATED_BY_STARTON",
+                  "COULD_NOT_ESTIMATE_GAS_PRICE",
+                  "COULD_NOT_INCREASE_GAS_PRICE",
+                  "GAS_PRICE_ESTIMATED",
+                  "INVALID_GAS_PRICE",
+                  "REPLACEMENT_GAS_PRICE_UNDERPRICED",
+                  "COULD_NOT_ESTIMATE_GAS_LIMIT",
+                  "GAS_LIMIT_ESTIMATED",
+                  "EXECUTION_WILL_FAIL",
+                  "INVALID_ARGUMENT",
+                  "INSUFFICIENT_FUNDS",
+                  "INSUFFICIENT_FUNDS_AFTER_BROADCAST",
+                  "COULD_NOT_ASSIGN_NONCE",
+                  "COULD_NOT_UNSTUCK_NONCE",
+                  "NONCE_ASSIGNED",
+                  "NONCE_EXPIRED",
+                  "COULD_NOT_SIGN",
+                  "SIGNED",
+                  "SENT_TO_MEMPOOL",
+                  "COULD_NOT_BROADCAST",
+                  "ALREADY_KNOWN",
+                  "MINED",
+                  "CONFIRMED",
+                  "REPLACED",
+                  "FAILED",
+                  "MONITORING_IN_PROGRESS",
+                  "STUCK_BY_PREVIOUS_TRANSACTION",
+                  "MAX_GAS_PRICE_REACH",
+                  "GAS_PRICE_INCREASED",
+                  "NEW_TRANSACTION_HASH",
+                  "UNKNOWN",
+                  "MONITORING_INTERRUPTED"
+                ]
+              }
+            }
+          },
+          {
+            "name": "state",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "enum": [
+                  "SUCCESS",
+                  "PENDING",
+                  "MANUAL_ACTION_REQUIRED",
+                  "ERROR"
+                ]
+              }
+            }
           }
         ],
         "responses": {
@@ -2136,6 +2203,14 @@
             "in": "query",
             "schema": {
               "pattern": "^[\\w\\-\\s]+$",
+              "type": "string"
+            }
+          },
+          {
+            "name": "kmsId",
+            "required": false,
+            "in": "query",
+            "schema": {
               "type": "string"
             }
           }
@@ -4096,7 +4171,17 @@
             }
           },
           {
-            "name": "id",
+            "name": "name",
+            "required": false,
+            "in": "query",
+            "description": "",
+            "schema": {
+              "pattern": "^[\\w\\-\\s]+$",
+              "type": "string"
+            }
+          },
+          {
+            "name": "displayName",
             "required": false,
             "in": "query",
             "description": "",
@@ -4115,30 +4200,68 @@
             }
           },
           {
-            "name": "origin",
-            "required": true,
-            "in": "header",
+            "name": "featured",
+            "required": false,
+            "in": "query",
+            "description": "",
             "schema": {
-              "type": "string"
+              "type": "boolean"
             }
           },
           {
-            "name": "x-platform-hostname",
-            "required": true,
-            "in": "header",
+            "name": "deprecated",
+            "required": false,
+            "in": "query",
+            "description": "",
             "schema": {
-              "type": "string"
+              "type": "boolean"
+            }
+          },
+          {
+            "name": "transactionManagerService",
+            "required": false,
+            "in": "query",
+            "description": "",
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "name": "browserExtensionService",
+            "required": false,
+            "in": "query",
+            "description": "",
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "name": "indexerService",
+            "required": false,
+            "in": "query",
+            "description": "",
+            "schema": {
+              "type": "boolean"
             }
           },
           {
             "name": "chainIds",
-            "required": true,
+            "required": false,
             "in": "query",
+            "description": "",
             "schema": {
               "type": "array",
               "items": {
-                "type": "string"
+                "type": "number"
               }
+            }
+          },
+          {
+            "name": "x-tenant-name",
+            "required": false,
+            "in": "header",
+            "schema": {
+              "type": "string"
             }
           }
         ],
@@ -4211,7 +4334,7 @@
                   "summary": "Example creating a private network",
                   "description": "An example showing how to create a private network",
                   "value": {
-                    "name": "optimism-functional-tests1714642436107",
+                    "name": "optimism-functional-tests1728323990886",
                     "displayName": "optimism-private",
                     "logo": "https://optimism-invalid-test-logo.com",
                     "chainId": 10,
@@ -4428,7 +4551,7 @@
             "required": true,
             "in": "path",
             "description": "The name of the network to delete",
-            "example": "optimism-functional-tests1714642436107",
+            "example": "optimism-functional-tests1728323990886",
             "schema": {
               "type": "string"
             }
@@ -4687,7 +4810,7 @@
                   "description": "Creates a watcher monitoring any activity on Starton Test wallet.",
                   "value": {
                     "name": "watcher test",
-                    "address": "0xf96aeba5b2df4ba7b69e5f61fe1d963840ededb1",
+                    "address": "0x69bfde6e0e13d45670b17b182d45cdd72a35fc1a",
                     "network": "polygon-mumbai",
                     "type": "ADDRESS_ACTIVITY",
                     "webhookUrl": "https://webhook.site/db756457-9ca1-4975-9a3d-6257c9e0601e",
@@ -6929,13 +7052,13 @@
           "createdAt": {
             "format": "date-time",
             "type": "string",
-            "default": "2024-05-02T09:33:57.362Z",
+            "default": "2024-10-07T18:00:07.422Z",
             "description": ""
           },
           "updatedAt": {
             "format": "date-time",
             "type": "string",
-            "default": "2024-05-02T09:33:57.362Z",
+            "default": "2024-10-07T18:00:07.422Z",
             "description": ""
           }
         },
@@ -7176,13 +7299,13 @@
           "createdAt": {
             "format": "date-time",
             "type": "string",
-            "default": "2024-05-02T09:34:19.243Z",
+            "default": "2024-10-07T18:00:44.828Z",
             "description": ""
           },
           "updatedAt": {
             "format": "date-time",
             "type": "string",
-            "default": "2024-05-02T09:34:19.243Z",
+            "default": "2024-10-07T18:00:44.828Z",
             "description": ""
           }
         },
@@ -8402,13 +8525,13 @@
           "createdAt": {
             "format": "date-time",
             "type": "string",
-            "default": "2024-05-02T09:34:19.251Z",
+            "default": "2024-10-07T18:00:44.843Z",
             "description": ""
           },
           "updatedAt": {
             "format": "date-time",
             "type": "string",
-            "default": "2024-05-02T09:34:19.251Z",
+            "default": "2024-10-07T18:00:44.843Z",
             "description": ""
           }
         },
@@ -8969,7 +9092,7 @@
           "network": {
             "type": "string",
             "description": "",
-            "example": "polygon-mumbai"
+            "example": "polygon-amoy"
           },
           "description": {
             "type": "string",
@@ -9146,13 +9269,13 @@
           "createdAt": {
             "format": "date-time",
             "type": "string",
-            "default": "2024-05-02T09:34:19.272Z",
+            "default": "2024-10-07T18:00:44.878Z",
             "description": ""
           },
           "updatedAt": {
             "format": "date-time",
             "type": "string",
-            "default": "2024-05-02T09:34:19.272Z",
+            "default": "2024-10-07T18:00:44.878Z",
             "description": ""
           }
         },
@@ -9418,13 +9541,13 @@
           "createdAt": {
             "format": "date-time",
             "type": "string",
-            "default": "2024-05-02T09:34:19.277Z",
+            "default": "2024-10-07T18:00:44.886Z",
             "description": ""
           },
           "updatedAt": {
             "format": "date-time",
             "type": "string",
-            "default": "2024-05-02T09:34:19.277Z",
+            "default": "2024-10-07T18:00:44.886Z",
             "description": ""
           }
         },
@@ -9852,13 +9975,13 @@
           "createdAt": {
             "format": "date-time",
             "type": "string",
-            "default": "2024-05-02T09:34:19.284Z",
+            "default": "2024-10-07T18:00:44.901Z",
             "description": ""
           },
           "updatedAt": {
             "format": "date-time",
             "type": "string",
-            "default": "2024-05-02T09:34:19.284Z",
+            "default": "2024-10-07T18:00:44.901Z",
             "description": ""
           }
         },
@@ -10102,7 +10225,7 @@
           "createdAt": {
             "format": "date-time",
             "type": "string",
-            "default": "2024-05-02T09:34:19.286Z",
+            "default": "2024-10-07T18:00:44.904Z",
             "description": "Claim date."
           }
         },
@@ -10136,13 +10259,13 @@
           "createdAt": {
             "format": "date-time",
             "type": "string",
-            "default": "2024-05-02T09:33:57.043Z",
+            "default": "2024-10-07T17:59:53.167Z",
             "description": ""
           },
           "updatedAt": {
             "format": "date-time",
             "type": "string",
-            "default": "2024-05-02T09:33:57.043Z",
+            "default": "2024-10-07T17:59:53.167Z",
             "description": ""
           },
           "type": {
@@ -10199,6 +10322,106 @@
           "type"
         ]
       },
+      "NetworkEips": {
+        "type": "object",
+        "properties": {
+          "eip1159": {
+            "type": "boolean",
+            "description": ""
+          },
+          "eip155": {
+            "type": "boolean",
+            "description": ""
+          }
+        },
+        "required": [
+          "eip1159",
+          "eip155"
+        ]
+      },
+      "GasPriceRecommendation": {
+        "type": "object",
+        "properties": {
+          "lowest": {
+            "type": "string",
+            "description": ""
+          },
+          "defaultRelayerUnstuck": {
+            "type": "string",
+            "description": ""
+          },
+          "max": {
+            "type": "string",
+            "description": ""
+          }
+        },
+        "required": [
+          "lowest",
+          "defaultRelayerUnstuck",
+          "max"
+        ]
+      },
+      "TransactionManagerSettings": {
+        "type": "object",
+        "properties": {
+          "gasPriceRecommendation": {
+            "description": "",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/GasPriceRecommendation"
+              }
+            ]
+          },
+          "confirmationBlocks": {
+            "type": "number",
+            "description": ""
+          }
+        },
+        "required": [
+          "confirmationBlocks"
+        ]
+      },
+      "BrowserExtensionSettings": {
+        "type": "object",
+        "properties": {
+          "rpcUrl": {
+            "type": "string",
+            "description": ""
+          },
+          "rpcHeaders": {
+            "description": "",
+            "type": "array",
+            "items": {
+              "type": "object"
+            }
+          }
+        },
+        "required": [
+          "rpcUrl"
+        ]
+      },
+      "IndexerSettings": {
+        "type": "object",
+        "properties": {
+          "verifyTxIntegrity": {
+            "type": "boolean",
+            "description": ""
+          },
+          "verifyBlockIntegrity": {
+            "type": "boolean",
+            "description": ""
+          },
+          "confirmationBlocks": {
+            "type": "number",
+            "description": ""
+          }
+        },
+        "required": [
+          "verifyTxIntegrity",
+          "verifyBlockIntegrity",
+          "confirmationBlocks"
+        ]
+      },
       "Network": {
         "type": "object",
         "properties": {
@@ -10234,21 +10457,69 @@
             "type": "string",
             "description": ""
           },
-          "confirmationBlocks": {
-            "type": "number",
-            "description": ""
-          },
-          "gasPriceRecommendation": {
-            "type": "object",
-            "description": "",
-            "nullable": true
-          },
           "testnet": {
             "type": "boolean",
             "description": ""
           },
           "faucetUrl": {
             "type": "string",
+            "description": "",
+            "nullable": true
+          },
+          "owner": {
+            "type": "string",
+            "description": ""
+          },
+          "deprecated": {
+            "type": "boolean",
+            "description": ""
+          },
+          "featured": {
+            "type": "boolean",
+            "description": ""
+          },
+          "transactionManagerService": {
+            "type": "boolean",
+            "description": ""
+          },
+          "browserExtensionService": {
+            "type": "boolean",
+            "description": ""
+          },
+          "indexerService": {
+            "type": "boolean",
+            "description": ""
+          },
+          "createdAt": {
+            "format": "date-time",
+            "type": "string",
+            "default": "2024-10-07T17:59:53.244Z",
+            "description": ""
+          },
+          "updatedAt": {
+            "format": "date-time",
+            "type": "string",
+            "default": "2024-10-07T17:59:53.244Z",
+            "description": ""
+          },
+          "verifyTxIntegrity": {
+            "type": "boolean",
+            "description": ""
+          },
+          "verifyBlockIntegrity": {
+            "type": "boolean",
+            "description": ""
+          },
+          "eip1159": {
+            "type": "boolean",
+            "description": ""
+          },
+          "loadbalancerUrl": {
+            "type": "string",
+            "description": ""
+          },
+          "gasPriceRecommendation": {
+            "type": "object",
             "description": "",
             "nullable": true
           },
@@ -10264,37 +10535,21 @@
             "type": "boolean",
             "description": ""
           },
-          "loadbalancerUrl": {
-            "type": "string",
+          "confirmationBlocks": {
+            "type": "number",
             "description": ""
           },
-          "eip1159": {
-            "type": "boolean",
-            "description": ""
+          "eips": {
+            "$ref": "#/components/schemas/NetworkEips"
           },
-          "verifyTxIntegrity": {
-            "type": "boolean",
-            "description": ""
+          "transactionManagerSettings": {
+            "$ref": "#/components/schemas/TransactionManagerSettings"
           },
-          "verifyBlockIntegrity": {
-            "type": "boolean",
-            "description": ""
+          "browserExtensionSettings": {
+            "$ref": "#/components/schemas/BrowserExtensionSettings"
           },
-          "owner": {
-            "type": "string",
-            "description": ""
-          },
-          "createdAt": {
-            "format": "date-time",
-            "type": "string",
-            "default": "2024-05-02T09:33:57.058Z",
-            "description": ""
-          },
-          "updatedAt": {
-            "format": "date-time",
-            "type": "string",
-            "default": "2024-05-02T09:33:57.058Z",
-            "description": ""
+          "indexerSettings": {
+            "$ref": "#/components/schemas/IndexerSettings"
           }
         },
         "required": [
@@ -10306,18 +10561,24 @@
           "symbol",
           "decimal",
           "explorerUrl",
-          "confirmationBlocks",
           "testnet",
+          "owner",
+          "deprecated",
+          "featured",
+          "transactionManagerService",
+          "browserExtensionService",
+          "indexerService",
+          "createdAt",
+          "updatedAt",
+          "verifyTxIntegrity",
+          "verifyBlockIntegrity",
+          "eip1159",
+          "loadbalancerUrl",
           "enableRelayer",
           "enableExternalWallet",
           "enableListener",
-          "loadbalancerUrl",
-          "eip1159",
-          "verifyTxIntegrity",
-          "verifyBlockIntegrity",
-          "owner",
-          "createdAt",
-          "updatedAt"
+          "confirmationBlocks",
+          "eips"
         ]
       },
       "GasPriceRecommendationDto": {
@@ -10460,7 +10721,7 @@
             "type": "string",
             "description": ""
           },
-          "tenantHostnames": {
+          "tenantNames": {
             "type": "array",
             "items": {
               "type": "string"
@@ -10559,7 +10820,7 @@
             "type": "string",
             "description": ""
           },
-          "tenantHostnames": {
+          "tenantNames": {
             "type": "array",
             "items": {
               "type": "string"
@@ -10665,13 +10926,13 @@
           "createdAt": {
             "format": "date-time",
             "type": "string",
-            "default": "2024-05-02T09:34:03.879Z",
+            "default": "2024-10-07T18:00:22.732Z",
             "description": ""
           },
           "updatedAt": {
             "format": "date-time",
             "type": "string",
-            "default": "2024-05-02T09:34:03.879Z",
+            "default": "2024-10-07T18:00:22.732Z",
             "description": ""
           },
           "customFilters": {
@@ -10926,13 +11187,13 @@
           "createdAt": {
             "format": "date-time",
             "type": "string",
-            "default": "2024-05-02T09:34:03.892Z",
+            "default": "2024-10-07T18:00:22.747Z",
             "description": ""
           },
           "updatedAt": {
             "format": "date-time",
             "type": "string",
-            "default": "2024-05-02T09:34:03.892Z",
+            "default": "2024-10-07T18:00:22.747Z",
             "description": ""
           }
         },
@@ -10964,19 +11225,80 @@
           "createdAt": {
             "format": "date-time",
             "type": "string",
-            "default": "2024-05-02T09:34:00.631Z",
+            "default": "2024-10-07T18:00:19.999Z",
             "description": ""
           },
           "updatedAt": {
             "format": "date-time",
             "type": "string",
-            "default": "2024-05-02T09:34:00.631Z",
+            "default": "2024-10-07T18:00:19.999Z",
             "description": ""
           }
         },
         "required": [
           "projectId",
           "secret",
+          "createdAt",
+          "updatedAt"
+        ]
+      },
+      "WebhookAttempt": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": ""
+          },
+          "attempt": {
+            "type": "number",
+            "description": ""
+          },
+          "webhookId": {
+            "type": "string",
+            "description": ""
+          },
+          "responsePayload": {
+            "type": "string",
+            "description": ""
+          },
+          "responseStatusCode": {
+            "type": "number",
+            "description": ""
+          },
+          "attemptDate": {
+            "type": "string",
+            "description": ""
+          },
+          "status": {
+            "enum": [
+              "RUNNING_CALL",
+              "SUCCESSFUL_CALL",
+              "FAILED_CALL"
+            ],
+            "type": "string",
+            "description": ""
+          },
+          "createdAt": {
+            "format": "date-time",
+            "type": "string",
+            "default": "2024-10-07T18:00:20.012Z",
+            "description": ""
+          },
+          "updatedAt": {
+            "format": "date-time",
+            "type": "string",
+            "default": "2024-10-07T18:00:20.012Z",
+            "description": ""
+          }
+        },
+        "required": [
+          "id",
+          "attempt",
+          "webhookId",
+          "responsePayload",
+          "responseStatusCode",
+          "attemptDate",
+          "status",
           "createdAt",
           "updatedAt"
         ]
@@ -11016,6 +11338,13 @@
             "description": "",
             "nullable": true
           },
+          "attempts": {
+            "default": [],
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/WebhookAttempt"
+            }
+          },
           "projectId": {
             "type": "string",
             "description": ""
@@ -11023,13 +11352,13 @@
           "createdAt": {
             "format": "date-time",
             "type": "string",
-            "default": "2024-05-02T09:34:00.636Z",
+            "default": "2024-10-07T18:00:20.011Z",
             "description": ""
           },
           "updatedAt": {
             "format": "date-time",
             "type": "string",
-            "default": "2024-05-02T09:34:00.636Z",
+            "default": "2024-10-07T18:00:20.011Z",
             "description": ""
           }
         },
@@ -11040,6 +11369,7 @@
           "payload",
           "url",
           "headers",
+          "attempts",
           "projectId",
           "createdAt",
           "updatedAt"
@@ -11206,12 +11536,12 @@
           "createdAt": {
             "format": "date-time",
             "type": "string",
-            "default": "2024-05-02T09:33:57.821Z"
+            "default": "2024-10-07T18:00:02.654Z"
           },
           "updatedAt": {
             "format": "date-time",
             "type": "string",
-            "default": "2024-05-02T09:33:57.821Z"
+            "default": "2024-10-07T18:00:02.654Z"
           }
         },
         "required": [
@@ -11859,15 +12189,21 @@
           "playground": {
             "type": "object"
           },
+          "tenantNames": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
           "createdAt": {
             "format": "date-time",
             "type": "string",
-            "default": "2024-05-02T09:34:07.010Z"
+            "default": "2024-10-07T18:00:31.692Z"
           },
           "updatedAt": {
             "format": "date-time",
             "type": "string",
-            "default": "2024-05-02T09:34:07.010Z"
+            "default": "2024-10-07T18:00:31.692Z"
           }
         },
         "required": [
@@ -11882,6 +12218,7 @@
           "ownerId",
           "serviceUsed",
           "featureFlag",
+          "tenantNames",
           "createdAt",
           "updatedAt"
         ]
@@ -12028,7 +12365,8 @@
           }
         },
         "required": [
-          "name"
+          "name",
+          "email"
         ]
       },
       "ChangePlanDto": {
@@ -12076,12 +12414,12 @@
           "createdAt": {
             "format": "date-time",
             "type": "string",
-            "default": "2024-05-02T09:34:07.020Z"
+            "default": "2024-10-07T18:00:31.708Z"
           },
           "updatedAt": {
             "format": "date-time",
             "type": "string",
-            "default": "2024-05-02T09:34:07.020Z"
+            "default": "2024-10-07T18:00:31.708Z"
           }
         },
         "required": [
@@ -12172,12 +12510,12 @@
           "createdAt": {
             "format": "date-time",
             "type": "string",
-            "default": "2024-05-02T09:34:07.024Z"
+            "default": "2024-10-07T18:00:31.716Z"
           },
           "updatedAt": {
             "format": "date-time",
             "type": "string",
-            "default": "2024-05-02T09:34:07.024Z"
+            "default": "2024-10-07T18:00:31.716Z"
           }
         },
         "required": [
@@ -12268,13 +12606,13 @@
           "createdAt": {
             "format": "date-time",
             "type": "string",
-            "default": "2024-05-02T09:34:07.028Z",
+            "default": "2024-10-07T18:00:31.722Z",
             "description": ""
           },
           "updatedAt": {
             "format": "date-time",
             "type": "string",
-            "default": "2024-05-02T09:34:07.028Z",
+            "default": "2024-10-07T18:00:31.722Z",
             "description": ""
           },
           "ownerId": {
@@ -12321,7 +12659,7 @@
           "day": {
             "format": "date-time",
             "type": "string",
-            "default": "2024-05-02T09:34:07.028Z"
+            "default": "2024-10-07T18:00:31.723Z"
           },
           "computeUnit": {
             "type": "number"
